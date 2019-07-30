@@ -86,3 +86,6 @@ function displayRestaurantResults(response) {
         resultsDisplay.innerHTML = 'No Restaurants Found.';
     }
 }
+
+
+    
