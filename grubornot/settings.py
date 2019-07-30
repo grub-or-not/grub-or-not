@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #'django.contrib.sites',
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +41,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
 ]
+
+#Registration Redux
+ACCOUNT_ACTIVATION_DAYS = 7 
+REGISTRATION_AUTO_LOGIN = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'janed3584@gmail.com'
+EMAIL_HOST_PASSWORD = 'Testing123!'
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,11 +89,22 @@ WSGI_APPLICATION = 'grubornot.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('DB_NAME', 'post'),
+#         'USER': os.environ.get('DB_USER', 'tester1'),
+#         'PASSWORD': os.environ.get('DB_PASS', 'testing123'),
+#         'HOST': 'localhost',
+#         'PORT':'5432',
+#     }
+# }
 
 
 # Password validation

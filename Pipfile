@@ -8,6 +8,9 @@ prospector = "*"
 
 [packages]
 django = "*"
+django-registration-redux = "*"
+psycopg2 = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
