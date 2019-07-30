@@ -37,6 +37,26 @@ function createFullRestaurantDetailsUrl() {
 
 // display an individual restaurant's details
 function displayRestaurantDetails(restaurant) {
+
+    // Yelp API
+    fetch(`${createFullYelpSearchUrl(restaurant)}`, {
+        "method": "GET",
+        "mode": 'cors',
+        "headers": {
+            "authorization": "Bearer LXc_1CXYWbpCcRrhXYCQ8UVdROphcKPdlDoR-EC9GGadzfBh-iTLBpqmhNPCI3_on1IroKPRcFNWffn3Y3orgE50ho4k0j-VABxhBrJgPrsfn7RssZavS4-S47k9XXYx",
+          }
+        })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+
+
+
+
     // create div to hold all restaurant details
     let resultDiv = document.createElement('div');
     resultDiv.classList += 'restaurant';
@@ -177,4 +197,15 @@ function displayInspectionResults(response) {
     else {
         resultsDisplay.innerHTML = 'No Inspections Found.';
     }
+}
+
+
+function createFullYelpSearchUrl(restaurant) {
+    let cors = "https://cors-anywhere.herokuapp.com/";
+    let yelpSearchApi = 'https://api.yelp.com/v3/businesses/search?';
+    let term = `term=${encodeURI(restaurant.NAME)}`;
+    let longitude = `longitude=${encodeURI(restaurant.X)}`;
+    let latitude = `latitude=${encodeURI(restaurant.Y)}`;
+    let limit = 'limit=1';
+    return `${cors}${yelpSearchApi}&${term}&${longitude}&${latitude}&${limit}`;
 }
