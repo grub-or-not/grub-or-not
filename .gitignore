@@ -140,4 +140,9 @@ dmypy.json
 # Ignore all local history of files
 .history
 
+
+#Npm
+node_modules/
+
+
 # End of https://www.gitignore.io/api/python,visualstudiocode
