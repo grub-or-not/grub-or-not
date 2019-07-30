@@ -178,3 +178,4 @@ function displayInspectionResults(response) {
         resultsDisplay.innerHTML = 'No Inspections Found.';
     }
 }
+
