@@ -2,6 +2,7 @@ let searchForm = document.querySelector('#search-form');
 let searchInput = document.querySelector('#search-input');
 let resultsDisplay = document.querySelector('#results-display');
 
+// search event listener
 searchForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -27,6 +28,7 @@ function clearResultsDisplay() {
     resultsDisplay.innerHTML = '';
 }
 
+// Wake County Restaurants API
 function createFullRestaurantDetailsUrl() {
     let restaurantApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?outFields=*&outSR=4326&f=json&where=NAME%20%3D%20';
     let restaurantName = encodeURI(searchInput.value);
@@ -88,4 +90,92 @@ function displayRestaurantResults(response) {
 }
 
 
+
+// event listener for when an individual restaurant is clicked
+resultsDisplay.addEventListener('click', function (event) {
+    // if event.target is a child of div class="restaurant", set targetResultDiv to the parent div
+    // else, set targetResultDiv to event.target
+    let targetResultDiv;
+    if (event.target.matches('div.restaurant')) {
+        targetResultDiv = event.target;
+    }
+    else if (event.target.closest('div.restaurant')) {
+        targetResultDiv = event.target.parentElement;
+    }
+
+    // if event.target is div class="restaurant" or if event.target is a child of div class="restaurant"
+    if (event.target.matches('div.restaurant') || event.target.closest('div.restaurant')) {
+        console.log('restaurant clicked: ' + targetResultDiv.dataset.hsisid);
+
+        let fullUrl = createFullRestaurantInspectionsUrl(targetResultDiv.dataset.hsisid);
+
+        fetch(fullUrl)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(response) {
+                console.log('inspections:');
+                console.log(response);
     
+                // clearResultsDisplay();
+    
+                displayInspectionResults(response);
+            })
+            .catch(function(error) {
+                console.log('Request failed', error);
+            });
+    }
+});
+
+// Wake County Food Inspections API
+function createFullRestaurantInspectionsUrl(hsisid) {
+    let inspectionsApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?outFields=*&outSR=4326&f=json&where=HSISID%20%3D%20';
+    return `${inspectionsApi}${hsisid}`;
+}
+
+// display an individual inspection's details
+function displayInspectionDetails(inspection) {
+    // create div to hold all inspection details
+    let resultDiv = document.createElement('div');
+    resultDiv.classList += 'inspection';
+
+    // create div to hold inspection date
+    let inspectionDate = document.createElement('div');
+    let date = new Date(inspection.DATE_);
+    inspectionDate.innerHTML = date.toLocaleString().split(',')[0];
+    resultDiv.appendChild(inspectionDate);
+
+    // create div to hold inspection score
+    let inspectionScore = document.createElement('div');
+    inspectionScore.innerHTML = inspection.SCORE;
+    resultDiv.appendChild(inspectionScore);
+
+    // create div to hold inspection description
+    let inspectionDescription = document.createElement('div');
+    inspectionDescription.innerHTML = inspection.DESCRIPTION;
+    resultDiv.appendChild(inspectionDescription);
+
+    // add line break for spacing
+    resultDiv.appendChild(document.createElement('br'));
+
+    // add inspection detail div to results display div
+    let restaurantDisplay = document.querySelector(`[data-hsisid='${inspection.HSISID}']`);
+    restaurantDisplay.appendChild(resultDiv);
+}
+
+
+// display all inspection results returned from api call
+function displayInspectionResults(response) {
+    // display inspection results if there are matches,
+    // else display a message that no inspections are found
+    if (response.features.length > 0) {
+        for (let feature of response.features) {
+            console.log(feature.attributes);
+            displayInspectionDetails(feature.attributes);
+        }
+    }
+    else {
+        resultsDisplay.innerHTML = 'No Inspections Found.';
+    }
+}
+
