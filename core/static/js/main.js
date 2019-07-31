@@ -37,6 +37,29 @@ function createFullRestaurantDetailsUrl() {
 
 // display an individual restaurant's details
 function displayRestaurantDetails(restaurant) {
+
+    // Yelp API
+    fetch(createFullYelpSearchUrl(restaurant))
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(response) {
+            console.log(response);
+            let restaurantRating = response.businesses[0].rating;
+            let restaurantNumReviews = response.businesses[0].review_count;
+
+            // create div to hold restaurant yelp rating and num reviews
+            let restaurantYelpRating = document.createElement('div');
+            restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
+            resultDiv.appendChild(restaurantYelpRating);    
+            
+            // add line break for spacing
+            resultDiv.appendChild(document.createElement('br'));
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
     // create div to hold all restaurant details
     let resultDiv = document.createElement('div');
     resultDiv.classList += 'restaurant';
@@ -177,5 +200,16 @@ function displayInspectionResults(response) {
     else {
         resultsDisplay.innerHTML = 'No Inspections Found.';
     }
+}
+
+
+
+function createFullYelpSearchUrl(restaurant) {
+    let yelpSearchUrl = '/yelp';
+    let term = encodeURI(restaurant.NAME);
+    let longitude = encodeURI(restaurant.X);
+    let latitude = encodeURI(restaurant.Y);
+    let limit = 1;
+    return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
 }
 
