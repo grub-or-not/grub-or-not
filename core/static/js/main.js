@@ -2,6 +2,7 @@ let searchForm = document.querySelector('#search-form');
 let searchInput = document.querySelector('#search-input');
 let resultsDisplay = document.querySelector('#results-display');
 
+
 // search event listener
 searchForm.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -63,6 +64,7 @@ function displayRestaurantDetails(restaurant) {
     // create div to hold all restaurant details
     let resultDiv = document.createElement('li');
     resultDiv.classList += 'mdl-list__item mdl-list__item--three-line';
+    resultDiv.classList.add('restaurant');
     resultDiv.setAttribute('data-hsisid', restaurant.HSISID);
 
 
@@ -141,20 +143,21 @@ function displayRestaurantResults(response) {
 
 
 
-// event listener for when an individual restaurant is clicked
+// display inspections when a restaurant is clicked
 resultsDisplay.addEventListener('click', function (event) {
-    // if event.target is a child of div class="restaurant", set targetResultDiv to the parent div
+    // targetResultDiv must have data-hsisid attribute
+    // if event.target is a child of li class="restaurant", set targetResultDiv to the parent div
     // else, set targetResultDiv to event.target
     let targetResultDiv;
-    if (event.target.matches('div.restaurant')) {
+    if (event.target.classList.contains('restaurant')) {
         targetResultDiv = event.target;
     }
-    else if (event.target.closest('div.restaurant')) {
+    else if (event.target.closest('.mdl-list__item mdl-list__item--three-line restaurant')){
         targetResultDiv = event.target.parentElement;
     }
 
-    // if event.target is div class="restaurant" or if event.target is a child of div class="restaurant"
-    if (event.target.matches('div.restaurant') || event.target.closest('div.restaurant')) {
+    // if event.target is li class="restaurant" or if event.target is a child of li class="restaurant"
+    if (event.target.classList.contains('restaurant') || event.target.closest('.mdl-list__item mdl-list__item--three-line restaurant')) {
         console.log('restaurant clicked: ' + targetResultDiv.dataset.hsisid);
 
         let fullUrl = createFullRestaurantInspectionsUrl(targetResultDiv.dataset.hsisid);
