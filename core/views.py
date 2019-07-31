@@ -23,7 +23,6 @@ def user_profile(request):
     }
     return render(request, 'core/user_profile.html', context)
 
-
 def yelp_search(request, term, longitude, latitude, limit):
     api_key='LXc_1CXYWbpCcRrhXYCQ8UVdROphcKPdlDoR-EC9GGadzfBh-iTLBpqmhNPCI3_on1IroKPRcFNWffn3Y3orgE50ho4k0j-VABxhBrJgPrsfn7RssZavS4-S47k9XXYx'
     headers = {'Authorization': f'Bearer {api_key}'}
