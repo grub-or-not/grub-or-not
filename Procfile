@@ -1,1 +1,1 @@
-web: gunicorn grub-or-not.wsgi
+web: gunicorn grubornot.wsgi
