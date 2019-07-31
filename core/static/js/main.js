@@ -39,23 +39,26 @@ function createFullRestaurantDetailsUrl() {
 function displayRestaurantDetails(restaurant) {
 
     // Yelp API
-    fetch(`${createFullYelpSearchUrl(restaurant)}`, {
-        "method": "GET",
-        "mode": 'cors',
-        "headers": {
-            "authorization": "Bearer LXc_1CXYWbpCcRrhXYCQ8UVdROphcKPdlDoR-EC9GGadzfBh-iTLBpqmhNPCI3_on1IroKPRcFNWffn3Y3orgE50ho4k0j-VABxhBrJgPrsfn7RssZavS4-S47k9XXYx",
-          }
+    fetch(createFullYelpSearchUrl(restaurant))
+        .then(function(response) {
+            return response.json();
         })
-        .then(response => {
-          console.log(response);
+        .then(function(response) {
+            console.log(response);
+            let restaurantRating = response.businesses[0].rating;
+            let restaurantNumReviews = response.businesses[0].review_count;
+
+            // create div to hold restaurant yelp rating and num reviews
+            let restaurantYelpRating = document.createElement('div');
+            restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
+            resultDiv.appendChild(restaurantYelpRating);    
+            
+            // add line break for spacing
+            resultDiv.appendChild(document.createElement('br'));
         })
         .catch(err => {
           console.log(err);
         });
-
-
-
-
 
     // create div to hold all restaurant details
     let resultDiv = document.createElement('div');
@@ -201,11 +204,10 @@ function displayInspectionResults(response) {
 
 
 function createFullYelpSearchUrl(restaurant) {
-    let cors = "https://cors-anywhere.herokuapp.com/";
-    let yelpSearchApi = 'https://api.yelp.com/v3/businesses/search?';
-    let term = `term=${encodeURI(restaurant.NAME)}`;
-    let longitude = `longitude=${encodeURI(restaurant.X)}`;
-    let latitude = `latitude=${encodeURI(restaurant.Y)}`;
-    let limit = 'limit=1';
-    return `${cors}${yelpSearchApi}&${term}&${longitude}&${latitude}&${limit}`;
+    let yelpSearchUrl = '/yelp';
+    let term = encodeURI(restaurant.NAME);
+    let longitude = encodeURI(restaurant.X);
+    let latitude = encodeURI(restaurant.Y);
+    let limit = 1;
+    return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
 }
