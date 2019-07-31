@@ -1,21 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Grub Or Not</h1>
-    <p>
+<div class="background-color">
+    <!-- <h1>Grub Or Not</h1> -->
+    <p class="dirty-secret">
         Is your favorite restaurant hiding a dirty secret?
     </p>
     <div>
-        <form id="search-form">
+        <form class="search" id="search-form">
             <input type="text" id="search-input" required>
             <br>
-            <button type="submit">search</button>
+            <button class="button" type="submit">search</button>
         </form>
     </div>
     <hr>
-    <div id="results">
+    <div class="background-color" id="results">
         <h2>Restaurants:</h2>
         <div id="results-display">
         </div>
     </div>
+</div>
+
 {% endblock %}

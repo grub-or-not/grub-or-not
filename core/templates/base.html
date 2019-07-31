@@ -11,23 +11,27 @@
     <title>Grub or Not</title>
 </head>
 <body>
-    <h1>
-        <a href="{% url 'index' %}">Grub or Not</a>
-
+    <header>
+    <h1 class="title">
+        Grub or Not
+        <!-- href="{% url 'index' %}" -->
     </h1>
-    <ul>
+    <ul class="login">
         {% if request.user.is_authenticated %}
             <li><a href="{% url 'my_profile' %}"> {{user.username }}</a></li>
-            <li><a href="{% url 'auth_logout' %}?next={{request.path}}">Logout</a></li>   
+            <li class="link"><a href="{% url 'auth_logout' %}?next={{request.path}}">Logout</a></li>   
         {% else %}
-            <li><a href="{% url 'auth_login' %}?next={{request.path}}">Login</a></li>
-            <li><a href="{% url 'registration_register' %}">Register</a> </li>
+            <li class="link"><a href="{% url 'auth_login' %}?next={{request.path}}">Login</a></li>
+            <li class="link"><a href="{% url 'registration_register' %}">Register</a> </li>
         {% endif %} 
     </ul>
-    <nav>
+    <nav class="nav">
         <a href="{% url 'index' %}">home</a>
-        <a href="{% url 'rankings' %}">rankings</a>
+        <!-- <a href="{% url 'rankings' %}">rankings</a> -->
     </nav>
+    </div>
+    </header>
+   
     {% block content %}
 
     {% endblock %}
