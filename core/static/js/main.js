@@ -37,35 +37,85 @@ function createFullRestaurantDetailsUrl() {
 
 // display an individual restaurant's details
 function displayRestaurantDetails(restaurant) {
+
+    // Yelp API
+    fetch(createFullYelpSearchUrl(restaurant))
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(response) {
+            console.log(response);
+            let restaurantRating = response.businesses[0].rating;
+            let restaurantNumReviews = response.businesses[0].review_count;
+
+            // create div to hold restaurant yelp rating and num reviews
+            let restaurantYelpRating = document.createElement('div');
+            restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
+            resultDiv.appendChild(restaurantYelpRating);    
+            
+            // add line break for spacing
+            resultDiv.appendChild(document.createElement('br'));
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
     // create div to hold all restaurant details
-    let resultDiv = document.createElement('div');
-    resultDiv.classList += 'restaurant';
+    let resultDiv = document.createElement('li');
+    resultDiv.classList += 'mdl-list__item mdl-list__item--three-line';
     resultDiv.setAttribute('data-hsisid', restaurant.HSISID);
 
+
+    // Create span class to hold detail information
+    let restaurantDetail = document.createElement('span');
+    restaurantDetail.classList += 'mdl-list__item-primary-content';
+    resultDiv.appendChild(restaurantDetail);
+
+
+    // create icon for each restaurant result
+    let restaurantIcon = document.createElement('i');
+    restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
+    restaurantIcon.innerHTML = 'restaurant';
+    restaurantDetail.appendChild(restaurantIcon);
+
+
     // create div to hold restaurant name
-    let restaurantName = document.createElement('div');
+    let restaurantName = document.createElement('span');
     restaurantName.innerHTML = restaurant.NAME;
-    resultDiv.appendChild(restaurantName);
+    restaurantDetail.appendChild(restaurantName);
+
 
     // create div to hold restaurant address
-    let restaurantAddress = document.createElement('div');
-    restaurantAddress.innerHTML = restaurant.ADDRESS1;
-    resultDiv.appendChild(restaurantAddress);
+    let restaurantAddress = document.createElement('span');
+    restaurantAddress.classList += 'mdl-list__item-text-body';
+    restaurantAddress.innerHTML = restaurant.ADDRESS1 + ' ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + ' ' + restaurant.PHONENUMBER;
+    restaurantDetail.appendChild(restaurantAddress);
+
+
+    let restaurantRating = document.createElement('span');
+    restaurantRating.classList += 'mdl-list__item-secondary-content';
+    resultDiv.appendChild(restaurantRating);
+
+    let ratingIcon = document.createElement('i');
+    ratingIcon.classList += 'material-icons rating';
+    ratingIcon.innerHTML = 'tag_faces';
+    restaurantRating.appendChild(ratingIcon);
+
 
     // create div to hold restaurant city
-    let restaurantCity = document.createElement('div');
-    restaurantCity.innerHTML = restaurant.CITY;
-    resultDiv.appendChild(restaurantCity);
+    // let restaurantCity = document.createElement('div');
+    // restaurantCity.innerHTML = restaurant.CITY;
+    // resultDiv.appendChild(restaurantCity);
 
     // create div to hold restaurant postal code
-    let restaurantPostalCode = document.createElement('div');
-    restaurantPostalCode.innerHTML = restaurant.POSTALCODE;
-    resultDiv.appendChild(restaurantPostalCode);
+    // let restaurantPostalCode = document.createElement('div');
+    // restaurantPostalCode.innerHTML = restaurant.POSTALCODE;
+    // resultDiv.appendChild(restaurantPostalCode);
 
     // create div to hold restaurant phone number
-    let restaurantPhoneNumber = document.createElement('div');
-    restaurantPhoneNumber.innerHTML = restaurant.PHONENUMBER;
-    resultDiv.appendChild(restaurantPhoneNumber);
+    // let restaurantPhoneNumber = document.createElement('div');
+    // restaurantPhoneNumber.innerHTML = restaurant.PHONENUMBER;
+    // resultDiv.appendChild(restaurantPhoneNumber);
 
     // add line break for spacing
     resultDiv.appendChild(document.createElement('br'));
@@ -177,5 +227,16 @@ function displayInspectionResults(response) {
     else {
         resultsDisplay.innerHTML = 'No Inspections Found.';
     }
+}
+
+
+
+function createFullYelpSearchUrl(restaurant) {
+    let yelpSearchUrl = '/yelp';
+    let term = encodeURI(restaurant.NAME);
+    let longitude = encodeURI(restaurant.X);
+    let latitude = encodeURI(restaurant.Y);
+    let limit = 1;
+    return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
 }
 
