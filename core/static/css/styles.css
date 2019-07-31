@@ -63,5 +63,15 @@ a {
 }
 
 .button {
-    color:#05386B ;
+    color:#05386B;
+    
+}
+
+.rating {
+    color:#05386B;
+    padding: 10px;
+}
+
+.mdl-list__item-avatar, .mdl-list__item-avatar.material-icons {
+    background-color: #05386B;
 }
