@@ -203,6 +203,7 @@ function displayInspectionResults(response) {
 }
 
 
+
 function createFullYelpSearchUrl(restaurant) {
     let yelpSearchUrl = '/yelp';
     let term = encodeURI(restaurant.NAME);
@@ -211,3 +212,4 @@ function createFullYelpSearchUrl(restaurant) {
     let limit = 1;
     return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
 }
+
