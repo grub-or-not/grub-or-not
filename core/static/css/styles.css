@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #F4976C;
+}
+
+.background-color {
+    background-color: #D2FDFF;
+}
+
+a {
+    color: #303C6C;
+    font-family: sans-serif;
+
+}
+
+.title {
+    color: #FBE8A6;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    font-size: 4rem;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    list-style: none;
+}
+
+.link {
+    padding: 10px;
+}
+
+.dirty-secret {
+    color: #303C6C;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    font-family: sans-serif;
+}
+
+.search-reports {
+    color: #303C6C;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    padding: 2px;
+    font-family: sans-serif;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    
+    color: #EDF5E1;
+}
+
+.button {
+    color:#05386B;
+
+}
+
+/* smiley face icon for rating */
+.rating {
+    color:#05386B;
+    padding: 10px;
+}
+
+/* fork avatar */
+.mdl-list__item-avatar, .mdl-list__item-avatar.material-icons {
+    background-color: #05386B;
+}
+
+.results-heading {
+    color: #F4976C;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: left;
+    padding: 10px;
+    font-family: sans-serif;
+}
