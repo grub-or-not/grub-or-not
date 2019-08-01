@@ -8,7 +8,7 @@ header {
     background-color: #F4976C;
 }
 
-.background-color {
+body {
     background-color: #D2FDFF;
 }
 
@@ -57,7 +57,7 @@ a {
     font-family: sans-serif;
 }
 
-.search {
+#search-form {
     display: flex;
     justify-content: center;
     
@@ -98,3 +98,13 @@ a {
     left: 50%;
    
     }
+
+#results-display {
+
+}
+
+.restaurant {
+    display: grid;
+
+    margin: 3rem;
+}
