@@ -52,56 +52,40 @@ function displayRestaurantDetails(restaurant) {
             // create div to hold restaurant yelp rating and num reviews
             let restaurantYelpRating = document.createElement('div');
             restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
-            resultDiv.appendChild(restaurantYelpRating);    
-            
-            // add line break for spacing
-            resultDiv.appendChild(document.createElement('br'));
+            resultDiv.appendChild(restaurantYelpRating);
         })
         .catch(err => {
           console.log(err);
         });
 
     // create div to hold all restaurant details
-    let resultDiv = document.createElement('li');
-    resultDiv.classList += 'mdl-list__item mdl-list__item--three-line';
+    let resultDiv = document.createElement('div');
     resultDiv.classList.add('restaurant');
     resultDiv.setAttribute('data-hsisid', restaurant.HSISID);
 
 
-    // Create span class to hold detail information
-    let restaurantDetail = document.createElement('span');
-    restaurantDetail.classList += 'mdl-list__item-primary-content';
-    resultDiv.appendChild(restaurantDetail);
-
-
     // create icon for each restaurant result
-    let restaurantIcon = document.createElement('i');
+    let restaurantIcon = document.createElement('span');
     restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
     restaurantIcon.innerHTML = 'restaurant';
-    restaurantDetail.appendChild(restaurantIcon);
+    resultDiv.appendChild(restaurantIcon);
 
 
     // create div to hold restaurant name
-    let restaurantName = document.createElement('span');
+    let restaurantName = document.createElement('div');
     restaurantName.innerHTML = restaurant.NAME;
-    restaurantDetail.appendChild(restaurantName);
+    resultDiv.appendChild(restaurantName);
 
 
     // create div to hold restaurant address
-    let restaurantAddress = document.createElement('span');
-    restaurantAddress.classList += 'mdl-list__item-text-body';
+    let restaurantAddress = document.createElement('div');
     restaurantAddress.innerHTML = restaurant.ADDRESS1 + ' ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + ' ' + restaurant.PHONENUMBER;
-    restaurantDetail.appendChild(restaurantAddress);
+    resultDiv.appendChild(restaurantAddress);
 
-
-    let restaurantRating = document.createElement('span');
-    restaurantRating.classList += 'mdl-list__item-secondary-content';
-    resultDiv.appendChild(restaurantRating);
-
-    let ratingIcon = document.createElement('i');
+    let ratingIcon = document.createElement('div');
     ratingIcon.classList += 'material-icons rating';
     ratingIcon.innerHTML = 'tag_faces';
-    restaurantRating.appendChild(ratingIcon);
+    resultDiv.appendChild(ratingIcon);
 
 
     // create div to hold restaurant city
@@ -118,9 +102,6 @@ function displayRestaurantDetails(restaurant) {
     // let restaurantPhoneNumber = document.createElement('div');
     // restaurantPhoneNumber.innerHTML = restaurant.PHONENUMBER;
     // resultDiv.appendChild(restaurantPhoneNumber);
-
-    // add line break for spacing
-    resultDiv.appendChild(document.createElement('br'));
 
     // add restaurant detail div to results display div
     resultsDisplay.appendChild(resultDiv);
@@ -152,12 +133,12 @@ resultsDisplay.addEventListener('click', function (event) {
     if (event.target.classList.contains('restaurant')) {
         targetResultDiv = event.target;
     }
-    else if (event.target.closest('.mdl-list__item mdl-list__item--three-line restaurant')){
+    else if (event.target.closest('div.restaurant')){
         targetResultDiv = event.target.parentElement;
     }
 
     // if event.target is li class="restaurant" or if event.target is a child of li class="restaurant"
-    if (event.target.classList.contains('restaurant') || event.target.closest('.mdl-list__item mdl-list__item--three-line restaurant')) {
+    if (event.target.classList.contains('restaurant') || event.target.closest('div.restaurant')) {
         console.log('restaurant clicked: ' + targetResultDiv.dataset.hsisid);
 
         let fullUrl = createFullRestaurantInspectionsUrl(targetResultDiv.dataset.hsisid);
@@ -207,9 +188,6 @@ function displayInspectionDetails(inspection) {
     let inspectionDescription = document.createElement('div');
     inspectionDescription.innerHTML = inspection.DESCRIPTION;
     resultDiv.appendChild(inspectionDescription);
-
-    // add line break for spacing
-    resultDiv.appendChild(document.createElement('br'));
 
     // add inspection detail div to results display div
     let restaurantDisplay = document.querySelector(`[data-hsisid='${inspection.HSISID}']`);
