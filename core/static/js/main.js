@@ -200,10 +200,23 @@ function displayInspectionResults(response) {
     // display inspection results if there are matches,
     // else display a message that no inspections are found
     if (response.features.length > 0) {
+
+        let listOfInspectionScoreDates = [];
+        let listOfInspectionScores = [];
+
         for (let feature of response.features) {
             console.log(feature.attributes);
             displayInspectionDetails(feature.attributes);
+
+            let date = new Date(feature.attributes.DATE_);
+            listOfInspectionScoreDates.push(date.toLocaleString().split(',')[0]);
+            listOfInspectionScores.push(feature.attributes.SCORE);
         }
+        console.log('INSPECTION SCORES: ');
+        console.log(listOfInspectionScoreDates);
+        console.log(listOfInspectionScores);
+
+        displayInspectionChart(listOfInspectionScoreDates, listOfInspectionScores);
     }
     else {
         resultsDisplay.innerHTML = 'No Inspections Found.';
@@ -219,5 +232,46 @@ function createFullYelpSearchUrl(restaurant) {
     let latitude = encodeURI(restaurant.Y);
     let limit = 1;
     return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
+}
+
+function displayInspectionChart(listOfInspectionScoreDates, listOfInspectionScores) {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: listOfInspectionScoreDates,
+            datasets: [{
+                label: 'Sanitation Scores',
+                data: listOfInspectionScores,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            scales: { 
+                yAxes: [{ 
+                    ticks: {
+                        beginAtZero: false
+                    }
+                }]
+            }
+        }
+    });
+
 }
 
