@@ -182,7 +182,7 @@ function displayInspectionDetails(inspection) {
 // display all inspection results returned from api call
 function displayInspectionResults(response) {
     console.log('THIS IS THE RESPONSE YOURE LOOKING AT:');
-    console.log(response.features[0].attributes.HSISID);
+    console.log(response.features[response.features.length - 1].attributes.SCORE);
 
     // display inspection results if there are matches,
     // else display a message that no inspections are found
@@ -205,6 +205,14 @@ function displayInspectionResults(response) {
         
         // add inspection chart to restaurant div
         let restaurantDisplay = document.querySelector(`[data-hsisid='${response.features[0].attributes.HSISID}']`);
+
+        let latestInspectionScore = document.createElement('span');
+        let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
+        date = date.toLocaleString().split(',')[0];
+        latestInspectionScore.innerHTML = `Latest Inspection Score: ${response.features[response.features.length - 1].attributes.SCORE} (${date})`;
+        restaurantDisplay.appendChild(latestInspectionScore);
+
+        // add inspection chart to restaurant div
         displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, listOfInspectionScores);
     }
     else {
