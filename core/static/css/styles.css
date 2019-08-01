@@ -89,6 +89,16 @@ a {
     font-family: sans-serif;
 }
 
+.box {
+    width:400px;
+    height:300px;
+    position:0;
+    
+    top: 10%;
+    left: 50%;
+   
+    }
+
 #results-display {
 
 }
