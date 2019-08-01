@@ -89,6 +89,17 @@ a {
     font-family: sans-serif;
 }
 
+.sanitation-chart {
+    width:400px;
+    height:300px;
+    position:0;
+    
+    top: 10%;
+    left: 50%;
+
+    margin: auto;
+}
+
 #results-display {
 
 }
