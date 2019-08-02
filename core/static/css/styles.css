@@ -5,21 +5,21 @@
 }
 
 header {
-    background-color: #F4976C;
+    background-color: #F45355;
 }
 
 body {
-    background-color: #D2FDFF;
+    background-color: #F45355;
 }
 
 a {
-    color: #303C6C;
+    color: black;
     font-family: sans-serif;
 
 }
 
 .title {
-    color: #FBE8A6;
+    color:gold;
     font-family: sans-serif;
     display: flex;
     justify-content: center;
@@ -40,7 +40,7 @@ a {
 }
 
 .dirty-secret {
-    color: #303C6C;
+    color: #684A6D;
     font-size: 1.5rem;
     display: flex;
     justify-content: center;
@@ -81,7 +81,7 @@ a {
 }
 
 .results-heading {
-    color: #F4976C;
+    color: #684A6D;
     font-size: 2.5rem;
     display: flex;
     justify-content: left;
@@ -100,9 +100,8 @@ a {
     margin: auto;
 }
 
-
 .restaurant {
     display: grid;
-
     margin: 3rem;
+
 }
