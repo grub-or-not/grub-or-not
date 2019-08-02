@@ -2,6 +2,9 @@ let searchForm = document.querySelector('#search-form');
 let searchInput = document.querySelector('#search-input');
 let resultsDisplay = document.querySelector('#results-display');
 
+function clearResultsDisplay() {
+    resultsDisplay.innerHTML = '';
+}
 
 // search event listener
 searchForm.addEventListener('submit', function (event) {
@@ -25,10 +28,6 @@ searchForm.addEventListener('submit', function (event) {
         });
 });
 
-function clearResultsDisplay() {
-    resultsDisplay.innerHTML = '';
-}
-
 // Wake County Restaurants API
 function createFullRestaurantDetailsUrl() {
     let restaurantApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?outFields=*&outSR=4326&f=json&where=NAME%20%3D%20';
@@ -36,7 +35,8 @@ function createFullRestaurantDetailsUrl() {
     return `${restaurantApi}'${restaurantName}'`;
 }
 
-// display an individual restaurant's details
+// call Wake County Restaurants API
+// and display an individual restaurant's details
 function displayRestaurantDetails(restaurant) {
 
     // Yelp API
@@ -87,27 +87,12 @@ function displayRestaurantDetails(restaurant) {
     ratingIcon.innerHTML = 'tag_faces';
     resultDiv.appendChild(ratingIcon);
 
-
-    // create div to hold restaurant city
-    // let restaurantCity = document.createElement('div');
-    // restaurantCity.innerHTML = restaurant.CITY;
-    // resultDiv.appendChild(restaurantCity);
-
-    // create div to hold restaurant postal code
-    // let restaurantPostalCode = document.createElement('div');
-    // restaurantPostalCode.innerHTML = restaurant.POSTALCODE;
-    // resultDiv.appendChild(restaurantPostalCode);
-
-    // create div to hold restaurant phone number
-    // let restaurantPhoneNumber = document.createElement('div');
-    // restaurantPhoneNumber.innerHTML = restaurant.PHONENUMBER;
-    // resultDiv.appendChild(restaurantPhoneNumber);
-
     // add restaurant detail div to results display div
     resultsDisplay.appendChild(resultDiv);
 }
 
-// display all restaurant results returned from api call
+// display all restaurant results returned
+// from Wake County Restaurants API
 function displayRestaurantResults(response) {
     // display restaurant results if there are matches,
     // else display a message that no restaurants are found
@@ -122,9 +107,8 @@ function displayRestaurantResults(response) {
     }
 }
 
-
-
-// display inspections when a restaurant is clicked
+// call Wake County Restaurants Inspections API
+// and display inspections when a restaurant is clicked
 resultsDisplay.addEventListener('click', function (event) {
     // targetResultDiv must have data-hsisid attribute
     // if event.target is a child of li class="restaurant", set targetResultDiv to the parent div
@@ -197,13 +181,39 @@ function displayInspectionDetails(inspection) {
 
 // display all inspection results returned from api call
 function displayInspectionResults(response) {
+    console.log('THIS IS THE RESPONSE YOURE LOOKING AT:');
+    console.log(response.features[response.features.length - 1].attributes.SCORE);
+
     // display inspection results if there are matches,
     // else display a message that no inspections are found
     if (response.features.length > 0) {
+
+        let listOfInspectionScoreDates = [];
+        let listOfInspectionScores = [];
+
         for (let feature of response.features) {
             console.log(feature.attributes);
-            displayInspectionDetails(feature.attributes);
+            // displayInspectionDetails(feature.attributes);
+
+            let date = new Date(feature.attributes.DATE_);
+            listOfInspectionScoreDates.push(date.toLocaleString().split(',')[0]);
+            listOfInspectionScores.push(feature.attributes.SCORE);
         }
+        console.log('INSPECTION SCORES: ');
+        console.log(listOfInspectionScoreDates);
+        console.log(listOfInspectionScores);
+        
+        // add inspection chart to restaurant div
+        let restaurantDisplay = document.querySelector(`[data-hsisid='${response.features[0].attributes.HSISID}']`);
+
+        let latestInspectionScore = document.createElement('span');
+        let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
+        date = date.toLocaleString().split(',')[0];
+        latestInspectionScore.innerHTML = `Latest Inspection Score: ${response.features[response.features.length - 1].attributes.SCORE} (${date})`;
+        restaurantDisplay.appendChild(latestInspectionScore);
+
+        // add inspection chart to restaurant div
+        displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, listOfInspectionScores);
     }
     else {
         resultsDisplay.innerHTML = 'No Inspections Found.';
@@ -219,5 +229,44 @@ function createFullYelpSearchUrl(restaurant) {
     let latitude = encodeURI(restaurant.Y);
     let limit = 1;
     return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
+}
+
+// given an html element, and two lists holding inspection dates and scores,
+// generate a line chart and place in the html element
+function displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, listOfInspectionScores) {
+    // create div to hold inspection chart
+    let sanitationChartDiv = document.createElement('div');
+    sanitationChartDiv.classList.add('sanitation-chart');
+    let sanitationChart = document.createElement('canvas');
+    sanitationChart.id = `${restaurantDisplay.getAttribute('data-hsisid')}`;
+    sanitationChartDiv.classList.add('sanitation-chart');
+    sanitationChartDiv.appendChild(sanitationChart);
+    restaurantDisplay.appendChild(sanitationChartDiv);
+
+    var ctx = document.getElementById(`${restaurantDisplay.getAttribute('data-hsisid')}`).getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: listOfInspectionScoreDates,
+            datasets: [{
+                label: 'Sanitation Score',
+                data: listOfInspectionScores,
+                borderWidth: 3,
+                backgroundColor: 'rgba(244, 151, 108, 0.5)',
+                borderColor: 'rgb(244, 151, 108)',
+            }]
+        },
+        options: {
+            scales: { 
+                yAxes: [{ 
+                    ticks: {
+                        // beginAtZero: true
+                        min: 70
+                    }
+                }]
+            }
+        }
+    });
+
 }
 
