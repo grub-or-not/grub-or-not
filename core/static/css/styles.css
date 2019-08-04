@@ -8,7 +8,11 @@ header {
     background-color: #F4976C;
 }
 
-body {
+/* body {
+    background-color: #D2FDFF;
+} */
+
+.background {
     background-color: #D2FDFF;
 }
 
@@ -100,9 +104,9 @@ a {
     margin: auto;
 }
 
-#results-display {
+/* #results-display {
 
-}
+} */
 
 .restaurant {
     display: grid;

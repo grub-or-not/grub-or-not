@@ -1,6 +1,7 @@
 let searchForm = document.querySelector('#search-form');
 let searchInput = document.querySelector('#search-input');
 let resultsDisplay = document.querySelector('#results-display');
+ 
 
 function clearResultsDisplay() {
     resultsDisplay.innerHTML = '';
@@ -45,13 +46,36 @@ function displayRestaurantDetails(restaurant) {
             return response.json();
         })
         .then(function(response) {
+            console.log('this is yelp');
             console.log(response);
             let restaurantRating = response.businesses[0].rating;
             let restaurantNumReviews = response.businesses[0].review_count;
-
+            let numberOfStars = '';
+// ADDED RATING ICON IF STATEMENT FOR YELP STARS 
+            if (restaurantRating == 1) {
+                numberOfStars = '⭐'
+            } else if (restaurantRating == 2) {
+                numberOfStars = '⭐⭐'
+            } else if (restaurantRating == 3) {
+                numberOfStars = '⭐⭐⭐'
+            } else if (restaurantRating == 4) {
+                numberOfStars = '⭐⭐⭐⭐'
+            } else  {
+                numberOfStars = '⭐⭐⭐⭐⭐'
+            }
+// SET IMAGE INSTEAD OF ICON USING IMG_URL FROM YELP API
+            // let restaurantImgUrl = response.businesses[0].image_url;
+            // // USE IMG FROM YELP API INSTEAD OF ICON
+            // let restaurantPicture = document.createElement('img');
+            // restaurantPicture.setAttribute('src', `${restaurantImgUrl}`);
+            // resultDiv.appendChild(restaurantPicture);
+            // // add a classlist for styling purposes
+            // // restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
+            // console.log(restaurantImgUrl);
             // create div to hold restaurant yelp rating and num reviews
             let restaurantYelpRating = document.createElement('div');
-            restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
+// ADDED ${numberOfStars} to this line
+            restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 ${numberOfStars} (${restaurantNumReviews} Reviews)`;
             resultDiv.appendChild(restaurantYelpRating);
         })
         .catch(err => {
@@ -205,12 +229,35 @@ function displayInspectionResults(response) {
         
         // add inspection chart to restaurant div
         let restaurantDisplay = document.querySelector(`[data-hsisid='${response.features[0].attributes.HSISID}']`);
+        
+        // ADDED RATING ICON IF STATEMENT 
+        let latestScore = response.features[response.features.length - 1].attributes.SCORE;
+        let numberOfIcons = '';
+            if (latestScore >= 1 && latestScore <= 20) {
+                numberOfIcons = '💩'
+            } else if (latestScore>= 21 && latestScore <= 40) {
+                numberOfIcons = '💩💩'
+            } else if (latestScore>=41 && latestScore <= 60) {
+                numberOfIcons = '💩💩💩'
+            } else if (latestScore>= 61 && latestScore <=69) {
+                numberOfIcons = '💩💩💩💩'
+            } else if (latestScore>= 70 && latestScore <=80) {
+                numberOfIcons = '🤔🤔🤔🤔'
+            } else if (latestScore>= 81 && latestScore <=89) {
+                numberOfIcons = '🤔🤔🤔🤔🤔'
+            } else if (latestScore>= 90 && latestScore <=100) {
+                numberOfIcons = '😍😍😍😍😍'
+            } else {
+                console.log('No score available');
+            }
 
         let latestInspectionScore = document.createElement('span');
         let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
         date = date.toLocaleString().split(',')[0];
-        latestInspectionScore.innerHTML = `Latest Inspection Score: ${response.features[response.features.length - 1].attributes.SCORE} (${date})`;
+        // CHANGE MADE HERE: DATE VARIABLE MOVED IN FRONT OF SCORE, ICONS VARIABLE ADDED-- ORDER OF VARIABLES ALTERED
+        latestInspectionScore.innerHTML = `Latest Inspection Score: ${date } ${ numberOfIcons} (${response.features[response.features.length - 1].attributes.SCORE}) `;
         restaurantDisplay.appendChild(latestInspectionScore);
+
 
         // add inspection chart to restaurant div
         displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, listOfInspectionScores);
