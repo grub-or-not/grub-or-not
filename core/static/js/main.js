@@ -7,12 +7,13 @@ function clearResultsDisplay() {
 }
 
 // search event listener
+// when user searches for a restaurant
 searchForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    let fullUrl = createFullRestaurantDetailsUrl();
+    let fullRestaurantDetailsUrl = createFullRestaurantDetailsUrl();
 
-    fetch(fullUrl)
+    fetch(fullRestaurantDetailsUrl)
         .then(function(response) {
             return response.json();
         })
@@ -26,18 +27,37 @@ searchForm.addEventListener('submit', function (event) {
         });
 });
 
-// Wake County Restaurants API
+// create URL for Wake County Restaurants API
 function createFullRestaurantDetailsUrl() {
     let restaurantApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?outFields=*&outSR=4326&f=json&where=NAME%20%3D%20';
     let restaurantName = encodeURI(searchInput.value);
     return `${restaurantApi}'${restaurantName}'`;
 }
 
-// call Wake County Restaurants API
-// and display an individual restaurant's details
+// from the result of Wake County Restaurants API,
+// display an individual restaurant's details
 function displayRestaurantDetails(restaurant) {
 
-    // Yelp API
+    // call Inspections API
+    // and display latest Inspection score
+    let fullRestaurantInspectionsUrl = createFullRestaurantInspectionsUrl(restaurant.PERMITID);
+
+    fetch(fullRestaurantInspectionsUrl)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(response) {
+
+            // clearResultsDisplay();
+
+            displayLatestInspectionScore(response);
+        })
+        .catch(function(error) {
+            console.log('Request failed', error);
+        });   
+
+    // call Yelp API
+    // and display Yelp Rating
     fetch(createFullYelpSearchUrl(restaurant))
         .then(function(response) {
             return response.json();
@@ -51,14 +71,14 @@ function displayRestaurantDetails(restaurant) {
             restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
             resultDiv.appendChild(restaurantYelpRating);
         })
-        .catch(err => {
-          console.log(err);
+        .catch(function(error) {
+            console.log('Request failed', error);
         });
 
     // create div to hold all restaurant details
     let resultDiv = document.createElement('div');
     resultDiv.classList.add('restaurant');
-    resultDiv.setAttribute('data-hsisid', restaurant.HSISID);
+    resultDiv.setAttribute('data-permitid', restaurant.PERMITID);
 
 
     // create icon for each restaurant result
@@ -106,7 +126,7 @@ function displayRestaurantResults(response) {
 // call Wake County Restaurants Inspections API
 // and display inspections when a restaurant is clicked
 resultsDisplay.addEventListener('click', function (event) {
-    // targetResultDiv must have data-hsisid attribute
+    // targetResultDiv must have data-permitid attribute
     // if event.target is a child of li class="restaurant", set targetResultDiv to the parent div
     // else, set targetResultDiv to event.target
     let targetResultDiv;
@@ -120,9 +140,9 @@ resultsDisplay.addEventListener('click', function (event) {
     // if event.target is li class="restaurant" or if event.target is a child of li class="restaurant"
     if (event.target.classList.contains('restaurant') || event.target.closest('div.restaurant')) {
 
-        let fullUrl = createFullRestaurantInspectionsUrl(targetResultDiv.dataset.hsisid);
+        let fullRestaurantInspectionsUrl = createFullRestaurantInspectionsUrl(targetResultDiv.dataset.permitid);
 
-        fetch(fullUrl)
+        fetch(fullRestaurantInspectionsUrl)
             .then(function(response) {
                 return response.json();
             })
@@ -139,9 +159,9 @@ resultsDisplay.addEventListener('click', function (event) {
 });
 
 // Wake County Food Inspections API
-function createFullRestaurantInspectionsUrl(hsisid) {
-    let inspectionsApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?outFields=*&outSR=4326&f=json&where=HSISID%20%3D%20';
-    return `${inspectionsApi}${hsisid}`;
+function createFullRestaurantInspectionsUrl(permitid) {
+    let inspectionsApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?outFields=*&outSR=4326&f=json&where=PERMITID%20%3D%20';
+    return `${inspectionsApi}${permitid}`;
 }
 
 // display an individual inspection's details
@@ -167,8 +187,26 @@ function displayInspectionDetails(inspection) {
     resultDiv.appendChild(inspectionDescription);
 
     // add inspection detail div to results display div
-    let restaurantDisplay = document.querySelector(`[data-hsisid='${inspection.HSISID}']`);
+    let restaurantDisplay = document.querySelector(`[data-permitid='${inspection.PERMITID}']`);
     restaurantDisplay.appendChild(resultDiv);
+}
+
+// display latest inspection score returned from Wake County Inspections API
+function displayLatestInspectionScore(response) {
+
+    // display latest inspection score if there are matches,
+    // else display a message that no inspections are found
+    if (response.features.length > 0) {
+        let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
+        let latestInspectionScore = document.createElement('span');
+        let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
+        date = date.toLocaleString().split(',')[0];
+        latestInspectionScore.innerHTML = `Latest Inspection Score: ${response.features[response.features.length - 1].attributes.SCORE} (${date})`;
+        restaurantDisplay.appendChild(latestInspectionScore);
+    }
+    else {
+        resultsDisplay.innerHTML = 'No Inspections Found.';
+    }
 }
 
 
@@ -191,13 +229,7 @@ function displayInspectionResults(response) {
         }
         
         // add inspection chart to restaurant div
-        let restaurantDisplay = document.querySelector(`[data-hsisid='${response.features[0].attributes.HSISID}']`);
-
-        let latestInspectionScore = document.createElement('span');
-        let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
-        date = date.toLocaleString().split(',')[0];
-        latestInspectionScore.innerHTML = `Latest Inspection Score: ${response.features[response.features.length - 1].attributes.SCORE} (${date})`;
-        restaurantDisplay.appendChild(latestInspectionScore);
+        let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
 
         // add inspection chart to restaurant div
         displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, listOfInspectionScores);
@@ -225,12 +257,12 @@ function displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, l
     let sanitationChartDiv = document.createElement('div');
     sanitationChartDiv.classList.add('sanitation-chart');
     let sanitationChart = document.createElement('canvas');
-    sanitationChart.id = `${restaurantDisplay.getAttribute('data-hsisid')}`;
+    sanitationChart.id = `${restaurantDisplay.getAttribute('data-permitid')}`;
     sanitationChartDiv.classList.add('sanitation-chart');
     sanitationChartDiv.appendChild(sanitationChart);
     restaurantDisplay.appendChild(sanitationChartDiv);
 
-    var ctx = document.getElementById(`${restaurantDisplay.getAttribute('data-hsisid')}`).getContext('2d');
+    var ctx = document.getElementById(`${restaurantDisplay.getAttribute('data-permitid')}`).getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
