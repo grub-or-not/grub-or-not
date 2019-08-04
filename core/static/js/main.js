@@ -17,8 +17,6 @@ searchForm.addEventListener('submit', function (event) {
             return response.json();
         })
         .then(function(response) {
-            console.log(response);
-
             clearResultsDisplay();
 
             displayRestaurantResults(response);
@@ -45,7 +43,6 @@ function displayRestaurantDetails(restaurant) {
             return response.json();
         })
         .then(function(response) {
-            console.log(response);
             let restaurantRating = response.businesses[0].rating;
             let restaurantNumReviews = response.businesses[0].review_count;
 
@@ -98,7 +95,6 @@ function displayRestaurantResults(response) {
     // else display a message that no restaurants are found
     if (response.features.length > 0) {
         for (let feature of response.features) {
-            console.log(feature.attributes);
             displayRestaurantDetails(feature.attributes);
         }
     }
@@ -123,7 +119,6 @@ resultsDisplay.addEventListener('click', function (event) {
 
     // if event.target is li class="restaurant" or if event.target is a child of li class="restaurant"
     if (event.target.classList.contains('restaurant') || event.target.closest('div.restaurant')) {
-        console.log('restaurant clicked: ' + targetResultDiv.dataset.hsisid);
 
         let fullUrl = createFullRestaurantInspectionsUrl(targetResultDiv.dataset.hsisid);
 
@@ -132,8 +127,6 @@ resultsDisplay.addEventListener('click', function (event) {
                 return response.json();
             })
             .then(function(response) {
-                console.log('inspections:');
-                console.log(response);
     
                 // clearResultsDisplay();
     
@@ -181,8 +174,6 @@ function displayInspectionDetails(inspection) {
 
 // display all inspection results returned from api call
 function displayInspectionResults(response) {
-    console.log('THIS IS THE RESPONSE YOURE LOOKING AT:');
-    console.log(response.features[response.features.length - 1].attributes.SCORE);
 
     // display inspection results if there are matches,
     // else display a message that no inspections are found
@@ -192,16 +183,12 @@ function displayInspectionResults(response) {
         let listOfInspectionScores = [];
 
         for (let feature of response.features) {
-            console.log(feature.attributes);
             // displayInspectionDetails(feature.attributes);
 
             let date = new Date(feature.attributes.DATE_);
             listOfInspectionScoreDates.push(date.toLocaleString().split(',')[0]);
             listOfInspectionScores.push(feature.attributes.SCORE);
         }
-        console.log('INSPECTION SCORES: ');
-        console.log(listOfInspectionScoreDates);
-        console.log(listOfInspectionScores);
         
         // add inspection chart to restaurant div
         let restaurantDisplay = document.querySelector(`[data-hsisid='${response.features[0].attributes.HSISID}']`);
