@@ -22,12 +22,21 @@ class Restaurant(models.Model):
     """      """
     name = models.CharField(max_length=100)
     permitid = models.CharField(null=True, max_length=20)
+
+    def __str__(self):
+        """    """
+        return self.name
+
     
 
 class Favorite(models.Model):
     """  """
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """    """
+        return self.restaurant
 
 
     
