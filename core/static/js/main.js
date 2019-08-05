@@ -1,6 +1,7 @@
-let searchForm = document.querySelector('#search-form');
-let searchInput = document.querySelector('#search-input');
-let resultsDisplay = document.querySelector('#results-display');
+const searchForm = document.querySelector('#search-form');
+const searchInput = document.querySelector('#search-input');
+const resultsDisplay = document.querySelector('#results-display');
+let latestInspectionDate;
  
 
 function clearResultsDisplay() {
@@ -229,19 +230,10 @@ function displayInspectionViolationResults(response) {
         for (let feature of response.features) {
             console.log(feature.attributes);
 
-            
-            displayViolationDetails(feature.attributes);
+            if (feature.attributes.INSPECTDATE == latestInspectionDate) {
+                displayViolationDetails(feature.attributes);
+            }
 
-
-            /** FUTURE DJ:
-             * You need to figure out how to display all the results
-             * from the inspections api call underneath a restaurant's details
-             * when it is clicked.
-             * 
-             * 
-             * 
-             * 
-             *  **/
         }
 
     }
@@ -347,7 +339,8 @@ function displayLatestInspectionScore(response) {
 
 
         let latestInspectionScore = document.createElement('span');
-        let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
+        latestInspectionDate = response.features[response.features.length - 1].attributes.DATE_;
+        let date = new Date(latestInspectionDate);
         date = date.toLocaleString().split(',')[0];
         // CHANGE MADE HERE: DATE VARIABLE MOVED IN FRONT OF SCORE, ICONS VARIABLE ADDED-- ORDER OF VARIABLES ALTERED
         latestInspectionScore.innerHTML = `Latest Inspection Score: ${date } ${ numberOfIcons} (${response.features[response.features.length - 1].attributes.SCORE}) `;
