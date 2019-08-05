@@ -61,7 +61,7 @@ function displayRestaurantDetails(restaurant) {
     // create div to hold all restaurant details
     let resultDiv = document.createElement('div');
     resultDiv.classList.add('restaurant');
-    resultDiv.setAttribute('data-hsisid', restaurant.HSISID);
+    resultDiv.setAttribute('data-permitid', restaurant.PERMITID);
 
 
     // create icon for each restaurant result
@@ -117,7 +117,7 @@ function displayRestaurantResults(response) {
 // call Wake County Restaurants Inspections API
 // and display inspections when a restaurant is clicked
 resultsDisplay.addEventListener('click', function (event) {
-    // targetResultDiv must have data-hsisid attribute
+    // targetResultDiv must have data-permitid attribute
     // if event.target is a child of li class="restaurant", set targetResultDiv to the parent div
     // else, set targetResultDiv to event.target
     let targetResultDiv;
@@ -130,9 +130,9 @@ resultsDisplay.addEventListener('click', function (event) {
 
     // if event.target is li class="restaurant" or if event.target is a child of li class="restaurant"
     if (event.target.classList.contains('restaurant') || event.target.closest('div.restaurant')) {
-        console.log('restaurant clicked: ' + targetResultDiv.dataset.hsisid);
+        console.log('restaurant clicked: ' + targetResultDiv.dataset.permitid);
 
-        let fullUrl = createFullRestaurantInspectionsUrl(targetResultDiv.dataset.hsisid);
+        let fullUrl = createFullRestaurantInspectionsUrl(targetResultDiv.dataset.permitid);
 
         fetch(fullUrl)
             .then(function(response) {
@@ -153,9 +153,9 @@ resultsDisplay.addEventListener('click', function (event) {
 });
 
 // Wake County Food Inspections API
-function createFullRestaurantInspectionsUrl(hsisid) {
-    let inspectionsApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?outFields=*&outSR=4326&f=json&where=HSISID%20%3D%20';
-    return `${inspectionsApi}${hsisid}`;
+function createFullRestaurantInspectionsUrl(permitid) {
+    let inspectionsApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?outFields=*&outSR=4326&f=json&where=PERMITID%20%3D%20';
+    return `${inspectionsApi}${permitid}`;
 }
 
 // display an individual inspection's details
@@ -181,7 +181,7 @@ function displayInspectionDetails(inspection) {
     resultDiv.appendChild(inspectionDescription);
 
     // add inspection detail div to results display div
-    let restaurantDisplay = document.querySelector(`[data-hsisid='${inspection.HSISID}']`);
+    let restaurantDisplay = document.querySelector(`[data-permitid='${inspection.PERMITID}']`);
     restaurantDisplay.appendChild(resultDiv);
 }
 
@@ -211,7 +211,7 @@ function displayInspectionResults(response) {
         console.log(listOfInspectionScores);
         
         // add inspection chart to restaurant div
-        let restaurantDisplay = document.querySelector(`[data-hsisid='${response.features[0].attributes.HSISID}']`);
+        let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
 
         let latestInspectionScore = document.createElement('span');
         let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
@@ -245,12 +245,12 @@ function displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, l
     let sanitationChartDiv = document.createElement('div');
     sanitationChartDiv.classList.add('sanitation-chart');
     let sanitationChart = document.createElement('canvas');
-    sanitationChart.id = `${restaurantDisplay.getAttribute('data-hsisid')}`;
+    sanitationChart.id = `${restaurantDisplay.getAttribute('data-permitid')}`;
     sanitationChartDiv.classList.add('sanitation-chart');
     sanitationChartDiv.appendChild(sanitationChart);
     restaurantDisplay.appendChild(sanitationChartDiv);
 
-    var ctx = document.getElementById(`${restaurantDisplay.getAttribute('data-hsisid')}`).getContext('2d');
+    var ctx = document.getElementById(`${restaurantDisplay.getAttribute('data-permitid')}`).getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
