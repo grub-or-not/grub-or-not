@@ -99,7 +99,7 @@ function displayRestaurantDetails(restaurant) {
             let restaurantPicture = document.createElement('img');
             restaurantPicture.setAttribute('src', `${restaurantImgUrl}`);
             resultDiv.appendChild(restaurantPicture);
-            // add a classlist for styling purposes
+// ADDED A CLASS LIST 
             restaurantPicture.classList += 'yelp-image';
             console.log(restaurantImgUrl);
 
@@ -139,12 +139,16 @@ function displayRestaurantDetails(restaurant) {
     // create div to hold restaurant name
     let restaurantName = document.createElement('div');
     restaurantName.innerHTML = restaurant.NAME;
+// ADDED CLASS LIST 
+    restaurantName.classlist += 'restaurant-name'
     resultDiv.appendChild(restaurantName);
-
+ 
 
     // create div to hold restaurant address
     let restaurantAddress = document.createElement('div');
-    restaurantAddress.innerHTML = restaurant.ADDRESS1 + ' ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + ' ' + restaurant.PHONENUMBER;
+    restaurantAddress.innerHTML = restaurant.ADDRESS1 + '<br> ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + '<br> ' + restaurant.PHONENUMBER;
+// ADDED A NEW LINE FOR EACH PIECE OF RESTAURANT CONTACT INFO
+    restaurant
     resultDiv.appendChild(restaurantAddress);
 
 
