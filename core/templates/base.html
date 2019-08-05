@@ -1,41 +1,79 @@
 {% load static %}
-
 <!DOCTYPE html>
+<!--
+	Transit by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">    
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <script src="{% static 'js/main.js' %}" defer></script>
-    
-    <title>Grub or Not</title>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<title>Gurb or Not</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+        
+        <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+        <script src="js/init.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <script src="{% static 'js/main.js' %}" defer></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			
+			<link rel="stylesheet" href="css/style-xlarge.css" />
+		</noscript>
+	</head>
 
-<body>
-    <header>
-        <h1 class="title">Grub... or Not</h1>
-        <ul class="nav">
+<body class="landing">
+    <header id = "header">
+        <h1><a>Grub... or Not</a></h1>
+        <nav id = "nav">
+        <ul>
             {% if request.user.is_authenticated %}
-                <li class="link"><a href="{% url 'my_profile' %}"> {{user.username }}</a></li>
-                <li class="link"><a href="{% url 'auth_logout' %}?next={{request.path}}">Logout</a></li>
-                <li class="link"><a href="{% url 'index' %}">Home</a></li>
-                <li class="link"><a href="{% url 'rankings' %}">Browse</a></li>
+                <li><a href="{% url 'my_profile' %}"> {{user.username }}</a>
+                <li><a href="{% url 'auth_logout' %}?next={{request.path}}">Logout</a>
+                <li><a href="{% url 'index' %}">Home</a>
+                <li><a href="{% url 'rankings' %}">Browse</a>
             {% else %}
-                <li class="link"><a href="{% url 'auth_login' %}?next={{request.path}}">Login</a></li>
-                <li class="link"><a href="{% url 'registration_register' %}">Register</a> </li>
-                <li class="link"><a href="{% url 'index' %}">Home</a> </li>
-                <li class="link"><a href="{% url 'rankings' %}">Browse</a></li>
+                <li><a href="{% url 'auth_login' %}?next={{request.path}}">Login</a>
+                <li><a href="{% url 'registration_register' %}">Register</a> 
+                <li><a href="{% url 'index' %}">Home</a> 
+                <li><a href="{% url 'rankings' %}">Browse</a>
             {% endif %} 
+
+        </nav>
         </ul>
     </header>
-   
-    {% block content %}
 
-    {% endblock %}
+
+
+<section id="banner">
+        
+            <h2>
+                Is your favorite restaurant hiding a dirty secret?
+            </h2>
+            <p>Find Out!</p>
+            <div>
+                    <form id="search-form">
+                            <input type="text" id="search-input" required>
+                            <br>
+                            <button class="button" type="submit">search</button>
+                        </form>
+                        <p class="search-reports">Search Wake County Food Inspection Reports</p>
+                    </div>
+</section>             
+                   
+                    
+       
+    
+
+{% block content %}
+
+{% endblock %}
 </body>
 </html>
