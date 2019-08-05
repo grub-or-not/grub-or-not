@@ -21,7 +21,7 @@ class Profile(models.Model):
 class Restaurant(models.Model):
     """      """
     name = models.CharField(max_length=100)
-    hsisid = models.CharField(null=True, max_length=20)
+    permitid = models.CharField(null=True, max_length=20)
     
 
 class Favorite(models.Model):
