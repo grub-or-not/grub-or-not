@@ -12,14 +12,17 @@
   <div class="favs">
     {% if favorites %}
       <h2 style="text-align:center;">My Favorite Restaurants</h2>
+      <table>
       
         {% for favorite in favorites%}
-      <ul>
-        {{favorite.restaurant}}
-      </ul> 
+        <tr><td>{{favorite.restaurant}}</td></tr>
+        
+      
         {% endfor%}
+      </table>
      
       {% endif%}
+    
     </div>
     </div>
     
