@@ -72,31 +72,40 @@ function displayRestaurantDetails(restaurant) {
             let numberOfStars = ''; 
             if (restaurantRating == 1) {
                 numberOfStars = '../static/yelp-stars/small_1@2x.png'
+            } else if (restaurantRating == 1.5) {
+                numberOfStars = '../static/yelp-stars/small_1_half@2x.png'
             } else if (restaurantRating == 2) {
                 numberOfStars = '../static/yelp-stars/small_2@2x.png'
+            } else if (restaurantRating == 2.5) {
+                numberOfStars = '../static/yelp-stars/small_2_half@2x.png'
             } else if (restaurantRating == 3) {
                 numberOfStars = '../static/yelp-stars/small_3@2x.png'
+            } else if (restaurantRating == 3.5) {
+                numberOfStars = '../static/yelp-stars/small_3_half@2x.png'
             } else if (restaurantRating == 4) {
                 numberOfStars = '../static/yelp-stars/small_4@2x.png'
+            } else if (restaurantRating == 4.5) {
+                numberOfStars = '../static/yelp-stars/small_4_half@2x.png'
             } else  if (restaurantRating == 5) {
                 numberOfStars = '../static/yelp-stars/small_5@2x.png'
             } else {
-                numberOfStars = '../yelp-stars/small_0@2x.png'
+                numberOfStars = '../static/yelp-stars/small_0@2x.png'
             }
 
 
             // SET IMAGE INSTEAD OF ICON USING IMG_URL FROM YELP API
-            // let restaurantImgUrl = response.businesses[0].image_url;
-            // // USE IMG FROM YELP API INSTEAD OF ICON
-            // let restaurantPicture = document.createElement('img');
-            // restaurantPicture.setAttribute('src', `${restaurantImgUrl}`);
-            // resultDiv.appendChild(restaurantPicture);
-            // // add a classlist for styling purposes
-            // // restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
-            // console.log(restaurantImgUrl);
+            let restaurantImgUrl = response.businesses[0].image_url;
+            // USE IMG FROM YELP API INSTEAD OF ICON
+            let restaurantPicture = document.createElement('img');
+            restaurantPicture.setAttribute('src', `${restaurantImgUrl}`);
+            resultDiv.appendChild(restaurantPicture);
+            // add a classlist for styling purposes
+            restaurantPicture.classList += 'yelp-image';
+            console.log(restaurantImgUrl);
+
+
             // create div to hold restaurant yelp rating and num reviews
             let restaurantYelpRating = document.createElement('div');
-            // ADDED ${numberOfStars} to this line
             let restaurantYelpRatingStars = document.createElement('img');
             restaurantYelpRatingStars.src = numberOfStars;
             restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
