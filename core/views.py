@@ -18,11 +18,11 @@ def rankings(request):
 
 @login_required
 def user_profile(request):
-    user = Profile.objects.filter(user=request.user)
-    favorites = Restaurant.objects.filter()
+    profile = Profile.objects.get(user=request.user)
+    favorites = Favorite.objects.filter(profile=profile)
     
     context = {
-        'user' : user,
+        'profile' : profile,
         'favorites' : favorites,
         
     }
@@ -30,13 +30,13 @@ def user_profile(request):
 
 @login_required
 def create_favorite(request, permitid, name):
-    user = Profile.objects.get(user=request.user)
+    profile = Profile.objects.get(user=request.user)
     restaurant = Restaurant(permitid=permitid, name=name)
     restaurant.save()
     user.favorites.add(restaurant)
 
     context = {
-        'user' : user,
+        'profile' : profile,
         'restaurant' : restaurant,
         
         
