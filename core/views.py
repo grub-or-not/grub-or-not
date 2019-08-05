@@ -33,7 +33,7 @@ def create_favorite(request, permitid, name):
     profile = Profile.objects.get(user=request.user)
     restaurant = Restaurant(permitid=permitid, name=name)
     restaurant.save()
-    user.favorites.add(restaurant)
+    profile.favorites.add(restaurant)
 
     context = {
         'profile' : profile,
