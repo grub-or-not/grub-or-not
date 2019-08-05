@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponseForbidden
 from django. urls import reverse_lazy
-from core. models import Profile
+from core. models import Profile, Restaurant, Favorite
 import json
 import requests
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
+
 
 def index(request):
     return render(request, 'index.html')
@@ -18,10 +19,34 @@ def rankings(request):
 @login_required
 def user_profile(request):
     user = Profile.objects.filter(user=request.user)
+    favorites = Restaurant.objects.filter()
+    
     context = {
         'user' : user,
+        'favorites' : favorites,
+        
     }
     return render(request, 'core/user_profile.html', context)
+
+@login_required
+def create_favorite(request, hsisid):
+    user = Profile.objects.get(user=request.user)
+    restaurant = Restaurant.objects.get(hsisid=hsisid)
+    user.favorites.add(restaurant)
+
+    context = {
+        'user' : user,
+        'restaurant' : restaurant,
+        
+        
+    }
+    return render(request, 'core/create_favorite.html', context)
+    
+
+    
+
+
+
 
 def yelp_search(request, term, longitude, latitude, limit):
     api_key='LXc_1CXYWbpCcRrhXYCQ8UVdROphcKPdlDoR-EC9GGadzfBh-iTLBpqmhNPCI3_on1IroKPRcFNWffn3Y3orgE50ho4k0j-VABxhBrJgPrsfn7RssZavS4-S47k9XXYx'
@@ -35,3 +60,5 @@ def yelp_search(request, term, longitude, latitude, limit):
     }
     req=requests.get(url, params=params, headers=headers)
     return JsonResponse(json.loads(req.text))
+
+
