@@ -319,11 +319,35 @@ function displayLatestInspectionScore(response) {
     // display latest inspection score if there are matches,
     // else display a message that no inspections are found
     if (response.features.length > 0) {
+        // ADDED RATING SCORES FOR INSPECTIONS 
+        let latestScore = response.features[response.features.length - 1].attributes.SCORE;
+        let numberOfIcons = '';
+            if (latestScore >= 1 && latestScore <= 20) {
+                numberOfIcons = '💩'
+            } else if (latestScore>= 21 && latestScore <= 40) {
+                numberOfIcons = '💩💩'
+            } else if (latestScore>=41 && latestScore <= 60) {
+                numberOfIcons = '💩💩💩'
+            } else if (latestScore>= 61 && latestScore <=69) {
+                numberOfIcons = '💩💩💩💩'
+            } else if (latestScore>= 70 && latestScore <=80) {
+                numberOfIcons = '🤔🤔🤔🤔'
+            } else if (latestScore>= 81 && latestScore <=89) {
+                numberOfIcons = '🤔🤔🤔🤔🤔'
+            } else if (latestScore>= 90 && latestScore <=100) {
+                numberOfIcons = '😍😍😍😍😍'
+            } else {
+                console.log('No score available');
+            }
+
         let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
+
+
         let latestInspectionScore = document.createElement('span');
         let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
         date = date.toLocaleString().split(',')[0];
-        latestInspectionScore.innerHTML = `Latest Inspection Score: ${response.features[response.features.length - 1].attributes.SCORE} (${date})`;
+        // CHANGE MADE HERE: DATE VARIABLE MOVED IN FRONT OF SCORE, ICONS VARIABLE ADDED-- ORDER OF VARIABLES ALTERED
+        latestInspectionScore.innerHTML = `Latest Inspection Score: ${date } ${ numberOfIcons} (${response.features[response.features.length - 1].attributes.SCORE}) `;
         restaurantDisplay.appendChild(latestInspectionScore);
     }
     else {
@@ -351,38 +375,8 @@ function displayInspectionResults(response) {
             listOfInspectionScores.push(feature.attributes.SCORE);
         }
         
-        // add inspection chart to restaurant div
-// ADDED RATING SCORES FOR INSPECTIONS 
-        let latestScore = response.features[response.features.length - 1].attributes.SCORE;
-        let numberOfIcons = '';
-            if (latestScore >= 1 && latestScore <= 20) {
-                numberOfIcons = '💩'
-            } else if (latestScore>= 21 && latestScore <= 40) {
-                numberOfIcons = '💩💩'
-            } else if (latestScore>=41 && latestScore <= 60) {
-                numberOfIcons = '💩💩💩'
-            } else if (latestScore>= 61 && latestScore <=69) {
-                numberOfIcons = '💩💩💩💩'
-            } else if (latestScore>= 70 && latestScore <=80) {
-                numberOfIcons = '🤔🤔🤔🤔'
-            } else if (latestScore>= 81 && latestScore <=89) {
-                numberOfIcons = '🤔🤔🤔🤔🤔'
-            } else if (latestScore>= 90 && latestScore <=100) {
-                numberOfIcons = '😍😍😍😍😍'
-            } else {
-                console.log('No score available');
-            }
 
         let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
-
-
-        let latestInspectionScore = document.createElement('span');
-        let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
-        date = date.toLocaleString().split(',')[0];
-// CHANGE MADE HERE: DATE VARIABLE MOVED IN FRONT OF SCORE, ICONS VARIABLE ADDED-- ORDER OF VARIABLES ALTERED
-        latestInspectionScore.innerHTML = `Latest Inspection Score: ${date } ${ numberOfIcons} (${response.features[response.features.length - 1].attributes.SCORE}) `;
-        restaurantDisplay.appendChild(latestInspectionScore);
-
 
         // add inspection chart to restaurant div
         displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, listOfInspectionScores);
