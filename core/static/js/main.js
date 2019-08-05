@@ -95,8 +95,11 @@ function displayRestaurantDetails(restaurant) {
             // console.log(restaurantImgUrl);
             // create div to hold restaurant yelp rating and num reviews
             let restaurantYelpRating = document.createElement('div');
-// ADDED ${numberOfStars} to this line
-            restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 ${numberOfStars} (${restaurantNumReviews} Reviews)`;
+            // ADDED ${numberOfStars} to this line
+            let restaurantYelpRatingStars = document.createElement('img');
+            restaurantYelpRatingStars.src = numberOfStars;
+            restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
+            restaurantYelpRating.appendChild(restaurantYelpRatingStars);
             resultDiv.appendChild(restaurantYelpRating);
         })
         .catch(function(error) {
