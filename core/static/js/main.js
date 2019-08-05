@@ -50,19 +50,24 @@ function displayRestaurantDetails(restaurant) {
             console.log(response);
             let restaurantRating = response.businesses[0].rating;
             let restaurantNumReviews = response.businesses[0].review_count;
-            let numberOfStars = '';
-// ADDED RATING ICON IF STATEMENT FOR YELP STARS 
+            
+// ADDED YELP STAR RATING
+            let numberOfStars = ''; 
             if (restaurantRating == 1) {
-                numberOfStars = '⭐'
+                numberOfStars = '../static/yelp-stars/small_1@2x.png'
             } else if (restaurantRating == 2) {
-                numberOfStars = '⭐⭐'
+                numberOfStars = '../static/yelp-stars/small_2@2x.png'
             } else if (restaurantRating == 3) {
-                numberOfStars = '⭐⭐⭐'
+                numberOfStars = '../static/yelp-stars/small_3@2x.png'
             } else if (restaurantRating == 4) {
-                numberOfStars = '⭐⭐⭐⭐'
-            } else  {
-                numberOfStars = '⭐⭐⭐⭐⭐'
+                numberOfStars = '../static/yelp-stars/small_4@2x.png'
+            } else  if (restaurantRating == 5) {
+                numberOfStars = '../static/yelp-stars/small_5@2x.png'
+            } else {
+                numberOfStars = '../yelp-stars/small_0@2x.png'
             }
+
+
 // SET IMAGE INSTEAD OF ICON USING IMG_URL FROM YELP API
             // let restaurantImgUrl = response.businesses[0].image_url;
             // // USE IMG FROM YELP API INSTEAD OF ICON
@@ -106,10 +111,12 @@ function displayRestaurantDetails(restaurant) {
     restaurantAddress.innerHTML = restaurant.ADDRESS1 + ' ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + ' ' + restaurant.PHONENUMBER;
     resultDiv.appendChild(restaurantAddress);
 
-    let ratingIcon = document.createElement('div');
-    ratingIcon.classList += 'material-icons rating';
-    ratingIcon.innerHTML = 'tag_faces';
-    resultDiv.appendChild(ratingIcon);
+
+// SMILEY ICON--- I REMOVED THIS
+    // let ratingIcon = document.createElement('div');
+    // ratingIcon.classList += 'material-icons rating';
+    // ratingIcon.innerHTML = 'tag_faces';
+    // resultDiv.appendChild(ratingIcon);
 
     // add restaurant detail div to results display div
     resultsDisplay.appendChild(resultDiv);
@@ -230,7 +237,7 @@ function displayInspectionResults(response) {
         // add inspection chart to restaurant div
         let restaurantDisplay = document.querySelector(`[data-hsisid='${response.features[0].attributes.HSISID}']`);
         
-        // ADDED RATING ICON IF STATEMENT 
+// ADDED RATING SCORES FOR INSPECTIONS 
         let latestScore = response.features[response.features.length - 1].attributes.SCORE;
         let numberOfIcons = '';
             if (latestScore >= 1 && latestScore <= 20) {
@@ -254,7 +261,7 @@ function displayInspectionResults(response) {
         let latestInspectionScore = document.createElement('span');
         let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
         date = date.toLocaleString().split(',')[0];
-        // CHANGE MADE HERE: DATE VARIABLE MOVED IN FRONT OF SCORE, ICONS VARIABLE ADDED-- ORDER OF VARIABLES ALTERED
+// CHANGE MADE HERE: DATE VARIABLE MOVED IN FRONT OF SCORE, ICONS VARIABLE ADDED-- ORDER OF VARIABLES ALTERED
         latestInspectionScore.innerHTML = `Latest Inspection Score: ${date } ${ numberOfIcons} (${response.features[response.features.length - 1].attributes.SCORE}) `;
         restaurantDisplay.appendChild(latestInspectionScore);
 
