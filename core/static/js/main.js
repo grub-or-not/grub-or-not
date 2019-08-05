@@ -68,6 +68,7 @@ function displayRestaurantDetails(restaurant) {
             let restaurantRating = response.businesses[0].rating;
             let restaurantNumReviews = response.businesses[0].review_count;
             
+             
             // ADDED YELP STAR RATING
             let numberOfStars = ''; 
             if (restaurantRating == 1) {
@@ -99,9 +100,10 @@ function displayRestaurantDetails(restaurant) {
             let restaurantPicture = document.createElement('img');
             restaurantPicture.setAttribute('src', `${restaurantImgUrl}`);
             resultDiv.appendChild(restaurantPicture);
-// ADDED A CLASS LIST 
+            // ADDED A CLASS LIST 
             restaurantPicture.classList += 'yelp-image';
             console.log(restaurantImgUrl);
+
 
 
             // create div to hold restaurant yelp rating and num reviews
@@ -122,11 +124,11 @@ function displayRestaurantDetails(restaurant) {
     resultDiv.setAttribute('data-permitid', restaurant.PERMITID);
 
 
-    // create icon for each restaurant result
-    let restaurantIcon = document.createElement('span');
-    restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
-    restaurantIcon.innerHTML = 'restaurant';
-    resultDiv.appendChild(restaurantIcon);
+    // // create icon for each restaurant result
+    // let restaurantIcon = document.createElement('span');
+    // restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
+    // restaurantIcon.innerHTML = 'restaurant';
+    // resultDiv.appendChild(restaurantIcon);
     
     // create favorite button for user to save to profile
     let favButton = document.createElement('a');
@@ -140,15 +142,14 @@ function displayRestaurantDetails(restaurant) {
     let restaurantName = document.createElement('div');
     restaurantName.innerHTML = restaurant.NAME;
 // ADDED CLASS LIST 
-    restaurantName.classlist += 'restaurant-name'
+    restaurantName.classList.add('restaurant-name');
     resultDiv.appendChild(restaurantName);
  
 
     // create div to hold restaurant address
     let restaurantAddress = document.createElement('div');
     restaurantAddress.innerHTML = restaurant.ADDRESS1 + '<br> ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + '<br> ' + restaurant.PHONENUMBER;
-// ADDED A NEW LINE FOR EACH PIECE OF RESTAURANT CONTACT INFO
-    restaurant
+    restaurantAddress.classList.add('restaurant-address');
     resultDiv.appendChild(restaurantAddress);
 
 
@@ -345,7 +346,7 @@ function displayLatestInspectionScore(response) {
             } else if (latestScore>= 90 && latestScore <=100) {
                 numberOfIcons = '😍😍😍😍😍'
             } else {
-                console.log('No score available');
+                numberOfIcons = 'No score available'
             }
 
         let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
