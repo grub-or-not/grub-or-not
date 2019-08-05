@@ -1,6 +1,7 @@
 let searchForm = document.querySelector('#search-form');
 let searchInput = document.querySelector('#search-input');
 let resultsDisplay = document.querySelector('#results-display');
+ 
 
 function clearResultsDisplay() {
     resultsDisplay.innerHTML = '';
@@ -45,13 +46,41 @@ function displayRestaurantDetails(restaurant) {
             return response.json();
         })
         .then(function(response) {
+            console.log('this is yelp');
             console.log(response);
             let restaurantRating = response.businesses[0].rating;
             let restaurantNumReviews = response.businesses[0].review_count;
+            
+// ADDED YELP STAR RATING
+            let numberOfStars = ''; 
+            if (restaurantRating == 1) {
+                numberOfStars = '../static/yelp-stars/small_1@2x.png'
+            } else if (restaurantRating == 2) {
+                numberOfStars = '../static/yelp-stars/small_2@2x.png'
+            } else if (restaurantRating == 3) {
+                numberOfStars = '../static/yelp-stars/small_3@2x.png'
+            } else if (restaurantRating == 4) {
+                numberOfStars = '../static/yelp-stars/small_4@2x.png'
+            } else  if (restaurantRating == 5) {
+                numberOfStars = '../static/yelp-stars/small_5@2x.png'
+            } else {
+                numberOfStars = '../yelp-stars/small_0@2x.png'
+            }
 
+
+// SET IMAGE INSTEAD OF ICON USING IMG_URL FROM YELP API
+            // let restaurantImgUrl = response.businesses[0].image_url;
+            // // USE IMG FROM YELP API INSTEAD OF ICON
+            // let restaurantPicture = document.createElement('img');
+            // restaurantPicture.setAttribute('src', `${restaurantImgUrl}`);
+            // resultDiv.appendChild(restaurantPicture);
+            // // add a classlist for styling purposes
+            // // restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
+            // console.log(restaurantImgUrl);
             // create div to hold restaurant yelp rating and num reviews
             let restaurantYelpRating = document.createElement('div');
-            restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
+// ADDED ${numberOfStars} to this line
+            restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 ${numberOfStars} (${restaurantNumReviews} Reviews)`;
             resultDiv.appendChild(restaurantYelpRating);
         })
         .catch(err => {
@@ -89,10 +118,12 @@ function displayRestaurantDetails(restaurant) {
     restaurantAddress.innerHTML = restaurant.ADDRESS1 + ' ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + ' ' + restaurant.PHONENUMBER;
     resultDiv.appendChild(restaurantAddress);
 
-    let ratingIcon = document.createElement('div');
-    ratingIcon.classList += 'material-icons rating';
-    ratingIcon.innerHTML = 'tag_faces';
-    resultDiv.appendChild(ratingIcon);
+
+// SMILEY ICON--- I REMOVED THIS
+    // let ratingIcon = document.createElement('div');
+    // ratingIcon.classList += 'material-icons rating';
+    // ratingIcon.innerHTML = 'tag_faces';
+    // resultDiv.appendChild(ratingIcon);
 
     // add restaurant detail div to results display div
     resultsDisplay.appendChild(resultDiv);
@@ -211,13 +242,38 @@ function displayInspectionResults(response) {
         console.log(listOfInspectionScores);
         
         // add inspection chart to restaurant div
+        
+// ADDED RATING SCORES FOR INSPECTIONS 
+        let latestScore = response.features[response.features.length - 1].attributes.SCORE;
+        let numberOfIcons = '';
+            if (latestScore >= 1 && latestScore <= 20) {
+                numberOfIcons = '💩'
+            } else if (latestScore>= 21 && latestScore <= 40) {
+                numberOfIcons = '💩💩'
+            } else if (latestScore>=41 && latestScore <= 60) {
+                numberOfIcons = '💩💩💩'
+            } else if (latestScore>= 61 && latestScore <=69) {
+                numberOfIcons = '💩💩💩💩'
+            } else if (latestScore>= 70 && latestScore <=80) {
+                numberOfIcons = '🤔🤔🤔🤔'
+            } else if (latestScore>= 81 && latestScore <=89) {
+                numberOfIcons = '🤔🤔🤔🤔🤔'
+            } else if (latestScore>= 90 && latestScore <=100) {
+                numberOfIcons = '😍😍😍😍😍'
+            } else {
+                console.log('No score available');
+            }
+
         let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
+
 
         let latestInspectionScore = document.createElement('span');
         let date = new Date(response.features[response.features.length - 1].attributes.DATE_);
         date = date.toLocaleString().split(',')[0];
-        latestInspectionScore.innerHTML = `Latest Inspection Score: ${response.features[response.features.length - 1].attributes.SCORE} (${date})`;
+// CHANGE MADE HERE: DATE VARIABLE MOVED IN FRONT OF SCORE, ICONS VARIABLE ADDED-- ORDER OF VARIABLES ALTERED
+        latestInspectionScore.innerHTML = `Latest Inspection Score: ${date } ${ numberOfIcons} (${response.features[response.features.length - 1].attributes.SCORE}) `;
         restaurantDisplay.appendChild(latestInspectionScore);
+
 
         // add inspection chart to restaurant div
         displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, listOfInspectionScores);
