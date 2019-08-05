@@ -17,26 +17,24 @@
 </head>
 
 <body>
-    <div class="background">
-        <header>
-            <h1 class="title">Grub... or Not</h1>
-            <nav>
-                <ul class="nav">
-                    {% if request.user.is_authenticated %}
-                        <li class="link"><a href="{% url 'my_profile' %}"> {{user.username }}</a></li>
-                        <li class="link"><a href="{% url 'auth_logout' %}?next={{request.path}}">Logout</a></li>
-                        <li class="link"><a href="{% url 'index' %}">Home</a></li>
-                        <li class="link"><a href="{% url 'rankings' %}">Browse</a></li>
-                    {% else %}
-                        <li class="link"><a href="{% url 'auth_login' %}?next={{request.path}}">Login</a></li>
-                        <li class="link"><a href="{% url 'registration_register' %}">Register</a> </li>
-                        <li class="link"><a href="{% url 'index' %}">Home</a> </li>
-                        <li class="link"><a href="{% url 'rankings' %}">Browse</a></li>
-                    {% endif %} 
-                </ul>
-            </nav>
-        </header>
-    </div>
+    <header>
+        <h1 class="title">Grub... or Not</h1>
+        <nav>
+            <ul class="nav">
+                {% if request.user.is_authenticated %}
+                    <li class="link"><a href="{% url 'my_profile' %}"> {{user.username }}</a></li>
+                    <li class="link"><a href="{% url 'auth_logout' %}?next={{request.path}}">Logout</a></li>
+                    <li class="link"><a href="{% url 'index' %}">Home</a></li>
+                    <li class="link"><a href="{% url 'rankings' %}">Browse</a></li>
+                {% else %}
+                    <li class="link"><a href="{% url 'auth_login' %}?next={{request.path}}">Login</a></li>
+                    <li class="link"><a href="{% url 'registration_register' %}">Register</a> </li>
+                    <li class="link"><a href="{% url 'index' %}">Home</a> </li>
+                    <li class="link"><a href="{% url 'rankings' %}">Browse</a></li>
+                {% endif %} 
+            </ul>
+        </nav>
+    </header>
    
     {% block content %}
 
