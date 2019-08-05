@@ -69,8 +69,15 @@ function displayRestaurantDetails(restaurant) {
     restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
     restaurantIcon.innerHTML = 'restaurant';
     resultDiv.appendChild(restaurantIcon);
+    
+    // create favorite button for user to save to profile
+    let favButton = document.createElement('a');
+    favButton.innerHTML = '<i class="material-icons">favorite </i>';
+    favButton.href = '/favorite/'+ restaurant.HSISID;
+    resultDiv.appendChild(favButton);
 
 
+    
     // create div to hold restaurant name
     let restaurantName = document.createElement('div');
     restaurantName.innerHTML = restaurant.NAME;
@@ -270,3 +277,24 @@ function displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, l
 
 }
 
+//add user ability to favorite a restaurant
+const favRestaurantLinks = document.querySelectorAll('.fav-restaurant-link');
+
+if (favRestaurantLinks) {
+    for (let link of favRestaurantLinks) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            fetch(`${restaurantName}`)
+                .then(res => res.json())
+                .then(function (data) {
+                    console.log('data', data);
+                })
+                .then(function () {
+                    link.setAttribute('hidden', true);
+                    let favMessage = document.createElement('span');
+                    favMessage.innerText = 'Restaurant marked as favorite';
+                    link.parentElement.appendChild(favMessage);
+                });
+        });
+    }
+}
