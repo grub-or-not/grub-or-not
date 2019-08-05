@@ -29,9 +29,10 @@ def user_profile(request):
     return render(request, 'core/user_profile.html', context)
 
 @login_required
-def create_favorite(request, hsisid):
+def create_favorite(request, permitid, name):
     user = Profile.objects.get(user=request.user)
-    restaurant = Restaurant.objects.get(hsisid=hsisid)
+    restaurant = Restaurant(permitid=permitid, name=name)
+    restaurant.save()
     user.favorites.add(restaurant)
 
     context = {
@@ -40,7 +41,7 @@ def create_favorite(request, hsisid):
         
         
     }
-    return render(request, 'core/create_favorite.html', context)
+    return render(request, 'core/user_profile.html', context)
     
 
     

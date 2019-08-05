@@ -73,7 +73,7 @@ function displayRestaurantDetails(restaurant) {
     // create favorite button for user to save to profile
     let favButton = document.createElement('a');
     favButton.innerHTML = '<i class="material-icons">favorite </i>';
-    favButton.href = '/favorite/'+ restaurant.HSISID;
+    favButton.href = '/favorite/'+ restaurant.PERMITID+'/'+restaurant.NAME;
     resultDiv.appendChild(favButton);
 
 
