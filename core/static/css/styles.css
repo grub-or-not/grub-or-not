@@ -2,13 +2,19 @@
 @import url(font-awesome.min.css);
 @import url(http://fonts.googleapis.com/css?family=Raleway:700,400);
 
-/*
-	Transit by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
-*/
 
 /* Basic */
+
+	/* smiley face icon for rating */
+.rating {
+    color:#05386B;
+    padding: 10px;
+}
+
+/* fork avatar */
+.mdl-list__item-avatar, .mdl-list__item-avatar.material-icons {
+    background-color: #05386B;
+}
 
 	body {
 		background: fff;
@@ -927,6 +933,11 @@
 		}
 
 /* Header */
+
+    input {
+     color: white
+
+	}
 
 	body.landing #header {
 		background-color: transparent;
