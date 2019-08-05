@@ -123,6 +123,7 @@ function displayRestaurantResults(response) {
     }
 }
 
+// when user clicks on an individual restaurant
 // call Wake County Restaurants Inspections API
 // and display inspections when a restaurant is clicked
 resultsDisplay.addEventListener('click', function (event) {
@@ -140,6 +141,7 @@ resultsDisplay.addEventListener('click', function (event) {
     // if event.target is li class="restaurant" or if event.target is a child of li class="restaurant"
     if (event.target.classList.contains('restaurant') || event.target.closest('div.restaurant')) {
 
+        // call Restaurant Inspections API
         let fullRestaurantInspectionsUrl = createFullRestaurantInspectionsUrl(targetResultDiv.dataset.permitid);
 
         fetch(fullRestaurantInspectionsUrl)
@@ -155,13 +157,97 @@ resultsDisplay.addEventListener('click', function (event) {
             .catch(function(error) {
                 console.log('Request failed', error);
             });
+
+        // call Restaurant Violations API
+        let fullRestaurantInspectionViolationsUrl = createFullRestaurantInspectionViolationsUrl(targetResultDiv.dataset.permitid);
+
+        fetch(fullRestaurantInspectionViolationsUrl)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(response) {
+    
+                console.log(response);
+
+                displayInspectionViolationResults(response);
+            })
+            .catch(function(error) {
+                console.log('Request failed', error);
+            });
     }
 });
+
+function displayInspectionViolationResults(response) {
+
+    // display inspection violation results if there are matches,
+    // else display a message that no inspections violations are found
+    if (response.features.length > 0) {
+        
+        // add violation details to restaurant div
+        let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
+
+
+        for (let feature of response.features) {
+            console.log(feature.attributes);
+
+            
+            displayViolationDetails(feature.attributes);
+
+
+            /** FUTURE DJ:
+             * You need to figure out how to display all the results
+             * from the inspections api call underneath a restaurant's details
+             * when it is clicked.
+             * 
+             * 
+             * 
+             * 
+             *  **/
+        }
+
+    }
+    else {
+        resultsDisplay.innerHTML = 'No Inspection Violations Found.';
+    }
+}
 
 // Wake County Food Inspections API
 function createFullRestaurantInspectionsUrl(permitid) {
     let inspectionsApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?outFields=*&outSR=4326&f=json&where=PERMITID%20%3D%20';
     return `${inspectionsApi}${permitid}`;
+}
+
+// Wake County Food Inspection Violations API
+function createFullRestaurantInspectionViolationsUrl(permitid) {
+    let inspectionViolationsApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/2/query?outFields=*&outSR=4326&f=json&where=PERMITID%20%3D%20';
+    return `${inspectionViolationsApi}${permitid}`;
+}
+
+// display an individual violation's details
+function displayViolationDetails(violation) {
+    // create div to hold all violation details
+    let resultDiv = document.createElement('div');
+    resultDiv.classList += 'violation';
+
+    // create div to hold violation date
+    let violationDate = document.createElement('div');
+    let date = new Date(violation.INSPECTDATE);
+    violationDate.innerHTML = date.toLocaleString().split(',')[0];
+    resultDiv.appendChild(violationDate);
+
+    // create div to hold violation score
+    let violationScore = document.createElement('div');
+    violationScore.innerHTML = violation.POINTVALUE;
+    resultDiv.appendChild(violationScore);
+
+    // create div to hold violation description
+    let violationDescription = document.createElement('div');
+    violationDescription.innerHTML = violation.SHORTDESC;
+    resultDiv.appendChild(violationDescription);
+
+    // add violation detail div to results display div
+    let restaurantDisplay = document.querySelector(`[data-permitid='${violation.PERMITID}']`);
+    restaurantDisplay.appendChild(resultDiv);
 }
 
 // display an individual inspection's details
@@ -210,7 +296,8 @@ function displayLatestInspectionScore(response) {
 }
 
 
-// display all inspection results returned from api call
+// display all inspection results
+// returned from Wake County Inspections API call
 function displayInspectionResults(response) {
 
     // display inspection results if there are matches,
