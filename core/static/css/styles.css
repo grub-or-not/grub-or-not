@@ -116,9 +116,13 @@ a {
 
 
 .restaurant {
-    display: grid;
+	display: grid;
 
     margin: 3rem;
+}
+
+.restaurant:hover {
+	background-color: rgba(212, 212, 212, 0.5);
 }
 
 html, body { height:100%; }
