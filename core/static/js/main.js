@@ -68,35 +68,46 @@ function displayRestaurantDetails(restaurant) {
             let restaurantRating = response.businesses[0].rating;
             let restaurantNumReviews = response.businesses[0].review_count;
             
+             
             // ADDED YELP STAR RATING
             let numberOfStars = ''; 
             if (restaurantRating == 1) {
                 numberOfStars = '../static/yelp-stars/small_1@2x.png'
+            } else if (restaurantRating == 1.5) {
+                numberOfStars = '../static/yelp-stars/small_1_half@2x.png'
             } else if (restaurantRating == 2) {
                 numberOfStars = '../static/yelp-stars/small_2@2x.png'
+            } else if (restaurantRating == 2.5) {
+                numberOfStars = '../static/yelp-stars/small_2_half@2x.png'
             } else if (restaurantRating == 3) {
                 numberOfStars = '../static/yelp-stars/small_3@2x.png'
+            } else if (restaurantRating == 3.5) {
+                numberOfStars = '../static/yelp-stars/small_3_half@2x.png'
             } else if (restaurantRating == 4) {
                 numberOfStars = '../static/yelp-stars/small_4@2x.png'
+            } else if (restaurantRating == 4.5) {
+                numberOfStars = '../static/yelp-stars/small_4_half@2x.png'
             } else  if (restaurantRating == 5) {
                 numberOfStars = '../static/yelp-stars/small_5@2x.png'
             } else {
-                numberOfStars = '../yelp-stars/small_0@2x.png'
+                numberOfStars = '../static/yelp-stars/small_0@2x.png'
             }
 
 
             // SET IMAGE INSTEAD OF ICON USING IMG_URL FROM YELP API
-            // let restaurantImgUrl = response.businesses[0].image_url;
-            // // USE IMG FROM YELP API INSTEAD OF ICON
-            // let restaurantPicture = document.createElement('img');
-            // restaurantPicture.setAttribute('src', `${restaurantImgUrl}`);
-            // resultDiv.appendChild(restaurantPicture);
-            // // add a classlist for styling purposes
-            // // restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
-            // console.log(restaurantImgUrl);
+            let restaurantImgUrl = response.businesses[0].image_url;
+            // USE IMG FROM YELP API INSTEAD OF ICON
+            let restaurantPicture = document.createElement('img');
+            restaurantPicture.setAttribute('src', `${restaurantImgUrl}`);
+            resultDiv.appendChild(restaurantPicture);
+            // ADDED A CLASS LIST 
+            restaurantPicture.classList += 'yelp-image';
+            console.log(restaurantImgUrl);
+
+
+
             // create div to hold restaurant yelp rating and num reviews
             let restaurantYelpRating = document.createElement('div');
-            // ADDED ${numberOfStars} to this line
             let restaurantYelpRatingStars = document.createElement('img');
             restaurantYelpRatingStars.src = numberOfStars;
             restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
@@ -113,11 +124,11 @@ function displayRestaurantDetails(restaurant) {
     resultDiv.setAttribute('data-permitid', restaurant.PERMITID);
 
 
-    // create icon for each restaurant result
-    let restaurantIcon = document.createElement('span');
-    restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
-    restaurantIcon.innerHTML = 'restaurant';
-    resultDiv.appendChild(restaurantIcon);
+    // // create icon for each restaurant result
+    // let restaurantIcon = document.createElement('span');
+    // restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
+    // restaurantIcon.innerHTML = 'restaurant';
+    // resultDiv.appendChild(restaurantIcon);
     
     // create favorite button for user to save to profile
     let favButton = document.createElement('a');
@@ -130,12 +141,15 @@ function displayRestaurantDetails(restaurant) {
     // create div to hold restaurant name
     let restaurantName = document.createElement('div');
     restaurantName.innerHTML = restaurant.NAME;
+// ADDED CLASS LIST 
+    restaurantName.classList.add('restaurant-name');
     resultDiv.appendChild(restaurantName);
-
+ 
 
     // create div to hold restaurant address
     let restaurantAddress = document.createElement('div');
-    restaurantAddress.innerHTML = restaurant.ADDRESS1 + ' ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + ' ' + restaurant.PHONENUMBER;
+    restaurantAddress.innerHTML = restaurant.ADDRESS1 + '<br> ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + '<br> ' + restaurant.PHONENUMBER;
+    restaurantAddress.classList.add('restaurant-address');
     resultDiv.appendChild(restaurantAddress);
 
 
@@ -332,7 +346,7 @@ function displayLatestInspectionScore(response) {
             } else if (latestScore>= 90 && latestScore <=100) {
                 numberOfIcons = '😍😍😍😍😍'
             } else {
-                console.log('No score available');
+                numberOfIcons = 'No score available'
             }
 
         let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);

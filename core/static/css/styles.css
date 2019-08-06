@@ -20,7 +20,26 @@ body {
 a {
     color: #303C6C;
     font-family: sans-serif;
+}
 
+.yelp-image {
+    display: flex;
+    justify-content: right;
+    max-width: 45%;
+    margin: 20px;
+}
+
+.restaurant-name {
+    font-size: 4rem;
+    padding: 10px;
+    margin: 10px;
+}
+
+.restaurant-address {
+    font-size: 1.5rem;
+    padding: 10px;
+    margin: 10px;
+    margin-left: 20px;
 }
 
 .title {
@@ -55,7 +74,7 @@ a {
 
 .search-reports {
     color: #303C6C;
-    font-size: 1rem;
+    font-size: 1.5rem;
     display: flex;
     justify-content: center;
     padding: 2px;
@@ -72,17 +91,6 @@ a {
 .button {
     color:#05386B;
 
-}
-
-/* smiley face icon for rating */
-.rating {
-    color:#05386B;
-    padding: 10px;
-}
-
-/* fork avatar */
-.mdl-list__item-avatar, .mdl-list__item-avatar.material-icons {
-    background-color: #05386B;
 }
 
 .results-heading {
@@ -105,9 +113,7 @@ a {
     margin: auto;
 }
 
-/* #results-display {
 
-} */
 
 .restaurant {
     display: grid;
