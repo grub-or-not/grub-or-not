@@ -10,24 +10,26 @@ function clearResultsDisplay() {
 
 // search event listener
 // when user searches for a restaurant
-searchForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    let fullRestaurantDetailsUrl = createFullRestaurantDetailsUrl();
-
-    fetch(fullRestaurantDetailsUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(response) {
-            clearResultsDisplay();
-
-            displayRestaurantResults(response);
-        })
-        .catch(function(error) {
-            console.log('Request failed', error);
-        });
-});
+if (searchForm) {
+    searchForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+    
+        let fullRestaurantDetailsUrl = createFullRestaurantDetailsUrl();
+    
+        fetch(fullRestaurantDetailsUrl)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(response) {
+                clearResultsDisplay();
+    
+                displayRestaurantResults(response);
+            })
+            .catch(function(error) {
+                console.log('Request failed', error);
+            });
+    });
+}
 
 // create URL for Wake County Restaurants API
 function createFullRestaurantDetailsUrl() {
@@ -205,6 +207,8 @@ resultsDisplay.addEventListener('click', function (event) {
             .then(function(response) {
     
                 // clearResultsDisplay();
+    
+                console.log(response);
     
                 displayInspectionResults(response);
             })
