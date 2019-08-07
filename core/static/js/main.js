@@ -118,7 +118,7 @@ function displayRestaurantDetails(restaurant) {
             console.log('Request failed', error);
         });
 
-    // create div to hold all restaurant details
+    // create div to hold all restaurant detailstle
     let resultDiv = document.createElement('div');
     resultDiv.classList.add('restaurant');
     resultDiv.setAttribute('data-permitid', restaurant.PERMITID);
