@@ -120,7 +120,7 @@ function displayRestaurantDetails(restaurant) {
             console.log('Request failed', error);
         });
 
-    // create div to hold all restaurant detailstle
+    // create div to hold all restaurant details
     let resultDiv = document.createElement('div');
     resultDiv.classList.add('restaurant');
     resultDiv.setAttribute('data-permitid', restaurant.PERMITID);
@@ -291,7 +291,7 @@ function displayViolationDetails(violation) {
 
     // create div to hold violation description
     let violationDescription = document.createElement('div');
-    violationDescription.innerHTML = violation.COMMENTS;
+    violationDescription.innerHTML = violation.SHORTDESC;
     resultDiv.appendChild(violationDescription);
 
     // add violation detail div to results display div
