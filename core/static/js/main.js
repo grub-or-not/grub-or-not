@@ -291,7 +291,7 @@ function displayViolationDetails(violation) {
 
     // create div to hold violation description
     let violationDescription = document.createElement('div');
-    violationDescription.innerHTML = violation.SHORTDESC;
+    violationDescription.innerHTML = violation.COMMENTS;
     resultDiv.appendChild(violationDescription);
 
     // add violation detail div to results display div
