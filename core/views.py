@@ -98,6 +98,23 @@ def create_favorite(request, permitid, name):
         
     }
     return render(request, 'core/user_profile.html', context)
+
+@login_required
+def delete_favorite(request, pk):
+    profile = Profile.objects.get(user=request.user)
+    restaurant = Restaurant.objects.get(pk=pk )
+    profile.favorites.remove(restaurant)
+
+    context = {
+        'profile' : profile,
+       
+        
+        
+    }
+    return redirect(request, 'core/user_profile.html', context)
+
+
+
     
 
 def yelp_search(request, term, longitude, latitude, limit):

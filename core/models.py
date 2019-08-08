@@ -49,7 +49,7 @@ class Favorite(models.Model):
 
     def __str__(self):
         """    """
-        return self.restaurant
+        return self.restaurant.name
 
 
     

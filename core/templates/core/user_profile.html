@@ -15,7 +15,9 @@
       <table>
       
         {% for favorite in favorites%}
-        <tr><td>{{favorite.restaurant}}</td></tr>
+        
+        <div>{{favorite.restaurant}}   <!--input type="button" class="trash"  value="🗑️  Delete From Favorites"></button>--><a href="{% url 'delete_favorite' favorite.restaurant.pk%}">🗑️  Delete From Favorites</a></div>
+
         
       
         {% endfor%}

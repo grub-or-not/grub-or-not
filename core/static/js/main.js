@@ -138,6 +138,15 @@ function displayRestaurantDetails(restaurant) {
     favButton.href = '/favorite/'+ restaurant.PERMITID+'/'+restaurant.NAME;
     resultDiv.appendChild(favButton);
 
+    
+     
+        
+        
+    
+    
+
+    
+
 
     
     // create div to hold restaurant name
@@ -183,6 +192,7 @@ function displayRestaurantResults(response) {
 // when user clicks on an individual restaurant
 // call Wake County Restaurants Inspections API
 // and display inspections when a restaurant is clicked
+if (resultsDisplay){
 resultsDisplay.addEventListener('click', function (event) {
     // targetResultDiv must have data-permitid attribute
     // if event.target is a child of li class="restaurant", set targetResultDiv to the parent div
@@ -194,6 +204,7 @@ resultsDisplay.addEventListener('click', function (event) {
     else if (event.target.closest('div.restaurant')){
         targetResultDiv = event.target.parentElement;
     }
+
 
     // if event.target is li class="restaurant" or if event.target is a child of li class="restaurant"
     if (event.target.classList.contains('restaurant') || event.target.closest('div.restaurant')) {
@@ -234,7 +245,7 @@ resultsDisplay.addEventListener('click', function (event) {
             });
     }
 });
-
+}
 function displayInspectionViolationResults(response) {
 
     // display inspection violation results if there are matches,
@@ -449,25 +460,9 @@ function displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, l
     });
 
 }
-
-//add user ability to favorite a restaurant
-const favRestaurantLinks = document.querySelectorAll('.fav-restaurant-link');
-
-if (favRestaurantLinks) {
-    for (let link of favRestaurantLinks) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            fetch(`${restaurantName}`)
-                .then(res => res.json())
-                .then(function (data) {
-                    console.log('data', data);
-                })
-                .then(function () {
-                    link.setAttribute('hidden', true);
-                    let favMessage = document.createElement('span');
-                    favMessage.innerText = 'Restaurant marked as favorite';
-                    link.parentElement.appendChild(favMessage);
-                });
-        });
-    }
-}
+//create function to remove favorite item from user profile
+    
+//let buttons = document.getElementsByClassName("trash");
+//for (let button of buttons){
+   // button.addEventListener('click', function(event){ console.log();});
+//}
