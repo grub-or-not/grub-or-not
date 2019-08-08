@@ -255,9 +255,6 @@ function displayInspectionViolationResults(response) {
         }
 
     }
-    else {
-        resultsDisplay.innerHTML = 'No Inspection Violations Found.';
-    }
 }
 
 // Wake County Food Inspections API
