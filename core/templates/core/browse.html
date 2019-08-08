@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Recent Inspections</h1>
-
     <div id="results-display">
+
+        <h2>Recent Inspections</h2>
         {% for inspection in recent_inspections %}
             <div class="restaurant" data-permitid="{{ inspection.attributes.PERMITID }}">
                 <div class="recent-inspection-date">
@@ -43,6 +43,46 @@
             
             <hr>
         {% endfor %}
-    </div>
+        
+        <h2>Lowest Sanitation Scores</h2>
+        {% for inspection in lowest_inspections %}
+            <div class="restaurant" data-permitid="{{ inspection.attributes.PERMITID }}">
+                <div class="lowest-inspection-date">
+                    {{ inspection.attributes.DATE_ }}
+                </div>
+    
+                <div class="restaurant-name">
+                    {{ inspection.attributes.NAME|safe }}
+                </div>
 
+                <div class="restaurant-address">
+                    {{ inspection.attributes.ADDRESS1 }}
+
+                    <br>
+
+                    {{ inspection.attributes.CITY }} {{ inspection.attributes.POSTALCODE }} 
+                    <br>
+
+                    {{ inspection.attributes.PHONENUMBER }}
+                </div>
+    
+                <span class="latest-inspection-score">
+                    Latest Inspection Score: {{ inspection.attributes.SCORE }}
+                </span>
+
+                <br>
+
+                <span class="latest-inspection-score">
+                    {% if inspection.attributes.YELP_RATING is not None  %}
+                        Yelp Rating: {{ inspection.attributes.YELP_RATING }}
+                        ({{ inspection.attributes.YELP_NUM_RATINGS }} Reviews)
+                    {% else %}
+                        No Yelp Rating Found.
+                    {% endif %}
+                </span>
+            </div>
+            
+            <hr>
+        {% endfor %}
+    </div>
 {% endblock %}

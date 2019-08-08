@@ -16,24 +16,24 @@ def index(request):
 
 def browse(request):
 
+    ## RECENT INSPECTIONS
     # get all inspections ordered by DATE_
-    inspectionsApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?where=1%3D1&orderBy=DATE_&orderByAsc=false&outFields=*&outSR=4326&f=json&orderByFields=DATE_%20DESC'
-    inspectionsApiResponse = requests.get(inspectionsApi)
+    inspections_orderby_date_api = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?where=1%3D1&orderBy=DATE_&orderByAsc=false&outFields=*&outSR=4326&f=json&orderByFields=DATE_%20DESC'
+    inspectionsApiResponse = requests.get(inspections_orderby_date_api)
     inspections = json.loads(inspectionsApiResponse.text)['features']
 
-    # take 10 most recent inspections
+    # take 5 most recent inspections
     recent_inspections = []
-    for i in range(0, 10):
+    for i in range(0, 5):
         recent_inspections.append(inspections[i])
 
-    # convert inspection dates to python datetime
     for inspection in recent_inspections:
+        # convert inspection dates to python datetime
         inspection_date = inspection['attributes']['DATE_']
         s = inspection_date / 1000.0
         inspection['attributes']['DATE_'] = datetime.fromtimestamp(s).strftime('%m/%d/%Y')
 
-    # query the restaurant info of the last 5 inspections and add to recent_inspections
-    for inspection in recent_inspections:
+        # query the restaurant info of the last 5 inspections and add to recent_inspections
         restaurantsApi = create_restaurants_api_endpoint(inspection['attributes']['PERMITID'])
         restaurantsApiResponse = requests.get(restaurantsApi)
         restaurant = json.loads(restaurantsApiResponse.text)['features']
@@ -56,14 +56,61 @@ def browse(request):
         })
 
         if yelp['businesses']:
-            pprint(yelp['businesses'][0])
             inspection['attributes'].update({
                 'YELP_RATING': yelp['businesses'][0]['rating'],
                 'YELP_NUM_RATINGS': yelp['businesses'][0]['review_count'],
             })
 
+    ## LOWEST SANITATION SCORES
+    # get all inspections ordered by score and > 70
+    inspections_orderby_score_api = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?outFields=*&outSR=4326&f=json&orderByFields=SCORE&where=SCORE%20%3E%3D%2070'
+    inspections_orderby_score_response = requests.get(inspections_orderby_score_api)
+    inspections_orderby_score = json.loads(inspections_orderby_score_response.text)['features']
+
+    # take 5 and query the restaurant info
+    lowest_inspections = []
+    for i in range(0, 5):
+        lowest_inspections.append(inspections_orderby_score[i])
+
+    for inspection in lowest_inspections:
+        # convert inspection dates to python datetime
+        inspection_date = inspection['attributes']['DATE_']
+        s = inspection_date / 1000.0
+        inspection['attributes']['DATE_'] = datetime.fromtimestamp(s).strftime('%m/%d/%Y')
+
+        # query the restaurant info and add to lowest_inspections
+        restaurantsApi = create_restaurants_api_endpoint(inspection['attributes']['PERMITID'])
+        restaurantsApiResponse = requests.get(restaurantsApi)
+        restaurant = json.loads(restaurantsApiResponse.text)['features']
+        
+        if restaurant:
+            yelpApi = request.build_absolute_uri(reverse("yelp_search", args = [
+                restaurant[0]['attributes']['NAME'],
+                restaurant[0]['attributes']['X'],
+                restaurant[0]['attributes']['Y'],
+                1,
+            ]))
+            yelpApiResponse = requests.get(yelpApi)
+            yelp = json.loads(yelpApiResponse.text)
+
+            inspection['attributes'].update({
+                'NAME': restaurant[0]['attributes']['NAME'],
+                'ADDRESS1': restaurant[0]['attributes']['ADDRESS1'],
+                'CITY': restaurant[0]['attributes']['CITY'],
+                'POSTALCODE': restaurant[0]['attributes']['POSTALCODE'],
+                'PHONENUMBER': restaurant[0]['attributes']['PHONENUMBER'],
+            })
+
+            if yelp['businesses']:
+                inspection['attributes'].update({
+                    'YELP_RATING': yelp['businesses'][0]['rating'],
+                    'YELP_NUM_RATINGS': yelp['businesses'][0]['review_count'],
+                })
+
+
     return render(request, 'core/browse.html', {
         'recent_inspections': recent_inspections,
+        'lowest_inspections': lowest_inspections,
     })
 
 
