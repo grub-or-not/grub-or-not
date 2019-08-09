@@ -6,7 +6,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Capriola', 'Capriola', sans-serif;;
+    font-family: 'Capriola', sans-serif;
 }
 
 header {
@@ -38,7 +38,7 @@ body {
 
 a {
     color: #303C6C;
-    font-family: 'Capriola', sans-serif;;
+    
 }
 
 .yelp-image {
@@ -63,7 +63,6 @@ a {
 
 .title {
     color: #FBE8A6;
-    font-family: 'Capriola', sans-serif;;
     display: flex;
     justify-content: center;
     padding-top: 20px;
@@ -92,7 +91,7 @@ a {
     display: flex;
     justify-content: center;
     padding: 10px;
-    font-family: 'Capriola', sans-serif;;
+    
 }
 
 .search-reports {
@@ -101,7 +100,7 @@ a {
     display: flex;
     justify-content: center;
     padding: 2px;
-	font-family: 'Capriola', sans-serif;;
+	
 	margin-top: 1rem;
 }
 
@@ -131,7 +130,7 @@ a {
     display: flex;
     justify-content: left;
     padding: 10px;
-    font-family: 'Capriola', sans-serif;;
+    
 }
 
 .sanitation-chart {
