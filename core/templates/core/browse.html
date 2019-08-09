@@ -40,7 +40,7 @@
                                 {% if inspection.attributes.YELP_RATING is not None  %}
                                     {{ inspection.attributes.YELP_RATING }}
                                 {% else %}
-                                    No Yelp Rating Found
+                                    No Rating Found
                                 {% endif %}
                             </div>
                             <div class="browse-restaurant-yelp-score-heading">
@@ -64,7 +64,7 @@
                     {{ inspection.attributes.NAME|safe }}
                 </div>
 
-                <div class="browse-browse-">
+                <div class="browse-restaurant-address">
                     {{ inspection.attributes.ADDRESS1 }}
 
                     <br>
@@ -90,7 +90,7 @@
                             {% if inspection.attributes.YELP_RATING is not None  %}
                                 {{ inspection.attributes.YELP_RATING }}
                             {% else %}
-                                No Yelp Rating Found
+                                No Rating Found
                             {% endif %}
                         </div>
                         <div class="browse-restaurant-yelp-score-heading">
