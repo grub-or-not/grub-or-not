@@ -21,6 +21,20 @@ body {
 	background-size: cover;
 }
 
+#banner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 5rem;
+	border-radius: 15px;
+}
+
+#discover {
+	color: #27bace;
+	margin: 2.5rem;
+	font-size: 2rem;
+}
+
 a {
     color: #303C6C;
     font-family: sans-serif;
@@ -63,6 +77,7 @@ a {
     list-style: none;
 }
 .nav a {
+	color: #27bace;
 	margin: 1rem;
 }
 
@@ -80,12 +95,13 @@ a {
 }
 
 .search-reports {
-    color: #303C6C;
+    color: #27bace;
     font-size: 1.5rem;
     display: flex;
     justify-content: center;
     padding: 2px;
-    font-family: sans-serif;
+	font-family: sans-serif;
+	margin-top: 1rem;
 }
 
 #search-form {
@@ -100,6 +116,14 @@ a {
 
 }
 
+.violations-title {
+	text-align: center;
+}
+
+.restaurant-score {
+	font-size: 2rem;
+}
+
 .results-heading {
     color: #F4976C;
     font-size: 2.5rem;
@@ -110,14 +134,10 @@ a {
 }
 
 .sanitation-chart {
-    width:400px;
-    height:300px;
-    position:0;
-    
-    top: 10%;
-    left: 50%;
+    width: 40rem;
+    height: 30rem;
 
-    margin: auto;
+    margin: 5rem auto;
 }
 
 

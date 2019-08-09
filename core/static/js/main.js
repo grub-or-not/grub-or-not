@@ -99,6 +99,8 @@ function displayRestaurantDetails(restaurant) {
 
             // create div to hold restaurant yelp rating and num reviews
             let restaurantYelpRating = document.createElement('div');
+            restaurantYelpRating.classList.add('restaurant-score');
+
             let restaurantYelpRatingStars = document.createElement('img');
             restaurantYelpRatingStars.src = numberOfStars;
             restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
@@ -123,13 +125,13 @@ function displayRestaurantDetails(restaurant) {
 
     
     let restaurantDetails = document.createElement('div');
-
+    
     // create div to hold restaurant name
     let restaurantName = document.createElement('div');
     restaurantName.innerHTML = restaurant.NAME;
 // ADDED CLASS LIST 
     restaurantName.classList.add('restaurant-name');
-    // resultDiv.appendChild(restaurantName);
+    resultDiv.appendChild(restaurantName);
  
 
     // create div to hold restaurant address
@@ -228,6 +230,11 @@ function displayInspectionViolationResults(response) {
         // add violation details to restaurant div
         let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
 
+        let violationsTitle = document.createElement('h2');
+        violationsTitle.classList.add('violations-title');
+        violationsTitle.innerHTML = 'Comments from Most Recent Inspection';
+        restaurantDisplay.appendChild(violationsTitle);
+
 
         for (let feature of response.features) {
             console.log(feature.attributes);
@@ -325,11 +332,11 @@ function displayLatestInspectionScore(response) {
             } else if (latestScore>= 61 && latestScore <=69) {
                 numberOfIcons = '💩💩💩💩'
             } else if (latestScore>= 70 && latestScore <=80) {
-                numberOfIcons = '🤔🤔🤔🤔'
+                numberOfIcons = '💩💩💩🤔'
             } else if (latestScore>= 81 && latestScore <=89) {
-                numberOfIcons = '🤔🤔🤔🤔🤔'
+                numberOfIcons = '💩💩💩🤔🤔'
             } else if (latestScore>= 90 && latestScore <=100) {
-                numberOfIcons = '😍😍😍😍😍'
+                numberOfIcons = '💩💩💩🤔😍'
             } else {
                 numberOfIcons = 'No score available'
             }
@@ -338,11 +345,12 @@ function displayLatestInspectionScore(response) {
 
 
         let latestInspectionScore = document.createElement('span');
+        latestInspectionScore.classList.add('restaurant-score');
         latestInspectionDate = response.features[response.features.length - 1].attributes.DATE_;
         let date = new Date(latestInspectionDate);
         date = date.toLocaleString().split(',')[0];
         // CHANGE MADE HERE: DATE VARIABLE MOVED IN FRONT OF SCORE, ICONS VARIABLE ADDED-- ORDER OF VARIABLES ALTERED
-        latestInspectionScore.innerHTML = `Latest Inspection Score: ${date } ${ numberOfIcons} (${response.features[response.features.length - 1].attributes.SCORE}) `;
+        latestInspectionScore.innerHTML = `Latest Inspection Score: ${response.features[response.features.length - 1].attributes.SCORE} ${numberOfIcons}`;
         restaurantDisplay.appendChild(latestInspectionScore);
     }
     else {
