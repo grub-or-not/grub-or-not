@@ -14,23 +14,26 @@ header {
 	background-image: url('/static/images/martian.svg');
 	background-position: center top;
 	background-size: cover;
-	padding-top: 2rem;
+	justify-content: space-between;
 }
 
 .grubbernaut {
-	padding: 20px;
+	padding-left: 2rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 
 .nav {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-end;
-    list-style: none;
+	list-style: none;
+	padding-right: 1rem;
+	align-items: center;
 }
 
 .nav a {
-	color: #27bace;
+	color: #e6e6e6;
 	margin: 1rem;
 	padding: 1rem;
 	display: flex;
@@ -41,7 +44,7 @@ header {
 
 body {
 	min-height: 100vh;
-	background-color: black;	
+	background-color: #091433;	
 }
 
 #banner {
