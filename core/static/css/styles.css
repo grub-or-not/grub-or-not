@@ -192,10 +192,47 @@ html, body { height:100%; }
 	margin-top: 3rem;
 }
 
+.browse-inspection-date {
+	text-align: center;
+	margin: 1rem;
+}
+
 .browse-restaurant-name {
 	text-align: center;
 }
 
 .browse-restaurant-address {
 	text-align: center;
+}
+
+.browse-restaurant-scores-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.browse-restaurant-inspection-score {
+	margin: 2rem;
+	text-align: center;
+}
+
+.browse-restaurant-inspection-score-number {
+
+}
+
+.browse-restaurant-inspection-score-heading {
+
+}
+
+.browse-restaurant-yelp-score {
+	margin: 2rem;
+	text-align: center;
+}
+
+.browse-restaurant-yelp-score-number {
+
+}
+
+.browse-restaurant-yelp-score-heading {
+
 }

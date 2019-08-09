@@ -6,7 +6,7 @@
         <h2 class="browse-heading">Recent Inspections</h2>
         {% for inspection in recent_inspections %}
             <div class="restaurant" data-permitid="{{ inspection.attributes.PERMITID }}">
-                <div class="recent-inspection-date">
+                <div class="browse-inspection-date">
                     {{ inspection.attributes.DATE_ }}
                 </div>
     
@@ -25,20 +25,29 @@
                     {{ inspection.attributes.PHONENUMBER }}
                 </div>
     
-                <span class="browse-restaurant-score">
-                    Latest Inspection Score: {{ inspection.attributes.SCORE }}
-                </span>
+                <div class="browse-restaurant-scores-container">
+                    <div class="browse-restaurant-inspection-score">
+                        <div class="browse-restaurant-inspection-score-number">
+                            {{ inspection.attributes.SCORE }}
+                        </div>
+                        <div class="browse-restaurant-inspection-score-heading">
+                            Inspection Score
+                        </div>
+                    </div>
 
-                <br>
-
-                <span class="browse-restaurant-score">
-                    {% if inspection.attributes.YELP_RATING is not None  %}
-                        Yelp Rating: {{ inspection.attributes.YELP_RATING }}
-                        ({{ inspection.attributes.YELP_NUM_RATINGS }} Reviews)
-                    {% else %}
-                        No Yelp Rating Found.
-                    {% endif %}
-                </span>
+                    <div class="browse-restaurant-yelp-score">
+                            <div class="browse-restaurant-yelp-score-number">
+                                {% if inspection.attributes.YELP_RATING is not None  %}
+                                    {{ inspection.attributes.YELP_RATING }}
+                                {% else %}
+                                    No Yelp Rating Found
+                                {% endif %}
+                            </div>
+                            <div class="browse-restaurant-yelp-score-heading">
+                                Yelp Rating
+                            </div>
+                    </div>
+                </div>
             </div>
             
             <hr>
@@ -47,7 +56,7 @@
         <h2 class="browse-heading">Lowest Sanitation Scores</h2>
         {% for inspection in lowest_inspections %}
             <div class="restaurant" data-permitid="{{ inspection.attributes.PERMITID }}">
-                <div class="lowest-inspection-date">
+                <div class="browse-inspection-date">
                     {{ inspection.attributes.DATE_ }}
                 </div>
     
@@ -66,19 +75,28 @@
                     {{ inspection.attributes.PHONENUMBER }}
                 </div>
     
-                <div class="browse-restaurant-score">
-                    Lowest Inspection Score: {{ inspection.attributes.SCORE }}
-                </div>
-
-                <br>
-
-                <div class="browse-restaurant-score">
-                    {% if inspection.attributes.YELP_RATING is not None  %}
-                        Yelp Rating: {{ inspection.attributes.YELP_RATING }}
-                        ({{ inspection.attributes.YELP_NUM_RATINGS }} Reviews)
-                    {% else %}
-                        No Yelp Rating Found.
-                    {% endif %}
+                <div class="browse-restaurant-scores-container">
+                    <div class="browse-restaurant-inspection-score">
+                        <div class="browse-restaurant-inspection-score-number">
+                            {{ inspection.attributes.SCORE }}
+                        </div>
+                        <div class="browse-restaurant-inspection-score-heading">
+                            Inspection Score
+                        </div>
+                    </div>
+    
+                    <div class="browse-restaurant-yelp-score">
+                        <div class="browse-restaurant-yelp-score-number">
+                            {% if inspection.attributes.YELP_RATING is not None  %}
+                                {{ inspection.attributes.YELP_RATING }}
+                            {% else %}
+                                No Yelp Rating Found
+                            {% endif %}
+                        </div>
+                        <div class="browse-restaurant-yelp-score-heading">
+                            Yelp Rating
+                        </div>
+                    </div>
                 </div>
             </div>
             
