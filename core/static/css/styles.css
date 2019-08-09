@@ -191,3 +191,11 @@ html, body { height:100%; }
 	text-align: center;
 	margin-top: 3rem;
 }
+
+.browse-restaurant-name {
+	text-align: center;
+}
+
+.browse-restaurant-address {
+	text-align: center;
+}

@@ -10,11 +10,11 @@
                     {{ inspection.attributes.DATE_ }}
                 </div>
     
-                <div class="restaurant-name">
+                <div class="browse-restaurant-name">
                     {{ inspection.attributes.NAME|safe }}
                 </div>
 
-                <div class="restaurant-address">
+                <div class="browse-restaurant-address">
                     {{ inspection.attributes.ADDRESS1 }}
 
                     <br>
@@ -25,13 +25,13 @@
                     {{ inspection.attributes.PHONENUMBER }}
                 </div>
     
-                <span class="restaurant-score">
+                <span class="browse-restaurant-score">
                     Latest Inspection Score: {{ inspection.attributes.SCORE }}
                 </span>
 
                 <br>
 
-                <span class="restaurant-score">
+                <span class="browse-restaurant-score">
                     {% if inspection.attributes.YELP_RATING is not None  %}
                         Yelp Rating: {{ inspection.attributes.YELP_RATING }}
                         ({{ inspection.attributes.YELP_NUM_RATINGS }} Reviews)
@@ -51,11 +51,11 @@
                     {{ inspection.attributes.DATE_ }}
                 </div>
     
-                <div class="restaurant-name">
+                <div class="browse-restaurant-name">
                     {{ inspection.attributes.NAME|safe }}
                 </div>
 
-                <div class="restaurant-address">
+                <div class="browse-browse-">
                     {{ inspection.attributes.ADDRESS1 }}
 
                     <br>
@@ -66,20 +66,20 @@
                     {{ inspection.attributes.PHONENUMBER }}
                 </div>
     
-                <span class="restaurant-score">
+                <div class="browse-restaurant-score">
                     Lowest Inspection Score: {{ inspection.attributes.SCORE }}
-                </span>
+                </div>
 
                 <br>
 
-                <span class="restaurant-score">
+                <div class="browse-restaurant-score">
                     {% if inspection.attributes.YELP_RATING is not None  %}
                         Yelp Rating: {{ inspection.attributes.YELP_RATING }}
                         ({{ inspection.attributes.YELP_NUM_RATINGS }} Reviews)
                     {% else %}
                         No Yelp Rating Found.
                     {% endif %}
-                </span>
+                </div>
             </div>
             
             <hr>
