@@ -10,15 +10,19 @@
 
 header {
 	display: flex;
+	background-image: url('/static/images/martian.svg');
+	background-position: center top;
+	background-size: cover;
+	padding-top: 2rem;
+}
+
+.grubbernaut {
+	padding: 20px;
 }
 
 body {
-
 	min-height: 100vh;
-	background-color: black;
-	background-image: url('/static/images/martian.svg');
-	background-position: center bottom;
-	background-size: cover;
+	background-color: black;	
 }
 
 #banner {
@@ -79,6 +83,9 @@ a {
 .nav a {
 	color: #27bace;
 	margin: 1rem;
+	padding: 1rem;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .link {
