@@ -8,6 +8,7 @@
     box-sizing: border-box;
 }
 
+/* HEADER ELEMENTS */
 header {
 	display: flex;
 	background-image: url('/static/images/martian.svg');
@@ -19,6 +20,24 @@ header {
 .grubbernaut {
 	padding: 20px;
 }
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    list-style: none;
+}
+
+.nav a {
+	color: #27bace;
+	margin: 1rem;
+	padding: 1rem;
+	display: flex;
+	justify-content: flex-end;
+} 
+
+/* BODY ELEMENTS */
 
 body {
 	min-height: 100vh;
@@ -39,10 +58,10 @@ body {
 	font-size: 2rem;
 }
 
-a {
+/* a {
     color: #303C6C;
     font-family: sans-serif;
-}
+} */
 
 .yelp-image {
     display: flex;
@@ -64,29 +83,15 @@ a {
     margin-left: 20px;
 }
 
-.title {
+/* .title {
     color: #FBE8A6;
     font-family: sans-serif;
     display: flex;
     justify-content: center;
     padding-top: 20px;
     font-size: 4rem;
-}
+} */
 
-.nav {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    list-style: none;
-}
-.nav a {
-	color: #27bace;
-	margin: 1rem;
-	padding: 1rem;
-	display: flex;
-	justify-content: flex-end;
-}
 
 .link {
     padding: 10px;
