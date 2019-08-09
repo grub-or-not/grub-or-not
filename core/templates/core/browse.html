@@ -19,7 +19,11 @@
 
                     <br>
 
-                    {{ inspection.attributes.CITY }} {{ inspection.attributes.POSTALCODE }} 
+                    {% if inspection.attributs.CITY %}
+                        {{ inspection.attributes.CITY }}
+                    {% endif %}
+                    
+                    {{ inspection.attributes.POSTALCODE }} 
                     <br>
 
                     {{ inspection.attributes.PHONENUMBER }}
@@ -69,7 +73,11 @@
 
                     <br>
 
-                    {{ inspection.attributes.CITY }} {{ inspection.attributes.POSTALCODE }} 
+                    {% if inspection.attributs.CITY %}
+                        {{ inspection.attributes.CITY }}
+                    {% endif %}
+                    
+                    {{ inspection.attributes.POSTALCODE }} 
                     <br>
 
                     {{ inspection.attributes.PHONENUMBER }}
