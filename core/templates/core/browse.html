@@ -3,7 +3,7 @@
 {% block content %}
     <div id="results-display">
 
-        <h2>Recent Inspections</h2>
+        <h2 class="browse-heading">Recent Inspections</h2>
         {% for inspection in recent_inspections %}
             <div class="restaurant" data-permitid="{{ inspection.attributes.PERMITID }}">
                 <div class="recent-inspection-date">
@@ -44,7 +44,7 @@
             <hr>
         {% endfor %}
         
-        <h2>Lowest Sanitation Scores</h2>
+        <h2 class="browse-heading">Lowest Sanitation Scores</h2>
         {% for inspection in lowest_inspections %}
             <div class="restaurant" data-permitid="{{ inspection.attributes.PERMITID }}">
                 <div class="lowest-inspection-date">
