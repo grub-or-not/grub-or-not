@@ -102,16 +102,17 @@ def create_favorite(request, permitid, name):
 @login_required
 def delete_favorite(request, pk):
     profile = Profile.objects.get(user=request.user)
-    restaurant = Restaurant.objects.get(pk=pk )
-    profile.favorites.remove(restaurant)
+    favorite = Favorite.objects.get(pk=pk )
+    favorite.delete()
 
     context = {
         'profile' : profile,
-       
-        
+        'restaurant' : restaurant,
+     
         
     }
-    return redirect(request, 'core/user_profile.html', context)
+    
+    return render(request, 'core/user_profile.html', context)
 
 
 
@@ -129,3 +130,18 @@ def yelp_search(request, term, longitude, latitude, limit):
     }
     req=requests.get(url, params=params, headers=headers)
     return JsonResponse(json.loads(req.text))
+
+
+def autocompleteModel(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '').capitalize()
+        search_qs = MODEL.objects.filter(name__startswith=q)
+        results = []
+        print(q)
+        for r in search_qs:
+            results.append(r.FIELD)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)

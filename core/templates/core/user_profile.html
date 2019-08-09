@@ -11,14 +11,14 @@
 
   <div class="favs">
     {% if favorites %}
-      <h2 style="text-align:center;">My Favorite Restaurants</h2>
+      <h2 style="text-align:center;">Do Something With This Page</h2>
       <table>
       
         {% for favorite in favorites%}
         
-        <div>{{favorite.restaurant}}   <!--input type="button" class="trash"  value="🗑️  Delete From Favorites"></button>--><a href="{% url 'delete_favorite' favorite.restaurant.pk%}">🗑️  Delete From Favorites</a></div>
+        <div><!--{{favorite.restaurant}}   <a href="{% url 'delete_favorite' favorite.pk%}">🗑️  Delete From Favorites</a></div>-->
 
-        
+        <!--input type="button" class="trash"  value="🗑️  Delete From Favorites"></button>-->
       
         {% endfor%}
       </table>

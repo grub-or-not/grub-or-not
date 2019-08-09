@@ -2,13 +2,21 @@
 
 {% block content %}
 <div>
-        <form id="search-form">
-                <input type="text" id="search-input" required>
+        <form autocomplete="off"id="search-form" action="/action_page.php" >
+                <div class="autocomplete" style="width:300px;"></div>        
+                <input type="text" id="search-input" required name="Restaurants" placeholder="Restaurants">
                 <br>
                 <button class="button" type="submit">search</button>
             </form>
             <p class="search-reports">Search Wake County Food Inspection Reports</p>
         </div>
+        <!--Make sure the form has the autocomplete function switched off:-->
+<!--form autocomplete="off" action="/action_page.php"-->
+        <!--div class="autocomplete" style="width:300px;"-->
+          <!--input id="myInput" type="text" name="Restaurants" placeholder="Restaurants"-->
+        <!--/div>
+        <input type="submit">
+      </form>
 
 <div id="results">
         <!-- <h2 class="results-heading">Restaurants:</h2> -->
