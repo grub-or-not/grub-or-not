@@ -25,13 +25,13 @@
                     {{ inspection.attributes.PHONENUMBER }}
                 </div>
     
-                <span class="latest-inspection-score">
+                <span class="restaurant-score">
                     Latest Inspection Score: {{ inspection.attributes.SCORE }}
                 </span>
 
                 <br>
 
-                <span class="latest-inspection-score">
+                <span class="restaurant-score">
                     {% if inspection.attributes.YELP_RATING is not None  %}
                         Yelp Rating: {{ inspection.attributes.YELP_RATING }}
                         ({{ inspection.attributes.YELP_NUM_RATINGS }} Reviews)
