@@ -38,6 +38,7 @@ header {
 	padding: 1rem;
 	display: flex;
 	justify-content: flex-end;
+	font-size: 1.25rem;
 } 
 
 /* BODY ELEMENTS */
