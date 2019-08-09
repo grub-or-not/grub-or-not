@@ -20,17 +20,10 @@
             <img src="{% static 'images/gruburgernaut.png' %}">
         </h1>
         <nav class="nav">
-            {% if request.user.is_authenticated %}
-                <a href="{% url 'my_profile' %}"> {{user.username }}</a>
-                <a href="{% url 'auth_logout' %}?next={{request.path}}">Logout</a>
+            
                 <a href="{% url 'index' %}">Home</a>
                 <a href="{% url 'browse' %}">Browse</a>
-            {% else %}
-                <a href="{% url 'auth_login' %}?next={{request.path}}">Login</a>
-                <a href="{% url 'registration_register' %}">Register</a> 
-                <a href="{% url 'index' %}">Home</a> 
-                <a href="{% url 'browse' %}">Browse</a>
-            {% endif %}
+            
         </nav>
     </header>
 
