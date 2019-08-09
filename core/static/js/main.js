@@ -96,17 +96,6 @@ function displayRestaurantDetails(restaurant) {
             }
 
 
-            // SET IMAGE INSTEAD OF ICON USING IMG_URL FROM YELP API
-            let restaurantImgUrl = response.businesses[0].image_url;
-            // USE IMG FROM YELP API INSTEAD OF ICON
-            let restaurantPicture = document.createElement('img');
-            restaurantPicture.setAttribute('src', `${restaurantImgUrl}`);
-            resultDiv.appendChild(restaurantPicture);
-            // ADDED A CLASS LIST 
-            restaurantPicture.classList += 'yelp-image';
-            console.log(restaurantImgUrl);
-
-
 
             // create div to hold restaurant yelp rating and num reviews
             let restaurantYelpRating = document.createElement('div');
@@ -124,13 +113,6 @@ function displayRestaurantDetails(restaurant) {
     let resultDiv = document.createElement('div');
     resultDiv.classList.add('restaurant');
     resultDiv.setAttribute('data-permitid', restaurant.PERMITID);
-
-
-    // // create icon for each restaurant result
-    // let restaurantIcon = document.createElement('span');
-    // restaurantIcon.classList += 'material-icons mdl-list__item-avatar';
-    // restaurantIcon.innerHTML = 'restaurant';
-    // resultDiv.appendChild(restaurantIcon);
     
     // create favorite button for user to save to profile
     let favButton = document.createElement('a');
@@ -140,12 +122,14 @@ function displayRestaurantDetails(restaurant) {
 
 
     
+    let restaurantDetails = document.createElement('div');
+
     // create div to hold restaurant name
     let restaurantName = document.createElement('div');
     restaurantName.innerHTML = restaurant.NAME;
 // ADDED CLASS LIST 
     restaurantName.classList.add('restaurant-name');
-    resultDiv.appendChild(restaurantName);
+    // resultDiv.appendChild(restaurantName);
  
 
     // create div to hold restaurant address
