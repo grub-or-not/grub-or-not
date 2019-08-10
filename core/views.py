@@ -168,28 +168,6 @@ def get_all_inspections_higher_than_70_ordered_by_score():
     return json.loads(inspections_higher_than_70_ordered_by_score_response.text)['features']
 
 
-
-
-
-
-
-
-
-
-
-@login_required
-def user_profile(request):
-    profile = Profile.objects.get(user=request.user)
-    favorites = Favorite.objects.filter(profile=profile)
-    
-    context = {
-        'profile' : profile,
-        'favorites' : favorites,
-        
-    }
-    return render(request, 'core/user_profile.html', context)
-
-
 @login_required
 def create_favorite(request, permitid, name):
     profile = Profile.objects.get(user=request.user)
