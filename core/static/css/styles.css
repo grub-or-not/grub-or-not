@@ -174,7 +174,9 @@ body {
 
 .browse-heading {
 	text-align: center;
+	font-size: 3rem;
 	margin-top: 3rem;
+	color: #27bace;
 }
 
 .browse-inspection-date {
