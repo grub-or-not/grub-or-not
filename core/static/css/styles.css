@@ -1,7 +1,3 @@
-@charset "UTF-8";
-@import url(http://fonts.googleapis.com/css?family=Raleway:700,400);
-
-
 * {
     margin: 0;
     padding: 0;
@@ -9,17 +5,44 @@
     font-family: 'Capriola', sans-serif;
 }
 
+/* HEADER ELEMENTS */
 header {
 	display: flex;
+	background-image: url('/static/images/martian.svg');
+	background-position: center top;
+	background-size: cover;
+	justify-content: space-between;
 }
 
-body {
+.grubbernaut {
+	padding-left: 2rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
 
+.nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+	list-style: none;
+	padding-right: 1rem;
+	align-items: center;
+}
+
+.nav a {
+	color: #e6e6e6;
+	margin: 1rem;
+	padding: 1rem;
+	display: flex;
+	justify-content: flex-end;
+	font-size: 1.25rem;
+} 
+
+/* BODY ELEMENTS */
+
+body {
 	min-height: 100vh;
-	background-color: black;
-	background-image: url('/static/images/martian.svg');
-	background-position: center bottom;
-	background-size: cover;
+	background-color: #091433;	
 }
 
 #banner {
@@ -36,7 +59,7 @@ body {
 	font-size: 2rem;
 }
 
-a {
+/* a {
     color: #303C6C;
     
 }
@@ -61,25 +84,14 @@ a {
     margin-left: 20px;
 }
 
-.title {
+/* .title {
     color: #FBE8A6;
     display: flex;
     justify-content: center;
     padding-top: 20px;
     font-size: 4rem;
-}
+} */
 
-.nav {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    list-style: none;
-}
-.nav a {
-	color: #27bace;
-	margin: 1rem;
-}
 
 .link {
     padding: 10px;
@@ -107,9 +119,7 @@ a {
 #search-form {
     display: flex;
     justify-content: center;
-    /* height: 50px; */
-    
-  color: black;
+    color: black;
 }
 
 #search-input {

@@ -16,26 +16,13 @@
     </head>
 
 <body class="landing">
-    <header id = "header">
-        <h1>
-            <img src="{% static 'images/gruburgernaut.png' %}">
-        </h1>
+    <header id="header">
+            <a href="{% url 'index' %}"><img src="{% static 'images/grubbernaut1.png' %}" class='grubbernaut'></a>
         <nav class="nav">
-            
-                <a href="{% url 'index' %}">Home</a>
                 <a href="{% url 'browse' %}">Browse</a>
-            
         </nav>
     </header>
-
-
-
- 
-
-
 <hr>    
-    
-
 {% block content %}
 
 {% endblock %}

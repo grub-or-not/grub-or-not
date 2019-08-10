@@ -116,14 +116,6 @@ function displayRestaurantDetails(restaurant) {
     resultDiv.classList.add('restaurant');
     resultDiv.setAttribute('data-permitid', restaurant.PERMITID);
     
-    // create favorite button for user to save to profile
-    let favButton = document.createElement('a');
-    favButton.innerHTML = '<i class="material-icons">favorite </i>';
-    favButton.href = '/favorite/'+ restaurant.PERMITID+'/'+restaurant.NAME;
-    resultDiv.appendChild(favButton);
-
-
-    
     let restaurantDetails = document.createElement('div');
     
     // create div to hold restaurant name
@@ -437,26 +429,4 @@ function displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, l
         }
     });
 
-}
-
-//add user ability to favorite a restaurant
-const favRestaurantLinks = document.querySelectorAll('.fav-restaurant-link');
-
-if (favRestaurantLinks) {
-    for (let link of favRestaurantLinks) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            fetch(`${restaurantName}`)
-                .then(res => res.json())
-                .then(function (data) {
-                    console.log('data', data);
-                })
-                .then(function () {
-                    link.setAttribute('hidden', true);
-                    let favMessage = document.createElement('span');
-                    favMessage.innerText = 'Restaurant marked as favorite';
-                    link.parentElement.appendChild(favMessage);
-                });
-        });
-    }
 }
