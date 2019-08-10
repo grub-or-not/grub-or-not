@@ -1,7 +1,3 @@
-@charset "UTF-8";
-@import url(http://fonts.googleapis.com/css?family=Raleway:700,400);
-
-
 * {
     margin: 0;
     padding: 0;
@@ -125,6 +121,17 @@ body {
     justify-content: center;
     color: black;
 }
+
+#search-input {
+    /* display: flex; */
+    justify-content: center;
+    width: 50rem; 
+    height: 3rem;
+    margin-right:20px;
+    
+  color: black;
+}
+
 
 .button {
     color:#05386B;
@@ -252,3 +259,4 @@ html, body { height:100%; }
 .browse-restaurant-yelp-score-heading {
 
 }
+
