@@ -1,11 +1,17 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Capriola', sans-serif;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Capriola', sans-serif;
 }
 
-/* HEADER ELEMENTS */
+html, body {
+    height: 100%;
+}
+
+/*************************** HEADER ELEMENTS *****************************/
+
+
 header {
 	display: flex;
 	background-image: url('/static/images/martian.svg');
@@ -38,18 +44,18 @@ header {
 	font-size: 1.25rem;
 } 
 
-/* BODY ELEMENTS */
+/***************************** BODY ELEMENTS *****************************/
+
 
 body {
-	min-height: 100vh;
 	background-color: #091433;	
 }
 
 #banner {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	margin-top: 5rem;
 	border-radius: 15px;
 }
 
@@ -57,44 +63,7 @@ body {
 	color: #27bace;
 	margin: 2.5rem;
 	font-size: 2rem;
-}
-
-/* a {
-    color: #303C6C;
-    
-}
-
-.yelp-image {
-    display: flex;
-    justify-content: right;
-    max-width: 45%;
-    margin: 20px;
-}
-
-.restaurant-name {
-    font-size: 4rem;
-    padding: 10px;
-    margin: 10px;
-}
-
-.restaurant-address {
-    font-size: 1.5rem;
-    padding: 10px;
-    margin: 10px;
-    margin-left: 20px;
-}
-
-/* .title {
-    color: #FBE8A6;
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-    font-size: 4rem;
-} */
-
-
-.link {
-    padding: 10px;
+	text-align: center;
 }
 
 .dirty-secret {
@@ -112,97 +81,90 @@ body {
     display: flex;
     justify-content: center;
     padding: 2px;
-	
 	margin-top: 1rem;
 }
 
 #search-form {
-    display: flex;
+	display: flex;
+	flex-direction: column;
     justify-content: center;
-    color: black;
+	color: black;
+	text-align: center;
 }
 
 #search-input {
-    /* display: flex; */
-    justify-content: center;
     width: 50rem; 
     height: 3rem;
     margin-right:20px;
-    
-  color: black;
+    color: black;
 }
 
 
 .button {
     color:#05386B;
+}
 
+
+/*********************** DYNAMIC ELEMENTS *************************/
+
+
+.restaurant-name {
+    padding-top: 10px;
+	margin-top: 10px;
+	text-align: center;
+	font-size: 3rem;
+}
+
+.restaurant-address {
+	/* margin-left: 20px; */
+	/* height: 4rem; */
+	text-align: center;
+	/* font-size: 2rem; */
+}
+
+.explore-button {
+	margin: 1rem;
+	height: 3rem;
+	border-radius: 1rem;
+	font-size: 1.5rem;
+	background-color: #27bace;
+	border-color: #27bace;
+}
+
+.show-comments-button {
+	height: 2rem;
 }
 
 .violations-title {
 	text-align: center;
+	padding-top: 1.5rem;
 }
+
+.violation {
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+	padding-bottom: 1.5rem;
+}
+
 
 .restaurant-score {
 	font-size: 2rem;
+	display: flex;
+	justify-content: space-between;
 }
 
-.results-heading {
-    color: #F4976C;
-    font-size: 2.5rem;
-    display: flex;
-    justify-content: left;
-    padding: 10px;
-    
-}
 
 .sanitation-chart {
-    width: 40rem;
-    height: 30rem;
-
-    margin: 5rem auto;
+    width: 45rem;
+    height: 20rem;
+	margin: 2rem auto;
+	align-items: center;
 }
-
-
 
 .restaurant {
 	display: grid;
-
 	margin: 3rem;
-
 	background-color: rgba(212, 212, 212, 1);
-}
-
-
-html, body { height:100%; }
-
-.flexbox {
-	display: flex;
-	height: 100%;
-	justify-content: center;
-	align-items: center;
-}
-
-.fav-btn {
-	display:flex;
-	height: 100%;
-	justify-content: center;
-	align-items: center;
-}
-
-html, body { height:100%; }
-
-.flexbox {
-	display: flex;
-	height: 100%;
-	justify-content: center;
-	align-items: center;
-}
-
-.fav-btn {
-	display:flex;
-	height: 100%;
-	justify-content: center;
-	align-items: center;
 }
 
 .browse-heading {
@@ -257,4 +219,34 @@ html, body { height:100%; }
 .browse-restaurant-yelp-score-heading {
 
 }
+
+
+/* a {
+    color: #303C6C;
+    
+} */
+
+/* .yelp-image {
+    display: flex;
+    justify-content: right;
+    max-width: 45%;
+    margin: 20px;
+} */
+
+/* .results-heading {
+    color: #F4976C;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: left;
+    padding: 10px;
+    
+} */
+
+/* .title {
+    color: #FBE8A6;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    font-size: 4rem;
+} */
 
