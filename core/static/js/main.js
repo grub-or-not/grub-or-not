@@ -315,20 +315,14 @@ function displayLatestInspectionScore(response) {
         // ADDED RATING SCORES FOR INSPECTIONS 
         let latestScore = response.features[response.features.length - 1].attributes.SCORE;
         let numberOfIcons = '';
-            if (latestScore >= 1 && latestScore <= 20) {
+            if (latestScore >= 1 && latestScore <= 69) {
                 numberOfIcons = '💩'
-            } else if (latestScore>= 21 && latestScore <= 40) {
-                numberOfIcons = '💩💩'
-            } else if (latestScore>=41 && latestScore <= 60) {
-                numberOfIcons = '💩💩💩'
-            } else if (latestScore>= 61 && latestScore <=69) {
-                numberOfIcons = '💩💩💩💩'
             } else if (latestScore>= 70 && latestScore <=80) {
-                numberOfIcons = '💩💩💩🤔'
+                numberOfIcons = '🤔'
             } else if (latestScore>= 81 && latestScore <=89) {
-                numberOfIcons = '💩💩💩🤔🤔'
+                numberOfIcons = '🤔'
             } else if (latestScore>= 90 && latestScore <=100) {
-                numberOfIcons = '💩💩💩🤔😍'
+                numberOfIcons = '😍'
             } else {
                 numberOfIcons = 'No score available'
             }
