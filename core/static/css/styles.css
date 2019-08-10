@@ -131,6 +131,9 @@ body {
 	border-color: #27bace;
 }
 
+.show-comments-button {
+	height: 2rem;
+}
 
 .violations-title {
 	text-align: center;
