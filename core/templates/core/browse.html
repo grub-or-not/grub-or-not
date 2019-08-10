@@ -5,6 +5,8 @@
 
         <h2 class="browse-heading">Recent Inspections</h2>
         {% for inspection in recent_inspections %}
+
+            {% if inspection.attributes.NAME %}
             <div class="restaurant" data-permitid="{{ inspection.attributes.PERMITID }}">
                 <div class="browse-inspection-date">
                     {{ inspection.attributes.DATE_ }}
@@ -53,10 +55,13 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         {% endfor %}
         
         <h2 class="browse-heading">Lowest Sanitation Scores</h2>
         {% for inspection in lowest_inspections %}
+
+            {% if inspection.attributes.NAME %}
             <div class="restaurant" data-permitid="{{ inspection.attributes.PERMITID }}">
                 <div class="browse-inspection-date">
                     {{ inspection.attributes.DATE_ }}
@@ -105,6 +110,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}
