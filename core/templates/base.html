@@ -1,30 +1,28 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Grub or Not</title>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
-        <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link href="https://fonts.googleapis.com/css?family=Capriola&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <script src="{% static 'js/main.js' %}" defer></script>
-    </head>
-
-<body class="landing">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
+    <link href="https://fonts.googleapis.com/css?family=Capriola&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <title>Grubbernaut</title>
+</head>
+<body>
     <header id="header">
-            <a href="{% url 'index' %}"><img src="{% static 'images/grubbernaut1.png' %}" class='grubbernaut'></a>
+        <a href="{% url 'index' %}"><img src="{% static 'images/grubbernaut1.png' %}" class='grubbernaut'></a>
         <nav class="nav">
-                <a href="{% url 'browse' %}">Browse</a>
+            <a href="{% url 'browse' %}">Browse</a>
         </nav>
     </header>
-<hr>    
-{% block content %}
 
-{% endblock %}
+    <hr>
+
+    {% block content %}
+
+    {% endblock %}
 </body>
 </html>

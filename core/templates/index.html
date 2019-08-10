@@ -1,39 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-        <div id="banner">
-                <div id="discover">
-                        Discover if your favorite restaurant is hiding a dirty secret.
-                </div>
+    <div id="banner">
+        <div id="discover">
+            Discover if your favorite restaurant is hiding a dirty secret.
         </div>
         <form id="search-form">
-                <input type="text" id="search-input" required>
-                <br>
-                <button class="button" type="submit">Explore</button>
-        </form>
-
+            <input type="text" id="search-input" required>
+            <button class="explore-button" type="submit">Explore</button>
             <label  class="search-reports"  for="search-input">Search Wake County Food Inspection Reports</label>
-        </div>
-
-<div id="results">
-        <!-- <h2 class="results-heading">Restaurants:</h2> -->
-        <p>
-        <!--i class="material-icons">favorite </i>-->
-    
-        </p>
-         
+        </form>
+    </div>
+    <div id="results">
         <div id="results-display">
-
-    
-	
-</div>
-	
-</div>
-        
-            
         </div>
     </div>
-</div>
-
 {% endblock %}
