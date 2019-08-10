@@ -117,10 +117,9 @@ body {
 
 .restaurant-address {
 	/* margin-left: 20px; */
+	/* height: 4rem; */
 	text-align: center;
-	height: 4rem;
-	text-align: center;
-	font-size: 2rem;
+	/* font-size: 2rem; */
 }
 
 .explore-button {
@@ -135,6 +134,13 @@ body {
 
 .violations-title {
 	text-align: center;
+	padding-top: 1.5rem;
+}
+
+.violation {
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+	padding-bottom: 1.5rem;
 }
 
 
@@ -146,9 +152,10 @@ body {
 
 
 .sanitation-chart {
-    width: 40rem;
+    width: 45rem;
     height: 20rem;
-	margin: 5rem auto;
+	margin: 2rem auto;
+	align-items: center;
 }
 
 .restaurant {
