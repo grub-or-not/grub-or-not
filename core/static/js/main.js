@@ -62,45 +62,19 @@ function displayRestaurantDetails(restaurant) {
                 })
                 .then(function(response) {
                     let restaurantRating = response.businesses[0].rating;
-                    let restaurantNumReviews = response.businesses[0].review_count;
-                    
-                    
-                    // ADDED YELP STAR RATING
-                    let numberOfStars = ''; 
-                    if (restaurantRating == 1) {
-                        numberOfStars = '../static/yelp-stars/small_1@2x.png'
-                    } else if (restaurantRating == 1.5) {
-                        numberOfStars = '../static/yelp-stars/small_1_half@2x.png'
-                    } else if (restaurantRating == 2) {
-                        numberOfStars = '../static/yelp-stars/small_2@2x.png'
-                    } else if (restaurantRating == 2.5) {
-                        numberOfStars = '../static/yelp-stars/small_2_half@2x.png'
-                    } else if (restaurantRating == 3) {
-                        numberOfStars = '../static/yelp-stars/small_3@2x.png'
-                    } else if (restaurantRating == 3.5) {
-                        numberOfStars = '../static/yelp-stars/small_3_half@2x.png'
-                    } else if (restaurantRating == 4) {
-                        numberOfStars = '../static/yelp-stars/small_4@2x.png'
-                    } else if (restaurantRating == 4.5) {
-                        numberOfStars = '../static/yelp-stars/small_4_half@2x.png'
-                    } else  if (restaurantRating == 5) {
-                        numberOfStars = '../static/yelp-stars/small_5@2x.png'
-                    } else {
-                        numberOfStars = '../static/yelp-stars/small_0@2x.png'
-                    }
 
-
-
-                    // create div to hold restaurant yelp rating and num reviews
+                    let restaurantYelpRatingContainer = document.createElement('div');
+                    restaurantYelpRatingContainer.classList.add('browse-restaurant-yelp-score');
+            
                     let restaurantYelpRating = document.createElement('div');
-                    restaurantYelpRating.classList.add('restaurant-score');
-
-                    let restaurantYelpRatingStars = document.createElement('img');
-                    restaurantYelpRatingStars.src = numberOfStars;
-                    restaurantYelpRating.innerHTML = `Yelp Rating: ${restaurantRating}/5 (${restaurantNumReviews} Reviews)`;
-                    restaurantYelpRating.appendChild(restaurantYelpRatingStars);
-                    resultDiv.appendChild(restaurantYelpRating);
-
+                    restaurantYelpRating.classList.add('browse-restaurant-yelp-score-number');
+                    restaurantYelpRating.innerHTML = restaurantRating;
+                    let restaurantYelpRatingHeading = document.createElement('div');
+                    restaurantYelpRatingHeading.innerHTML = 'Yelp Rating';
+                    restaurantYelpRatingHeading.classList.add('browse-restaurant-yelp-score-heading');
+                    restaurantYelpRatingContainer.appendChild(restaurantYelpRating);
+                    restaurantYelpRatingContainer.appendChild(restaurantYelpRatingHeading);
+                    resultDiv.appendChild(restaurantYelpRatingContainer);
 
 
                     // call Restaurant Inspections API
@@ -223,7 +197,7 @@ function displayViolationDetails(violation) {
 
     // create div to hold violation score
     let violationScore = document.createElement('div');
-    violationScore.innerHTML = violation.POINTVALUE;
+    violationScore.innerHTML = `Points Deducted: ${violation.POINTVALUE}`;
     resultDiv.appendChild(violationScore);
 
     // create div to hold violation description
@@ -271,30 +245,28 @@ function displayLatestInspectionScore(response) {
     if (response.features.length > 0) {
         // ADDED RATING SCORES FOR INSPECTIONS 
         let latestScore = response.features[response.features.length - 1].attributes.SCORE;
-        let numberOfIcons = '';
-            if (latestScore >= 1 && latestScore <= 69) {
-                numberOfIcons = '💩'
-            } else if (latestScore>= 70 && latestScore <=80) {
-                numberOfIcons = '🤔'
-            } else if (latestScore>= 81 && latestScore <=89) {
-                numberOfIcons = '🤔'
-            } else if (latestScore>= 90 && latestScore <=100) {
-                numberOfIcons = '😍'
-            } else {
-                numberOfIcons = 'No score available'
-            }
 
-        let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
+        let latestInspectionScoreContainer = document.createElement('div');
+        latestInspectionScoreContainer.classList.add('browse-restaurant-inspection-score');
 
+        let latestInspectionScore = document.createElement('div');
+        latestInspectionScore.classList.add('browse-restaurant-inspection-score-number');
+        let latestInspectionScoreHeading = document.createElement('div');
+        latestInspectionScoreHeading.innerHTML = 'Inspection Score';
+        latestInspectionScoreHeading.classList.add('browse-restaurant-inspection-score-heading');
+        latestInspectionScoreContainer.appendChild(latestInspectionScore);
+        latestInspectionScoreContainer.appendChild(latestInspectionScoreHeading);
 
-        let latestInspectionScore = document.createElement('span');
-        latestInspectionScore.classList.add('restaurant-score');
         latestInspectionDate = response.features[response.features.length - 1].attributes.DATE_;
         let date = new Date(latestInspectionDate);
         date = date.toLocaleString().split(',')[0];
-        // CHANGE MADE HERE: DATE VARIABLE MOVED IN FRONT OF SCORE, ICONS VARIABLE ADDED-- ORDER OF VARIABLES ALTERED
-        latestInspectionScore.innerHTML = `Latest Inspection Score: ${response.features[response.features.length - 1].attributes.SCORE} ${numberOfIcons}`;
-        restaurantDisplay.appendChild(latestInspectionScore);
+
+        latestInspectionScore.innerHTML = latestScore;
+        latestInspectionScoreHeading.innerHTML = 'Inspection Score';
+
+        let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
+
+        restaurantDisplay.appendChild(latestInspectionScoreContainer);
     }
     else {
         resultsDisplay.innerHTML = 'No Inspections Found.';
@@ -379,6 +351,11 @@ function displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, l
     // create div to hold inspection chart
     let sanitationChartDiv = document.createElement('div');
     sanitationChartDiv.classList.add('sanitation-chart');
+    let sanitationChartTitle = document.createElement('h3');
+    sanitationChartTitle.classList.add('sanitation-chart-title');
+    sanitationChartTitle.innerHTML = 'Sanitation Score History';
+    sanitationChartDiv.appendChild(sanitationChartTitle);
+
     let sanitationChart = document.createElement('canvas');
     sanitationChart.id = `${restaurantDisplay.getAttribute('data-permitid')}`;
     sanitationChartDiv.classList.add('sanitation-chart');
