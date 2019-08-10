@@ -93,10 +93,10 @@ body {
 }
 
 #search-input {
-    width: 50rem; 
-    height: 3rem;
-    margin-right:20px;
-    color: black;
+	width: 50rem; 
+	height: 4rem;
+	text-align: center;
+	font-size: 2rem;
 }
 
 
@@ -132,7 +132,11 @@ body {
 }
 
 .show-comments-button {
+	margin: 1rem;
 	height: 2rem;
+	border-radius: 1rem;
+	background-color: #27bace;
+	border-color: #27bace;
 }
 
 .violations-title {
@@ -162,6 +166,7 @@ body {
 }
 
 .restaurant {
+	border-radius: 1rem;
 	display: grid;
 	margin: 3rem;
 	background-color: rgba(212, 212, 212, 1);
