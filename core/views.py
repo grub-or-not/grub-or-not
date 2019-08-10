@@ -166,22 +166,6 @@ def get_all_inspections_higher_than_70_ordered_by_score():
     inspections_higher_than_70_ordered_by_score_api = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/1/query?outFields=*&outSR=4326&f=json&orderByFields=SCORE&where=SCORE%20%3E%3D%2070'
     inspections_higher_than_70_ordered_by_score_response = requests.get(inspections_higher_than_70_ordered_by_score_api)
     return json.loads(inspections_higher_than_70_ordered_by_score_response.text)['features']
-
-
-@login_required
-def create_favorite(request, permitid, name):
-    profile = Profile.objects.get(user=request.user)
-    restaurant = Restaurant(permitid=permitid, name=name)
-    restaurant.save()
-    profile.favorites.add(restaurant)
-
-    context = {
-        'profile' : profile,
-        'restaurant' : restaurant,
-        
-        
-    }
-    return render(request, 'core/user_profile.html', context)
     
 
 def yelp_search(request, term, longitude, latitude, limit):
