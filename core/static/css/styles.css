@@ -211,7 +211,9 @@ html, body { height:100%; }
 
 .browse-heading {
 	text-align: center;
+	font-size: 3rem;
 	margin-top: 3rem;
+	color: rgba(212, 212, 212, 1);
 }
 
 .browse-inspection-date {
