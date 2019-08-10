@@ -5,7 +5,9 @@
     font-family: 'Capriola', sans-serif;
 }
 
-/* HEADER ELEMENTS */
+/*************************** HEADER ELEMENTS *****************************/
+
+
 header {
 	display: flex;
 	background-image: url('/static/images/martian.svg');
@@ -38,7 +40,8 @@ header {
 	font-size: 1.25rem;
 } 
 
-/* BODY ELEMENTS */
+/***************************** BODY ELEMENTS *****************************/
+
 
 body {
 	min-height: 100vh;
@@ -59,40 +62,6 @@ body {
 	font-size: 2rem;
 }
 
-/* a {
-    color: #303C6C;
-    
-}
-
-.yelp-image {
-    display: flex;
-    justify-content: right;
-    max-width: 45%;
-    margin: 20px;
-}
-
-.restaurant-name {
-    font-size: 4rem;
-    padding: 10px;
-    margin: 10px;
-}
-
-.restaurant-address {
-    font-size: 1.5rem;
-    padding: 10px;
-    margin: 10px;
-    margin-left: 20px;
-}
-
-/* .title {
-    color: #FBE8A6;
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-    font-size: 4rem;
-} */
-
-
 .link {
     padding: 10px;
 }
@@ -112,7 +81,6 @@ body {
     display: flex;
     justify-content: center;
     padding: 2px;
-	
 	margin-top: 1rem;
 }
 
@@ -128,47 +96,52 @@ body {
     width: 50rem; 
     height: 3rem;
     margin-right:20px;
-    
-  color: black;
+    color: black;
 }
 
 
 .button {
     color:#05386B;
-
 }
+
+
+/*********************** DYNAMIC ELEMENTS *************************/
+
+
+.restaurant-name {
+    padding-top: 10px;
+	margin-top: 10px;
+	text-align: center;
+	font-size: 3rem;
+}
+
+.restaurant-address {
+	/* margin-left: 20px; */
+	text-align: center;
+}
+
 
 .violations-title {
 	text-align: center;
 }
 
+
 .restaurant-score {
 	font-size: 2rem;
+	display: flex;
+	justify-content: space-between;
 }
 
-.results-heading {
-    color: #F4976C;
-    font-size: 2.5rem;
-    display: flex;
-    justify-content: left;
-    padding: 10px;
-    
-}
 
 .sanitation-chart {
     width: 40rem;
-    height: 30rem;
-
-    margin: 5rem auto;
+    height: 20rem;
+	margin: 5rem auto;
 }
-
-
 
 .restaurant {
 	display: grid;
-
 	margin: 3rem;
-
 	background-color: rgba(212, 212, 212, 1);
 }
 
@@ -204,6 +177,10 @@ html, body { height:100%; }
 	justify-content: center;
 	align-items: center;
 }
+
+
+/*********************** BROWSE PAGE ELEMENTS ****************************/
+
 
 .browse-heading {
 	text-align: center;
@@ -255,4 +232,34 @@ html, body { height:100%; }
 .browse-restaurant-yelp-score-heading {
 
 }
+
+
+/* a {
+    color: #303C6C;
+    
+} */
+
+/* .yelp-image {
+    display: flex;
+    justify-content: right;
+    max-width: 45%;
+    margin: 20px;
+} */
+
+/* .results-heading {
+    color: #F4976C;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: left;
+    padding: 10px;
+    
+} */
+
+/* .title {
+    color: #FBE8A6;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    font-size: 4rem;
+} */
 
