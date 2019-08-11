@@ -51,7 +51,7 @@ body {
 	background-color: #091433;	
 }
 
-.banner {
+#banner {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -59,7 +59,7 @@ body {
 	border-radius: 15px;
 }
 
-.discover {
+#discover {
 	color: #27bace;
 	margin: 2.5rem;
 	font-size: 2rem;
