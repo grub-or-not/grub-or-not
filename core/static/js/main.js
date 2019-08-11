@@ -50,22 +50,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                                     for (let feature of response.features) {
                                         restaurantNames.push(feature.attributes.NAME);
                                     }
-                                    console.log(restaurantNames);
 
-
-
-                                    /******  Need to put autocomplete code here  ******/
-                                    /*
-                                    *
-                                    *   Feed restaurantNames variable
-                                    *   into autocomplete code
-                                    * 
-                                    */
-
-  
                                     autocomplete(searchInput, restaurantNames);
-
-
 
                                 })
                                 .catch(function(error) {
@@ -166,11 +152,6 @@ function displayRestaurantDetails(restaurant) {
                             return response.json();
                         })
                         .then(function(response) {
-                
-                            // clearResultsDisplay();
-                
-                            console.log(response);
-                
                             displayInspectionResults(response);
                         })
                         .catch(function(error) {
@@ -241,14 +222,10 @@ function displayInspectionViolationResults(response) {
 
 
         for (let feature of response.features) {
-            console.log(feature.attributes);
-
             if (feature.attributes.INSPECTDATE == latestInspectionDate) {
                 displayViolationDetails(feature.attributes);
             }
-
         }
-
     }
 }
 
@@ -394,9 +371,6 @@ function displayInspectionResults(response) {
                         return response.json();
                     })
                     .then(function(response) {
-            
-                        console.log(response);
-        
                         displayInspectionViolationResults(response);
                     })
                     .catch(function(error) {
@@ -419,11 +393,19 @@ function displayInspectionResults(response) {
 // create the url for the yelp_search view function
 function createFullYelpSearchUrl(restaurant) {
     let yelpSearchUrl = '/yelp';
-    let term = encodeURIComponent(restaurant.NAME);
+    let term = removeNumberSymbolsFromRestaurantName(restaurant.NAME);
+    term = encodeURIComponent(term);
     let longitude = encodeURIComponent(restaurant.X);
     let latitude = encodeURIComponent(restaurant.Y);
     let limit = 1;
     return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
+}
+
+
+// remove any #'s from NAME 
+// (ex: 'STARBUCKS #29148' becomes 'STARBUCKS')
+function removeNumberSymbolsFromRestaurantName(restaurantName) {
+    return restaurantName.replace(new RegExp('\\s+#.*'), '');
 }
 
 // given an html element, and two lists holding inspection dates and scores,
