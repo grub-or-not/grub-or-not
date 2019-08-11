@@ -470,7 +470,7 @@ function displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, l
 }
 
 function autocomplete(inp, arr) {
-    
+   
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
     var currentFocus;
@@ -482,17 +482,20 @@ function autocomplete(inp, arr) {
         if (!val) { return false;}
         currentFocus = -1;
         /*create a DIV element that will contain the items (values):*/
-        a = document.createElement("DIV");
+        a = document.createElement("Select");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
         /*append the DIV element as a child of the autocomplete container:*/
         this.parentNode.appendChild(a);
+
+        
+        
         /*for each item in the array...*/
         for (i = 0; i < arr.length; i++) {
           /*check if the item starts with the same letters as the text field value:*/
           if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
             /*create a DIV element for each matching element:*/
-            b = document.createElement("DIV");
+            b = document.createElement("OPTION");
             /*make the matching letters bold:*/
             b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
             b.innerHTML += arr[i].substr(val.length);
@@ -510,6 +513,7 @@ function autocomplete(inp, arr) {
           }
         }
     });
+
     /*execute a function presses a key on the keyboard:*/
     inp.addEventListener("keydown", function(e) {
         var x = document.getElementById(this.id + "autocomplete-list");

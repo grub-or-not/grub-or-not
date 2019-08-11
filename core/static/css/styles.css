@@ -230,32 +230,9 @@ body {
 }
 
 
-/* a {
-    color: #303C6C;
-    
-} */
+.autocomplete-items{
 
-/* .yelp-image {
-    display: flex;
-    justify-content: right;
-    max-width: 45%;
-    margin: 20px;
-} */
+	color: white
+}
 
-/* .results-heading {
-    color: #F4976C;
-    font-size: 2.5rem;
-    display: flex;
-    justify-content: left;
-    padding: 10px;
-    
-} */
-
-/* .title {
-    color: #FBE8A6;
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-    font-size: 4rem;
-} */
 
