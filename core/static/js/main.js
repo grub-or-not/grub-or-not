@@ -116,7 +116,7 @@ if (searchForm) {
 // create URL for Wake County Restaurants API
 function createFullRestaurantDetailsUrl() {
     let restaurantApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?outFields=*&outSR=4326&f=json&where=NAME%20%3D%20';
-    let restaurantName = encodeURI(searchInput.value);
+    let restaurantName = encodeURIComponent(searchInput.value);
     return `${restaurantApi}'${restaurantName}'`;
 }
 
@@ -419,9 +419,9 @@ function displayInspectionResults(response) {
 // create the url for the yelp_search view function
 function createFullYelpSearchUrl(restaurant) {
     let yelpSearchUrl = '/yelp';
-    let term = encodeURI(restaurant.NAME);
-    let longitude = encodeURI(restaurant.X);
-    let latitude = encodeURI(restaurant.Y);
+    let term = encodeURIComponent(restaurant.NAME);
+    let longitude = encodeURIComponent(restaurant.X);
+    let latitude = encodeURIComponent(restaurant.Y);
     let limit = 1;
     return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
 }
