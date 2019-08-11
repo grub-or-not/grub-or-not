@@ -50,22 +50,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                                     for (let feature of response.features) {
                                         restaurantNames.push(feature.attributes.NAME);
                                     }
-                                    console.log(restaurantNames);
 
-
-
-                                    /******  Need to put autocomplete code here  ******/
-                                    /*
-                                    *
-                                    *   Feed restaurantNames variable
-                                    *   into autocomplete code
-                                    * 
-                                    */
-
-  
                                     autocomplete(searchInput, restaurantNames);
-
-
 
                                 })
                                 .catch(function(error) {
@@ -116,7 +102,7 @@ if (searchForm) {
 // create URL for Wake County Restaurants API
 function createFullRestaurantDetailsUrl() {
     let restaurantApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?outFields=*&outSR=4326&f=json&where=NAME%20%3D%20';
-    let restaurantName = encodeURI(searchInput.value);
+    let restaurantName = encodeURIComponent(searchInput.value);
     return `${restaurantApi}'${restaurantName}'`;
 }
 
@@ -166,11 +152,6 @@ function displayRestaurantDetails(restaurant) {
                             return response.json();
                         })
                         .then(function(response) {
-                
-                            // clearResultsDisplay();
-                
-                            console.log(response);
-                
                             displayInspectionResults(response);
                         })
                         .catch(function(error) {
@@ -202,7 +183,26 @@ function displayRestaurantDetails(restaurant) {
 
     // create div to hold restaurant address
     let restaurantAddress = document.createElement('div');
-    restaurantAddress.innerHTML = restaurant.ADDRESS1 + '<br> ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + '<br> ' + restaurant.PHONENUMBER;
+    if (restaurant.ADDRESS1) {
+        let restaurantStreet = document.createElement('div');
+        restaurantStreet.innerHTML = restaurant.ADDRESS1;
+        restaurantAddress.appendChild(restaurantStreet);
+    }
+    if (restaurant.CITY) {
+        let restaurantCity = document.createElement('div');
+        restaurantCity.innerHTML = restaurant.CITY;
+        restaurantAddress.appendChild(restaurantCity);
+    }
+    if (restaurant.POSTALCODE) {
+        let restaurantPostalCode = document.createElement('div');
+        restaurantPostalCode.innerHTML = restaurant.POSTALCODE;
+        restaurantAddress.appendChild(restaurantPostalCode);
+    }
+    if (restaurant.PHONENUMBER) {
+        let restaurantPhoneNumber = document.createElement('div');
+        restaurantPhoneNumber.innerHTML = restaurant.PHONENUMBER;
+        restaurantAddress.appendChild(restaurantPhoneNumber);
+    }
     restaurantAddress.classList.add('restaurant-address');
     resultDiv.appendChild(restaurantAddress);
 
@@ -225,31 +225,18 @@ function displayRestaurantResults(response) {
     }
 }
 
-function displayInspectionViolationResults(response) {
-
-    // display inspection violation results if there are matches,
-    // else display a message that no inspections violations are found
-    if (response.features.length > 0) {
-        
-        // add violation details to restaurant div
-        let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
+function displayInspectionViolationResults(violationsDisplay, response) {
 
         let violationsTitle = document.createElement('h2');
         violationsTitle.classList.add('violations-title');
         violationsTitle.innerHTML = 'Comments from Most Recent Inspection';
-        restaurantDisplay.appendChild(violationsTitle);
-
+        violationsDisplay.appendChild(violationsTitle);
 
         for (let feature of response.features) {
-            console.log(feature.attributes);
-
             if (feature.attributes.INSPECTDATE == latestInspectionDate) {
-                displayViolationDetails(feature.attributes);
+                displayViolationDetails(violationsDisplay, feature.attributes);
             }
-
         }
-
-    }
 }
 
 // Wake County Food Inspections API
@@ -265,30 +252,29 @@ function createFullRestaurantInspectionViolationsUrl(permitid) {
 }
 
 // display an individual violation's details
-function displayViolationDetails(violation) {
+function displayViolationDetails(violationsDisplay, violation) {
     // create div to hold all violation details
-    let resultDiv = document.createElement('div');
-    resultDiv.classList += 'violation';
+    let violationDiv = document.createElement('div');
+    violationDiv.classList += 'violation';
 
     // create div to hold violation date
     let violationDate = document.createElement('div');
     let date = new Date(violation.INSPECTDATE);
     violationDate.innerHTML = date.toLocaleString().split(',')[0];
-    resultDiv.appendChild(violationDate);
+    violationDiv.appendChild(violationDate);
 
     // create div to hold violation score
     let violationScore = document.createElement('div');
     violationScore.innerHTML = `Points Deducted: ${violation.POINTVALUE}`;
-    resultDiv.appendChild(violationScore);
+    violationDiv.appendChild(violationScore);
 
     // create div to hold violation description
     let violationDescription = document.createElement('div');
     violationDescription.innerHTML = violation.COMMENTS;
-    resultDiv.appendChild(violationDescription);
+    violationDiv.appendChild(violationDescription);
 
-    // add violation detail div to results display div
-    let restaurantDisplay = document.querySelector(`[data-permitid='${violation.PERMITID}']`);
-    restaurantDisplay.appendChild(resultDiv);
+    // add violation detail div to violationsDisplay div
+    violationsDisplay.appendChild(violationDiv);
 }
 
 // display an individual inspection's details
@@ -385,23 +371,30 @@ function displayInspectionResults(response) {
         showCommentsButton.innerText = 'Show Comments from Most Recent Inspection';
         restaurantDisplay.appendChild(showCommentsButton);
 
+        // create a div to hold violation comments
+        let violationsDisplay = document.createElement('div');
+        violationsDisplay.classList.add('violations-display');
+        restaurantDisplay.appendChild(violationsDisplay);
+
         showCommentsButton.addEventListener('click', function (event) {
-                // call Restaurant Violations API
-                let fullRestaurantInspectionViolationsUrl = createFullRestaurantInspectionViolationsUrl(response.features[0].attributes.PERMITID);
-        
-                fetch(fullRestaurantInspectionViolationsUrl)
-                    .then(function(response) {
-                        return response.json();
-                    })
-                    .then(function(response) {
-            
-                        console.log(response);
-        
-                        displayInspectionViolationResults(response);
-                    })
-                    .catch(function(error) {
-                        console.log('Request failed', error);
-                });
+
+            violationsDisplay.innerHTML = '';
+
+            // call Restaurant Violations API
+            let fullRestaurantInspectionViolationsUrl = createFullRestaurantInspectionViolationsUrl(response.features[0].attributes.PERMITID);
+    
+            fetch(fullRestaurantInspectionViolationsUrl)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(response) {
+                    if (response.features.length > 0) {
+                        displayInspectionViolationResults(violationsDisplay, response);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Request failed', error);
+            });
         });
 
 
@@ -419,11 +412,19 @@ function displayInspectionResults(response) {
 // create the url for the yelp_search view function
 function createFullYelpSearchUrl(restaurant) {
     let yelpSearchUrl = '/yelp';
-    let term = encodeURI(restaurant.NAME);
-    let longitude = encodeURI(restaurant.X);
-    let latitude = encodeURI(restaurant.Y);
+    let term = removeNumberSymbolsFromRestaurantName(restaurant.NAME);
+    term = encodeURIComponent(term);
+    let longitude = encodeURIComponent(restaurant.X);
+    let latitude = encodeURIComponent(restaurant.Y);
     let limit = 1;
     return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
+}
+
+
+// remove any #'s from NAME 
+// (ex: 'STARBUCKS #29148' becomes 'STARBUCKS')
+function removeNumberSymbolsFromRestaurantName(restaurantName) {
+    return restaurantName.replace(new RegExp('\\s+#.*'), '');
 }
 
 // given an html element, and two lists holding inspection dates and scores,
