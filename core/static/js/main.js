@@ -3,6 +3,73 @@ const searchInput = document.querySelector('#search-input');
 const resultsDisplay = document.querySelector('#results-display');
 let latestInspectionDate;
  
+// when page loads, start querying Wake County Restaurants API
+// to create array of all restaurant names
+window.addEventListener('DOMContentLoaded', (event) => {
+    let restaurantNames = [];
+    // fetch Wake County Restaurants API
+    fetch('https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?where=1%3D1&outFields=NAME&outSR=4326&f=json')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(response) {
+            for (let feature of response.features) {
+                restaurantNames.push(feature.attributes.NAME);
+            }
+            return restaurantNames;
+        })
+        .then(function(restaurantNames) {
+
+            fetch('https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?where=1%3D1&outFields=NAME&outSR=4326&f=json&resultOffset=1000')
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(response) {
+                    for (let feature of response.features) {
+                        restaurantNames.push(feature.attributes.NAME);
+                    }
+                    return restaurantNames;
+                })
+                .then(function(restaurantNames) {
+                    fetch('https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?where=1%3D1&outFields=NAME&outSR=4326&f=json&resultOffset=2000')
+                        .then(function(response) {
+                            return response.json();
+                        })
+                        .then(function(response) {
+                            for (let feature of response.features) {
+                                restaurantNames.push(feature.attributes.NAME);
+                            }
+                            return restaurantNames;
+                        })
+                        .then(function(restaurantNames) {
+                            fetch('https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?where=1%3D1&outFields=NAME&outSR=4326&f=json&resultOffset=3000')
+                                .then(function(response) {
+                                    return response.json();
+                                })
+                                .then(function(response) {
+                                    for (let feature of response.features) {
+                                        restaurantNames.push(feature.attributes.NAME);
+                                    }
+
+                                    autocomplete(searchInput, restaurantNames);
+
+                                })
+                                .catch(function(error) {
+                                    console.log('Request failed', error);
+                            });
+                        })
+                        .catch(function(error) {
+                            console.log('Request failed', error);
+                    }); 
+                })
+                .catch(function(error) {
+                    console.log('Request failed', error);
+            });
+        })
+        .catch(function(error) {
+            console.log('Request failed', error);
+    });
+});
 
 function clearResultsDisplay() {
     resultsDisplay.innerHTML = '';
@@ -35,7 +102,7 @@ if (searchForm) {
 // create URL for Wake County Restaurants API
 function createFullRestaurantDetailsUrl() {
     let restaurantApi = 'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?outFields=*&outSR=4326&f=json&where=NAME%20%3D%20';
-    let restaurantName = encodeURI(searchInput.value);
+    let restaurantName = encodeURIComponent(searchInput.value);
     return `${restaurantApi}'${restaurantName}'`;
 }
 
@@ -85,11 +152,6 @@ function displayRestaurantDetails(restaurant) {
                             return response.json();
                         })
                         .then(function(response) {
-                
-                            // clearResultsDisplay();
-                
-                            console.log(response);
-                
                             displayInspectionResults(response);
                         })
                         .catch(function(error) {
@@ -121,7 +183,26 @@ function displayRestaurantDetails(restaurant) {
 
     // create div to hold restaurant address
     let restaurantAddress = document.createElement('div');
-    restaurantAddress.innerHTML = restaurant.ADDRESS1 + '<br> ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + '<br> ' + restaurant.PHONENUMBER;
+    if (restaurant.ADDRESS1) {
+        let restaurantStreet = document.createElement('div');
+        restaurantStreet.innerHTML = restaurant.ADDRESS1;
+        restaurantAddress.appendChild(restaurantStreet);
+    }
+    if (restaurant.CITY) {
+        let restaurantCity = document.createElement('div');
+        restaurantCity.innerHTML = restaurant.CITY;
+        restaurantAddress.appendChild(restaurantCity);
+    }
+    if (restaurant.POSTALCODE) {
+        let restaurantPostalCode = document.createElement('div');
+        restaurantPostalCode.innerHTML = restaurant.POSTALCODE;
+        restaurantAddress.appendChild(restaurantPostalCode);
+    }
+    if (restaurant.PHONENUMBER) {
+        let restaurantPhoneNumber = document.createElement('div');
+        restaurantPhoneNumber.innerHTML = restaurant.PHONENUMBER;
+        restaurantAddress.appendChild(restaurantPhoneNumber);
+    }
     restaurantAddress.classList.add('restaurant-address');
     resultDiv.appendChild(restaurantAddress);
 
@@ -144,31 +225,18 @@ function displayRestaurantResults(response) {
     }
 }
 
-function displayInspectionViolationResults(response) {
-
-    // display inspection violation results if there are matches,
-    // else display a message that no inspections violations are found
-    if (response.features.length > 0) {
-        
-        // add violation details to restaurant div
-        let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
+function displayInspectionViolationResults(violationsDisplay, response) {
 
         let violationsTitle = document.createElement('h2');
         violationsTitle.classList.add('violations-title');
         violationsTitle.innerHTML = 'Comments from Most Recent Inspection';
-        restaurantDisplay.appendChild(violationsTitle);
-
+        violationsDisplay.appendChild(violationsTitle);
 
         for (let feature of response.features) {
-            console.log(feature.attributes);
-
             if (feature.attributes.INSPECTDATE == latestInspectionDate) {
-                displayViolationDetails(feature.attributes);
+                displayViolationDetails(violationsDisplay, feature.attributes);
             }
-
         }
-
-    }
 }
 
 // Wake County Food Inspections API
@@ -184,30 +252,29 @@ function createFullRestaurantInspectionViolationsUrl(permitid) {
 }
 
 // display an individual violation's details
-function displayViolationDetails(violation) {
+function displayViolationDetails(violationsDisplay, violation) {
     // create div to hold all violation details
-    let resultDiv = document.createElement('div');
-    resultDiv.classList += 'violation';
+    let violationDiv = document.createElement('div');
+    violationDiv.classList += 'violation';
 
     // create div to hold violation date
     let violationDate = document.createElement('div');
     let date = new Date(violation.INSPECTDATE);
     violationDate.innerHTML = date.toLocaleString().split(',')[0];
-    resultDiv.appendChild(violationDate);
+    violationDiv.appendChild(violationDate);
 
     // create div to hold violation score
     let violationScore = document.createElement('div');
     violationScore.innerHTML = `Points Deducted: ${violation.POINTVALUE}`;
-    resultDiv.appendChild(violationScore);
+    violationDiv.appendChild(violationScore);
 
     // create div to hold violation description
     let violationDescription = document.createElement('div');
     violationDescription.innerHTML = violation.COMMENTS;
-    resultDiv.appendChild(violationDescription);
+    violationDiv.appendChild(violationDescription);
 
-    // add violation detail div to results display div
-    let restaurantDisplay = document.querySelector(`[data-permitid='${violation.PERMITID}']`);
-    restaurantDisplay.appendChild(resultDiv);
+    // add violation detail div to violationsDisplay div
+    violationsDisplay.appendChild(violationDiv);
 }
 
 // display an individual inspection's details
@@ -304,23 +371,30 @@ function displayInspectionResults(response) {
         showCommentsButton.innerText = 'Show Comments from Most Recent Inspection';
         restaurantDisplay.appendChild(showCommentsButton);
 
+        // create a div to hold violation comments
+        let violationsDisplay = document.createElement('div');
+        violationsDisplay.classList.add('violations-display');
+        restaurantDisplay.appendChild(violationsDisplay);
+
         showCommentsButton.addEventListener('click', function (event) {
-                // call Restaurant Violations API
-                let fullRestaurantInspectionViolationsUrl = createFullRestaurantInspectionViolationsUrl(response.features[0].attributes.PERMITID);
-        
-                fetch(fullRestaurantInspectionViolationsUrl)
-                    .then(function(response) {
-                        return response.json();
-                    })
-                    .then(function(response) {
-            
-                        console.log(response);
-        
-                        displayInspectionViolationResults(response);
-                    })
-                    .catch(function(error) {
-                        console.log('Request failed', error);
-                });
+
+            violationsDisplay.innerHTML = '';
+
+            // call Restaurant Violations API
+            let fullRestaurantInspectionViolationsUrl = createFullRestaurantInspectionViolationsUrl(response.features[0].attributes.PERMITID);
+    
+            fetch(fullRestaurantInspectionViolationsUrl)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(response) {
+                    if (response.features.length > 0) {
+                        displayInspectionViolationResults(violationsDisplay, response);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Request failed', error);
+            });
         });
 
 
@@ -338,11 +412,19 @@ function displayInspectionResults(response) {
 // create the url for the yelp_search view function
 function createFullYelpSearchUrl(restaurant) {
     let yelpSearchUrl = '/yelp';
-    let term = encodeURI(restaurant.NAME);
-    let longitude = encodeURI(restaurant.X);
-    let latitude = encodeURI(restaurant.Y);
+    let term = removeNumberSymbolsFromRestaurantName(restaurant.NAME);
+    term = encodeURIComponent(term);
+    let longitude = encodeURIComponent(restaurant.X);
+    let latitude = encodeURIComponent(restaurant.Y);
     let limit = 1;
     return `${yelpSearchUrl}/${term}/${longitude}/${latitude}/${limit}`;
+}
+
+
+// remove any #'s from NAME 
+// (ex: 'STARBUCKS #29148' becomes 'STARBUCKS')
+function removeNumberSymbolsFromRestaurantName(restaurantName) {
+    return restaurantName.replace(new RegExp('\\s+#.*'), '');
 }
 
 // given an html element, and two lists holding inspection dates and scores,
@@ -387,3 +469,101 @@ function displayInspectionChart(restaurantDisplay, listOfInspectionScoreDates, l
         }
     });
 }
+
+function autocomplete(inp, arr) {
+    
+    /*the autocomplete function takes two arguments,
+    the text field element and an array of possible autocompleted values:*/
+    var currentFocus;
+    /*execute a function when someone writes in the text field:*/
+    inp.addEventListener("input", function(e) {
+        var a, b, i, val = this.value;
+        /*close any already open lists of autocompleted values*/
+        closeAllLists();
+        if (!val) { return false;}
+        currentFocus = -1;
+        /*create a DIV element that will contain the items (values):*/
+        a = document.createElement("DIV");
+        a.setAttribute("id", this.id + "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+        /*append the DIV element as a child of the autocomplete container:*/
+        this.parentNode.appendChild(a);
+        /*for each item in the array...*/
+        for (i = 0; i < arr.length; i++) {
+          /*check if the item starts with the same letters as the text field value:*/
+          if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            /*create a DIV element for each matching element:*/
+            b = document.createElement("DIV");
+            /*make the matching letters bold:*/
+            b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            b.innerHTML += arr[i].substr(val.length);
+            /*insert a input field that will hold the current array item's value:*/
+            b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+            /*execute a function when someone clicks on the item value (DIV element):*/
+            b.addEventListener("click", function(e) {
+                /*insert the value for the autocomplete text field:*/
+                inp.value = this.getElementsByTagName("input")[0].value;
+                /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+                closeAllLists();
+            });
+            a.appendChild(b);
+          }
+        }
+    });
+    /*execute a function presses a key on the keyboard:*/
+    inp.addEventListener("keydown", function(e) {
+        var x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) {
+          /*If the arrow DOWN key is pressed,
+          increase the currentFocus variable:*/
+          currentFocus++;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 38) { //up
+          /*If the arrow UP key is pressed,
+          decrease the currentFocus variable:*/
+          currentFocus--;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 13) {
+          /*If the ENTER key is pressed, prevent the form from being submitted,*/
+          e.preventDefault();
+          if (currentFocus > -1) {
+            /*and simulate a click on the "active" item:*/
+            if (x) x[currentFocus].click();
+          }
+        }
+    });
+    function addActive(x) {
+      /*a function to classify an item as "active":*/
+      if (!x) return false;
+      /*start by removing the "active" class on all items:*/
+      removeActive(x);
+      if (currentFocus >= x.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = (x.length - 1);
+      /*add class "autocomplete-active":*/
+      x[currentFocus].classList.add("autocomplete-active");
+    }
+    function removeActive(x) {
+      /*a function to remove the "active" class from all autocomplete items:*/
+      for (var i = 0; i < x.length; i++) {
+        x[i].classList.remove("autocomplete-active");
+      }
+    }
+    function closeAllLists(elmnt) {
+      /*close all autocomplete lists in the document,
+      except the one passed as an argument:*/
+      var x = document.getElementsByClassName("autocomplete-items");
+      for (var i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != inp) {
+          x[i].parentNode.removeChild(x[i]);
+        }
+      }
+    }
+    /*execute a function when someone clicks in the document:*/
+    document.addEventListener("click", function (e) {
+        closeAllLists(e.target);
+    });
+  }
