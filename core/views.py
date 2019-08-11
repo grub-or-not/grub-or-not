@@ -12,6 +12,10 @@ def index(request):
     return render(request, 'index.html')
 
 
+def about(request):
+    return render(request, 'core/about.html')
+
+
 def browse(request):
 
     ## RECENT INSPECTIONS
