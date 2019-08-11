@@ -225,27 +225,18 @@ function displayRestaurantResults(response) {
     }
 }
 
-function displayInspectionViolationResults(response) {
-
-    // display inspection violation results if there are matches,
-    // else display a message that no inspections violations are found
-    if (response.features.length > 0) {
-        
-        // add violation details to restaurant div
-        let restaurantDisplay = document.querySelector(`[data-permitid='${response.features[0].attributes.PERMITID}']`);
+function displayInspectionViolationResults(violationsDisplay, response) {
 
         let violationsTitle = document.createElement('h2');
         violationsTitle.classList.add('violations-title');
         violationsTitle.innerHTML = 'Comments from Most Recent Inspection';
-        restaurantDisplay.appendChild(violationsTitle);
-
+        violationsDisplay.appendChild(violationsTitle);
 
         for (let feature of response.features) {
             if (feature.attributes.INSPECTDATE == latestInspectionDate) {
-                displayViolationDetails(feature.attributes);
+                displayViolationDetails(violationsDisplay, feature.attributes);
             }
         }
-    }
 }
 
 // Wake County Food Inspections API
@@ -261,30 +252,29 @@ function createFullRestaurantInspectionViolationsUrl(permitid) {
 }
 
 // display an individual violation's details
-function displayViolationDetails(violation) {
+function displayViolationDetails(violationsDisplay, violation) {
     // create div to hold all violation details
-    let resultDiv = document.createElement('div');
-    resultDiv.classList += 'violation';
+    let violationDiv = document.createElement('div');
+    violationDiv.classList += 'violation';
 
     // create div to hold violation date
     let violationDate = document.createElement('div');
     let date = new Date(violation.INSPECTDATE);
     violationDate.innerHTML = date.toLocaleString().split(',')[0];
-    resultDiv.appendChild(violationDate);
+    violationDiv.appendChild(violationDate);
 
     // create div to hold violation score
     let violationScore = document.createElement('div');
     violationScore.innerHTML = `Points Deducted: ${violation.POINTVALUE}`;
-    resultDiv.appendChild(violationScore);
+    violationDiv.appendChild(violationScore);
 
     // create div to hold violation description
     let violationDescription = document.createElement('div');
     violationDescription.innerHTML = violation.COMMENTS;
-    resultDiv.appendChild(violationDescription);
+    violationDiv.appendChild(violationDescription);
 
-    // add violation detail div to results display div
-    let restaurantDisplay = document.querySelector(`[data-permitid='${violation.PERMITID}']`);
-    restaurantDisplay.appendChild(resultDiv);
+    // add violation detail div to violationsDisplay div
+    violationsDisplay.appendChild(violationDiv);
 }
 
 // display an individual inspection's details
@@ -381,20 +371,30 @@ function displayInspectionResults(response) {
         showCommentsButton.innerText = 'Show Comments from Most Recent Inspection';
         restaurantDisplay.appendChild(showCommentsButton);
 
+        // create a div to hold violation comments
+        let violationsDisplay = document.createElement('div');
+        violationsDisplay.classList.add('violations-display');
+        restaurantDisplay.appendChild(violationsDisplay);
+
         showCommentsButton.addEventListener('click', function (event) {
-                // call Restaurant Violations API
-                let fullRestaurantInspectionViolationsUrl = createFullRestaurantInspectionViolationsUrl(response.features[0].attributes.PERMITID);
-        
-                fetch(fullRestaurantInspectionViolationsUrl)
-                    .then(function(response) {
-                        return response.json();
-                    })
-                    .then(function(response) {
-                        displayInspectionViolationResults(response);
-                    })
-                    .catch(function(error) {
-                        console.log('Request failed', error);
-                });
+
+            violationsDisplay.innerHTML = '';
+
+            // call Restaurant Violations API
+            let fullRestaurantInspectionViolationsUrl = createFullRestaurantInspectionViolationsUrl(response.features[0].attributes.PERMITID);
+    
+            fetch(fullRestaurantInspectionViolationsUrl)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(response) {
+                    if (response.features.length > 0) {
+                        displayInspectionViolationResults(violationsDisplay, response);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Request failed', error);
+            });
         });
 
 
