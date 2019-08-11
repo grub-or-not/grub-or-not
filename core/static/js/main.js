@@ -183,7 +183,26 @@ function displayRestaurantDetails(restaurant) {
 
     // create div to hold restaurant address
     let restaurantAddress = document.createElement('div');
-    restaurantAddress.innerHTML = restaurant.ADDRESS1 + '<br> ' + restaurant.CITY + ' ' + restaurant.POSTALCODE + '<br> ' + restaurant.PHONENUMBER;
+    if (restaurant.ADDRESS1) {
+        let restaurantStreet = document.createElement('div');
+        restaurantStreet.innerHTML = restaurant.ADDRESS1;
+        restaurantAddress.appendChild(restaurantStreet);
+    }
+    if (restaurant.CITY) {
+        let restaurantCity = document.createElement('div');
+        restaurantCity.innerHTML = restaurant.CITY;
+        restaurantAddress.appendChild(restaurantCity);
+    }
+    if (restaurant.POSTALCODE) {
+        let restaurantPostalCode = document.createElement('div');
+        restaurantPostalCode.innerHTML = restaurant.POSTALCODE;
+        restaurantAddress.appendChild(restaurantPostalCode);
+    }
+    if (restaurant.PHONENUMBER) {
+        let restaurantPhoneNumber = document.createElement('div');
+        restaurantPhoneNumber.innerHTML = restaurant.PHONENUMBER;
+        restaurantAddress.appendChild(restaurantPhoneNumber);
+    }
     restaurantAddress.classList.add('restaurant-address');
     resultDiv.appendChild(restaurantAddress);
 
