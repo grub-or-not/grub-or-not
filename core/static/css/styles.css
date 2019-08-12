@@ -129,14 +129,20 @@ body {
 	font-size: 1.5rem;
 	background-color: #27bace;
 	border-color: #27bace;
+	outline: none;
 }
 
 .show-comments-button {
 	margin: 1rem;
-	height: 2rem;
 	border-radius: 1rem;
 	background-color: #27bace;
 	border-color: #27bace;
+	outline: none;
+	font-size: 1rem;
+	padding: 0.5rem;
+    
+	
+
 }
 
 .violations-title {
