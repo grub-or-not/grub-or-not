@@ -99,9 +99,9 @@ body {
 	font-size: 2rem;
 }
 
-
-.button {
-    color:#05386B;
+.autocomplete-items {
+	color:#27bace;
+	text-align: center;
 }
 
 
@@ -212,9 +212,9 @@ body {
 	font-size: 3rem;
 }
 
-.browse-restaurant-inspection-score-heading {
+/* .browse-restaurant-inspection-score-heading {
 	
-}
+} */
 
 .browse-restaurant-yelp-score {
 	margin: 2rem;
@@ -225,9 +225,9 @@ body {
 	font-size: 3rem;
 }
 
-.browse-restaurant-yelp-score-heading {
+/* .browse-restaurant-yelp-score-heading {
 
-}
+} */
 
 /************************ ABOUT PAGE  *******************/
 
@@ -238,6 +238,7 @@ body {
 	text-align: justify;
 } 
 
+
 .abouth1 {
 	padding: 2rem;
 	display: flex;
@@ -245,8 +246,9 @@ body {
 	font-size: 3.5rem;
 }
 
+
 .abouth2 {
-	font-size: 2.5rem;
+	font-size: 2.75rem;
 	margin: 1rem;
 }
 
@@ -294,4 +296,8 @@ body {
 	height: 20rem;
 	
 }
+
+
+
+
 

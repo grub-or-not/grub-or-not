@@ -128,14 +128,11 @@ function displayRestaurantDetails(restaurant) {
                     return response.json();
                 })
                 .then(function(response) {
-                    let restaurantRating = response.businesses[0].rating;
 
                     let restaurantYelpRatingContainer = document.createElement('div');
                     restaurantYelpRatingContainer.classList.add('browse-restaurant-yelp-score');
-            
                     let restaurantYelpRating = document.createElement('div');
                     restaurantYelpRating.classList.add('browse-restaurant-yelp-score-number');
-                    restaurantYelpRating.innerHTML = restaurantRating;
                     let restaurantYelpRatingHeading = document.createElement('div');
                     restaurantYelpRatingHeading.innerHTML = 'Yelp Rating';
                     restaurantYelpRatingHeading.classList.add('browse-restaurant-yelp-score-heading');
@@ -143,6 +140,11 @@ function displayRestaurantDetails(restaurant) {
                     restaurantYelpRatingContainer.appendChild(restaurantYelpRatingHeading);
                     resultDiv.appendChild(restaurantYelpRatingContainer);
 
+                    if (response.businesses[0]) {
+                        restaurantYelpRating.innerHTML = response.businesses[0].rating;
+                    } else {
+                        restaurantYelpRating.innerHTML = 'No Rating Found';
+                    }
 
                     // call Restaurant Inspections API
                     let fullRestaurantInspectionsUrl = createFullRestaurantInspectionsUrl(restaurant.PERMITID);
