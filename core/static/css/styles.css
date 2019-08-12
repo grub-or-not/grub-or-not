@@ -232,7 +232,14 @@ body {
 
 .autocomplete-items{
 
-	color: white
+	color:#27bace;
+	text-align: left;
+	position: relative;
+}
+
+.search-inputautocomplete-list{
+
+	position: relative;
 }
 
 

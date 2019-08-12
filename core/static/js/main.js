@@ -483,7 +483,7 @@ function autocomplete(inp, arr) {
         if (!val) { return false;}
         currentFocus = -1;
         /*create a DIV element that will contain the items (values):*/
-        a = document.createElement("Select");
+        a = document.createElement("DIV");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
         /*append the DIV element as a child of the autocomplete container:*/
@@ -496,7 +496,7 @@ function autocomplete(inp, arr) {
           /*check if the item starts with the same letters as the text field value:*/
           if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
             /*create a DIV element for each matching element:*/
-            b = document.createElement("OPTION");
+            b = document.createElement("DIV");
             /*make the matching letters bold:*/
             b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
             b.innerHTML += arr[i].substr(val.length);
@@ -506,8 +506,10 @@ function autocomplete(inp, arr) {
             b.addEventListener("click", function(e) {
                 /*insert the value for the autocomplete text field:*/
                 inp.value = this.getElementsByTagName("input")[0].value;
+
                 /*close the list of autocompleted values,
                 (or any other open lists of autocompleted values:*/
+                
                 closeAllLists();
             });
             a.appendChild(b);
@@ -571,3 +573,5 @@ function autocomplete(inp, arr) {
         closeAllLists(e.target);
     });
   }
+
+  
