@@ -228,7 +228,13 @@ function displayRestaurantResults(response) {
 }
 
 function displayInspectionViolationResults(violationsDisplay, response) {
-
+    let commentsExist = false;
+    for (let feature of response.features) {
+        if (feature.attributes.INSPECTDATE == latestInspectionDate) {
+            commentsExist = true;
+        }
+    }
+    if (commentsExist) {
         let violationsTitle = document.createElement('h2');
         violationsTitle.classList.add('violations-title');
         violationsTitle.innerHTML = 'Comments from Most Recent Inspection';
@@ -239,6 +245,13 @@ function displayInspectionViolationResults(violationsDisplay, response) {
                 displayViolationDetails(violationsDisplay, feature.attributes);
             }
         }
+    }
+    else {
+        let violationsTitle = document.createElement('h2');
+        violationsTitle.classList.add('violations-title');
+        violationsTitle.innerHTML = 'No Comments Found';
+        violationsDisplay.appendChild(violationsTitle);
+    }
 }
 
 // Wake County Food Inspections API
