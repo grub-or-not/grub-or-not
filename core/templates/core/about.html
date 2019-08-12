@@ -1,50 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-
-
     <div id="about">
         <h1 class="abouth1">About</h1>
         <p>Grubbernaut is designed to assist a user explore the tastiest, most sanitary food in Wake County so that you can decide if you want to grub or not. Use our search feature to search for a restaurant, or browse to explore the restaurants with the most recent inspections. </p>
         </div>
-        
     <div id="banner">
         <div id="discover">
            <h2 class="abouth2"> What does your sanitation score mean? Here's your guide:</h2>
         </div>
     </div>
     <div class="container">
-    <div class="divTable">
-            <div class="divTableBody">
-            <div class="divTableRow">
-            <div class="divTableCell">&nbsp;Grade</div>
-            <div class="divTableCell">&nbsp;Score Range</div>
+        <div class="divTable">
+                <div class="divTableBody">
+                <div class="divTableRow">
+                <div class="divTableCell">&nbsp;Grade</div>
+                <div class="divTableCell">&nbsp;Score Range</div>
+                </div>
+                <div class="divTableRow">
+                <div class="divTableCell">&nbsp;A</div>
+                <div class="divTableCell">&nbsp;90 -100</div>
+                </div>
+                <div class="divTableRow">
+                <div class="divTableCell">&nbsp;B</div>
+                <div class="divTableCell">&nbsp;80 - 89</div>
+                </div>
+                <div class="divTableRow">
+                <div class="divTableCell">&nbsp;C</div>
+                <div class="divTableCell">&nbsp;70 - 79</div>
+                </div>
+                <div class="divTableRow">
+                <div class="divTableCell">&nbsp;*Restaurant Closes*</div>
+                <div class="divTableCell">&nbsp;0&nbsp; -&nbsp; 69</div>
+                </div>
+                </div>
+                </div>
+               
             </div>
-            <div class="divTableRow">
-            <div class="divTableCell">&nbsp;A</div>
-            <div class="divTableCell">&nbsp;90 -100</div>
-            </div>
-            <div class="divTableRow">
-            <div class="divTableCell">&nbsp;B</div>
-            <div class="divTableCell">&nbsp;80 - 89</div>
-            </div>
-            <div class="divTableRow">
-            <div class="divTableCell">&nbsp;C</div>
-            <div class="divTableCell">&nbsp;70 - 79</div>
-            </div>
-            <div class="divTableRow">
-            <div class="divTableCell">&nbsp;*Restaurant Closes*</div>
-            <div class="divTableCell">&nbsp;0&nbsp; -&nbsp; 69</div>
-            </div>
-            </div>
-            </div>
-            <!-- DivTable.com -->  
-        </div>
     <div>
-        <h2>About The Project</h2>
+        <h2 class="about-project">About The Project</h2>
         <section>
-            <p>Grubbernaut was created to assist the community</p>
+            <p class="our-project">This project was developed out of a desire to make public information that is not easily accessible available in a user-friendly format. To create the Grubbernaut app data from four API's-- three from Wake County as well as Yelp Fusion-- was used. The app was built using Django, JavaScript, HTML and CSS. Graphic elements were developed using Charts.js. The Grubbernaut app was designed with user experience in mind, keeping the interface simple and highlighting key elements to make comparisons in user ratings from Yelp and the inspection score quick and easy for the user.</p>
         </section>
     </div>
+    
 {% endblock %}
