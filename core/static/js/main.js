@@ -412,7 +412,8 @@ function displayInspectionResults(response) {
 // create the url for the yelp_search view function
 function createFullYelpSearchUrl(restaurant) {
     let yelpSearchUrl = '/yelp';
-    let term = removeNumberSymbolsFromRestaurantName(restaurant.NAME);
+    let term = removeParenthesesFromRestaurantName(restaurant.NAME);
+    term = removeNumberSymbolsFromRestaurantName(term);
     term = encodeURIComponent(term);
     let longitude = encodeURIComponent(restaurant.X);
     let latitude = encodeURIComponent(restaurant.Y);
@@ -425,6 +426,14 @@ function createFullYelpSearchUrl(restaurant) {
 // (ex: 'STARBUCKS #29148' becomes 'STARBUCKS')
 function removeNumberSymbolsFromRestaurantName(restaurantName) {
     return restaurantName.replace(new RegExp('\\s+#.*'), '');
+}
+
+// remove any parentheses from NAME 
+// (ex: 'Hale Yeah Kitchen  (WCID #640)' becomes 'Hale Yeah Kitchen')
+function removeParenthesesFromRestaurantName(restaurantName) {
+    let regex = /\s*\([^)]*\)/gm;
+    let subst = ``;
+    return restaurantName.replace(regex, subst);
 }
 
 // given an html element, and two lists holding inspection dates and scores,
