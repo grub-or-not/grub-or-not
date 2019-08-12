@@ -307,3 +307,9 @@ body {
 	font-size: 2rem;
 	text-align: justify;
 } 
+
+
+.autocomplete-items {
+	color:#27bace;
+	text-align: center;
+}
