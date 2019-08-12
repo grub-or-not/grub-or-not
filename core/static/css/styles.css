@@ -62,7 +62,7 @@ body {
 #discover {
 	color: #27bace;
 	margin: 2.5rem;
-	font-size: 2rem;
+	font-size: 2.25rem;
 	text-align: center;
 }
 
@@ -229,49 +229,40 @@ body {
 
 }
 
+/************************ ABOUT PAGE  *******************/
 
-/* a {
-    color: #303C6C;
-    
-} */
+#about {
+	color: #27bace;
+	margin: 2.5rem;
+	font-size: 1.75rem;
+	text-align: justify;
+} 
 
-/* .yelp-image {
-    display: flex;
-    justify-content: right;
-    max-width: 45%;
-    margin: 20px;
-} */
+.abouth1 {
+	padding: 2rem;
+	display: flex;
+	justify-content: center;
+	font-size: 3.5rem;
+}
 
-/* .results-heading {
-    color: #F4976C;
-    font-size: 2.5rem;
-    display: flex;
-    justify-content: left;
-    padding: 10px;
-    
-} */
+.abouth2 {
+	font-size: 2.5rem;
+	margin: 1rem;
+}
 
-/* .title {
-    color: #FBE8A6;
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-    font-size: 4rem;
-} */
 
 /* DivTable.com */
 .divTable{
-	width: 100%;
+	width: 100%;column-count: 
 	display: flex;  
-	flex-grow: 3;
+	/* flex-grow: 3; */
 	text-align: center;
 	justify-content: center; 
-	align-items: center; 
-
-	
+	align-items: center; 	
 }
 .divTableRow {
 	display: table-row;
+	height: 4rem;
 }
 .divTableHeading {
 	display: table-header-group;
@@ -280,7 +271,8 @@ body {
 .divTableCell, .divTableHead {
 	border: 1px solid #999999;
 	display: table-cell;
-	padding: 3px 10px;
+	padding: 3px;
+	width: 40rem;
 	
 }
 .divTableHeading {
@@ -298,12 +290,8 @@ body {
 .divTableBody {
 	display: table-row-group;
 	background-color: rgba(212, 212, 212, 1);
+	width: 40rem;
+	height: 20rem;
 	
 }
 
-#about {
-	color: #27bace;
-	margin: 2.5rem;
-	font-size: 2rem;
-	text-align: justify;
-} 
