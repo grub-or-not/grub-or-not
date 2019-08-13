@@ -6,6 +6,7 @@ import json
 import requests
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+import re
 
 
 def index(request):
@@ -142,12 +143,27 @@ def create_restaurants_api_endpoint(permit_id):
     return f'https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/0/query?outFields=*&outSR=4326&f=json&where=PERMITID%20%3D%20{permit_id}'
 
 
+def remove_number_symbols_from_restaurant_name_for_yelp_search(restaurant_name):
+    regex = r"\s+#.*"
+    subst = ""
+    return re.sub(regex, subst, restaurant_name, 0, re.MULTILINE)
+
+
+def remove_parentheses_from_restaurant_name_for_yelp_search(restaurant_name):
+    regex = r"\s*\([^)]*\)"
+    subst = ""
+    return re.sub(regex, subst, restaurant_name, 0, re.MULTILINE)
+
+
 def create_yelp_search_endpoint(request, restaurant):
     """
     Create the endpoint to the yelp_search view function.
     """
+    restaurant_name = restaurant['NAME']
+    restaurant_name = remove_parentheses_from_restaurant_name_for_yelp_search(restaurant_name)
+    restaurant_name = remove_number_symbols_from_restaurant_name_for_yelp_search(restaurant_name)
     return request.build_absolute_uri(reverse("yelp_search", args = [
-        restaurant['NAME'],
+        restaurant_name,
         restaurant['X'],
         restaurant['Y'],
         1,
