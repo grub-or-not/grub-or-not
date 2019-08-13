@@ -259,50 +259,6 @@ body {
 }
 
 
-/* DivTable.com */
-.divTable{
-	width: 100%;column-count: 
-	display: flex;  
-	/* flex-grow: 3; */
-	text-align: center;
-	justify-content: center; 
-	align-items: center; 	
-}
-.divTableRow {
-	display: table-row;
-	height: 4rem;
-}
-.divTableHeading {
-	display: table-header-group;
-	
-}
-.divTableCell, .divTableHead {
-	border: 1px solid #999999;
-	display: table-cell;
-	padding: 3px;
-	width: 40rem;
-	
-}
-.divTableHeading {
-	background-color: #EEE;
-	display: table-header-group;
-	font-weight: bold;
-	font-family: 'Capriola', sans-serif;
-}
-.divTableFoot {
-	background-color: #EEE;
-	display: table-footer-group;
-	font-weight: bold;
-	font-family: 'Capriola', sans-serif;
-}
-.divTableBody {
-	display: table-row-group;
-	background-color: rgba(212, 212, 212, 1);
-	width: 40rem;
-	height: 20rem;
-	
-}
-
 section {
 	color: #27bace;
 	margin: 2rem;	
@@ -319,7 +275,27 @@ section {
 	font-size: 2.5rem;
 }
 
+.grades {
+	display: grid;
+	grid-template-columns: 25rem 25rem;
+	grid-template-rows: repeat(5, 80px); 
+	background-color: #e6e6e6;
+	justify-self: center;
+	border-radius: 15px;
 
+}
 
+.grades p {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.75rem;
+	padding: 1rem;
 
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+}
 
