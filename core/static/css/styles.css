@@ -62,7 +62,7 @@ body {
 #discover {
 	color: #27bace;
 	margin: 2.5rem;
-	font-size: 2rem;
+	font-size: 2.25rem;
 	text-align: center;
 }
 
@@ -99,9 +99,9 @@ body {
 	font-size: 2rem;
 }
 
-
-.button {
-    color:#05386B;
+.autocomplete-items {
+	color:#27bace;
+	text-align: center;
 }
 
 
@@ -218,9 +218,9 @@ body {
 	font-size: 3rem;
 }
 
-.browse-restaurant-inspection-score-heading {
+/* .browse-restaurant-inspection-score-heading {
 	
-}
+} */
 
 .browse-restaurant-yelp-score {
 	margin: 2rem;
@@ -231,91 +231,85 @@ body {
 	font-size: 3rem;
 }
 
-.browse-restaurant-yelp-score-heading {
+/* .browse-restaurant-yelp-score-heading {
 
-}
-
-
-/* a {
-    color: #303C6C;
-    
 } */
 
-/* .yelp-image {
-    display: flex;
-    justify-content: right;
-    max-width: 45%;
-    margin: 20px;
-} */
-
-/* .results-heading {
-    color: #F4976C;
-    font-size: 2.5rem;
-    display: flex;
-    justify-content: left;
-    padding: 10px;
-    
-} */
-
-/* .title {
-    color: #FBE8A6;
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-    font-size: 4rem;
-} */
-
-/* DivTable.com */
-.divTable{
-	width: 100%;
-	display: flex;  
-	flex-grow: 3;
-	text-align: center;
-	justify-content: center; 
-	align-items: center; 
-
-	
-}
-.divTableRow {
-	display: table-row;
-}
-.divTableHeading {
-	display: table-header-group;
-	
-}
-.divTableCell, .divTableHead {
-	border: 1px solid #999999;
-	display: table-cell;
-	padding: 3px 10px;
-	
-}
-.divTableHeading {
-	background-color: #EEE;
-	display: table-header-group;
-	font-weight: bold;
-	font-family: 'Capriola', sans-serif;
-}
-.divTableFoot {
-	background-color: #EEE;
-	display: table-footer-group;
-	font-weight: bold;
-	font-family: 'Capriola', sans-serif;
-}
-.divTableBody {
-	display: table-row-group;
-	background-color: rgba(212, 212, 212, 1);
-	
-}
+/************************ ABOUT PAGE  *******************/
 
 #about {
 	color: #27bace;
 	margin: 2.5rem;
-	font-size: 2rem;
 	text-align: justify;
+	font-size: 2rem;
 } 
 
 
-.autocomplete-items {
-	color:#27bace;
-	text-align: center;
+.abouth1 {
+	padding: 2rem;
+	display: flex;
+	justify-content: center;
+	font-size: 3.5rem;
+	margin-top: 3rem;
+}
+
+
+.abouth2 {
+	font-size: 2.75rem;
+	margin-top: 3rem;
+	margin-bottom: 3rem;
+}
+
+.abouth2 p {
+	font-size: 1.5rem;
+}
+
+section {
+	color: #27bace;
+	margin-top: 2rem;
+	margin-bottom: 4rem;
+}
+
+.our-project {
+	font-size: 1.75rem;
+}
+.about-project {
+	color: #27bace;
+	display: flex;
+	justify-content: center;
+	margin-top: 6rem;
+	font-size: 2.5rem;
+}
+
+.grades {
+	display: grid;
+	grid-template-columns: 25rem 25rem;
+	grid-template-rows: repeat(5, 80px); 
+	background-color: #e6e6e6;
+	justify-self: center;
+	border-radius: 15px;
+
+}
+
+.grades p {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.75rem;
+	padding: 1rem;
+
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+}
+
+.abouth3 {
+	color: #27bace;
+	font-size: 2.25rem;
+}
+
+.api-list {
+
 }
