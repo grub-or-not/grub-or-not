@@ -272,7 +272,13 @@ section {
 
 .our-project {
 	font-size: 1.75rem;
+	margin: 2rem;
 }
+
+.our-project p {
+	margin: 1rem;
+}
+
 .about-project {
 	color: #27bace;
 	display: flex;
@@ -308,8 +314,17 @@ section {
 .abouth3 {
 	color: #27bace;
 	font-size: 2.25rem;
+	text-align: center;
+	margin: 1rem;
 }
 
 .api-list {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	margin-bottom: 2rem;
+}
 
+.api-list a:visited {
+	color: white;
 }
